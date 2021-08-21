@@ -1,3 +1,6 @@
+#ifndef PATHFINDER2_CACHE
+#define PATHFINDER2_CACHE
+
 #include <list>
 #include <utility>
 #include <unordered_map>
@@ -59,3 +62,5 @@ namespace common
 			}
 	};
 }
+
+#endif
