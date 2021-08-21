@@ -48,8 +48,8 @@ std::vector<const item_database_entry*> item_database::search_items(const std::s
 		item.name = string(query.getColumn(1));
 		item.description = string(query.getColumn(3));
 
-		auto bulk_str = string(query.getColumn(2));
-		item.bulk = bulk_str[0] == 'L' ? 0.1f : atoi(bulk_str.c_str());
+		auto bulk_str = query.getColumn(2);
+		item.bulk = bulk_str[0] == 'L' ? 0.1f : atoi(bulk_str);
 
 		//Insert it in the cache and in the result vector
 		result.emplace_back(&item_cache.insert(item.name, item));
