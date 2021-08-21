@@ -1,6 +1,8 @@
 inventory_lib = library('inventory',
 						[
-							'item_manager.cpp'
+							'inventory_entry.cpp',
+							'item_database.cpp',
+							'item.cpp'
 						],
 						dependencies: [sqlitecpp, cache])
 
