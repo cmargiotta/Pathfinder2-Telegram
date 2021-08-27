@@ -13,6 +13,7 @@ item::item(int _owner, const string& _name, SQLite::Database& _database):
 	database(_database)
 {
 	auto& item_db = item_database::get_instance();
+	bool found = false;
 
 	Statement query(database, "SELECT quantity FROM inventory WHERE owner = ? AND name = ?");
 	query.bind(1, _owner);
@@ -20,19 +21,33 @@ item::item(int _owner, const string& _name, SQLite::Database& _database):
 
 	while (query.executeStep())
 	{
+		found = true;
 		quantity = query.getColumn(0);
+
 		break;
 	}
 
 	data = item_db.get_item(_name);
 	name = _name;
 	owner = _owner;
+
+	if (!found)
+	{
+		Transaction transaction (database);
+		Statement query1 (database, "INSERT INTO inventory (owner, name, quantity) VALUES (?, ?, 1)");
+		query1.bind(1, owner);
+		query1.bind(2, name);
+		query1.exec();
+		transaction.commit();
+		
+		quantity = 1;
+	}
 }
 
 item::~item()
 {}
 
-float item::get_bulk() const 
+double item::get_bulk() const 
 {
 	return data->bulk;
 }
