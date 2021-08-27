@@ -12,8 +12,8 @@ namespace pathfinder2
 	class item final: public inventory_entry 
 	{
 		private:  
-			std::shared_ptr<item_database_entry> 	data; 
-			SQLite::Database& 						database; 
+			std::shared_ptr<const item_database_entry> 	data; 
+			SQLite::Database& 							database; 
 		
 		public: 
 			item(const std::string& owner, const std::string& _name, SQLite::Database& database); 

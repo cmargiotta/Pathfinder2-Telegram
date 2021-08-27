@@ -33,9 +33,9 @@ item_database& item_database::get_instance(Database* database)
 	return instance;
 }
 
-const std::vector<std::shared_ptr<item_database_entry>> item_database::search_items(const std::string& name)
+const std::vector<std::shared_ptr<const item_database_entry>> item_database::search_items(const std::string& name)
 {
-	std::vector<std::shared_ptr<item_database_entry>> result;
+	std::vector<std::shared_ptr<const item_database_entry>> result;
 
 	//Load item from database
 	Statement query(database, "SELECT url, name, bulk, description FROM items WHERE name MATCH ?");
@@ -60,7 +60,7 @@ const std::vector<std::shared_ptr<item_database_entry>> item_database::search_it
 	return result; 
 }
 
-const std::shared_ptr<item_database_entry> item_database::get_item(const std::string& name)
+std::shared_ptr<const item_database_entry> item_database::get_item(const std::string& name)
 {
 	try 
 	{
