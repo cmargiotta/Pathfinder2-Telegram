@@ -21,15 +21,19 @@ namespace pathfinder2
 			inventory_entry(const char* owner, const char* name, float bulk, const char* category);
 			virtual ~inventory_entry();
 
-			const std::string& get_name() const; 
-			const std::string& get_category() const;
-			float get_bulk() const; 
+			const std::string& get_name() const;
 			int get_quantity() const;
 
-			virtual void update_quantity(int delta);
-
+			virtual const std::string& get_category() const;
+			virtual float get_bulk() const; 
 			virtual const std::string& get_url() const; 
 			virtual const std::string& get_description() const; 
+
+			virtual void update_quantity(int delta);
+			virtual void set_category(const std::string& category);
+			virtual void set_bulk(const std::string& bulk);
+			virtual void set_description(const std::string& description);
+			virtual void set_url(const std::string& url);
 	};
 }
 

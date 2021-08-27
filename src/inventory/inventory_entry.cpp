@@ -1,5 +1,7 @@
 #include "inventory_entry.hpp"
 
+#include <cstdlib>
+
 using std::string;
 using pathfinder2::inventory_entry;
 
@@ -67,3 +69,20 @@ const std::string& inventory_entry::get_description() const
 	static const string description ("");
 	return description;
 }
+
+void inventory_entry::set_category(const string& category) 
+{
+	this->category = category;
+}
+
+void inventory_entry::set_bulk(const string& bulk) 
+{
+	bulk_string = bulk;
+	this->bulk = bulk_string[0] == 'L' ? 0.1f : atoi(bulk_string.c_str());
+}
+
+void inventory_entry::set_description(const string& description) 
+{}
+
+void inventory_entry::set_url(const string& url) 
+{}

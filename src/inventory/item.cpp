@@ -25,14 +25,22 @@ item::item(const string& _owner, const string& _name, SQLite::Database& _databas
 	}
 
 	data = item_db.get_item(_name);
-	bulk = data->bulk;
-	category = data->category;
 	name = _name;
 	owner = _owner;
 }
 
 item::~item()
 {}
+
+float item::get_bulk() const 
+{
+	return data->bulk;
+}
+
+const std::string& item::get_category() const
+{
+	return data->category;
+}
 
 const std::string& item::get_url() const
 {
@@ -68,4 +76,28 @@ void item::update_quantity(int delta)
 	}
 
 	transaction.commit();
+}
+
+void item::set_url(const string& url)
+{
+	auto& item_db = item_database::get_instance();
+	item_db.update_url(name, url);
+}
+
+void item::set_bulk(const string& bulk)
+{
+	auto& item_db = item_database::get_instance();
+	item_db.update_bulk(name, bulk);
+}
+
+void item::set_category(const string& category)
+{
+	auto& item_db = item_database::get_instance();
+	item_db.update_category(name, category);
+}
+
+void item::set_description(const std::string& description)
+{
+	auto& item_db = item_database::get_instance();
+	item_db.update_description(name, description);
 }

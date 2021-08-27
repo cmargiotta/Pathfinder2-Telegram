@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 #include <functional>
 #include <SQLiteCpp/SQLiteCpp.h>
 
@@ -33,8 +34,14 @@ namespace pathfinder2
 		public:  
 			static item_database& get_instance(SQLite::Database* database = nullptr); 
 
-			std::vector<const item_database_entry*> search_items(const std::string& name);
-			const item_database_entry* get_item(const std::string& name);
+			void update_url(const std::string& name, const std::string& url);
+			void update_category(const std::string& name, const std::string& category);
+			void update_description(const std::string& name, const std::string& description);
+			void update_bulk(const std::string& name, const std::string& bulk);
+			void update_bulk(const std::string& name, float bulk);
+
+			const std::vector<std::shared_ptr<item_database_entry>> search_items(const std::string& name);
+			const std::shared_ptr<item_database_entry> get_item(const std::string& name);
 	};
 }
 
