@@ -9,27 +9,26 @@ using SQLite::Statement;
 
 unique_ptr<Database> pathfinder2::init_database(const string& path)
 {
-	auto db = make_unique<Database>(path);
-	Transaction transaction(*db);
+	auto db = make_unique<Database>(path, SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
 
-	Statement query (*db, "CREATE TABLE IF NOT EXISTS 'inventory' ( \
+	Transaction transaction(*db);
+	db->exec("CREATE TABLE IF NOT EXISTS 'inventory' ( \
 		'owner'		INT NOT NULL, \
 		'name'		TEXT NOT NULL, \
 		'quantity'	INT NOT NULL, \
-		'category'	TEXT, \
 		FOREIGN KEY('owner') REFERENCES 'character'('id'), \
 		FOREIGN KEY('name') REFERENCES 'items'('name') \
-	); \
-	CREATE VIRTUAL TABLE IF NOT EXISTS items USING FTS5(url, name, bulk, description); \
-	CREATE TABLE IF NOT EXISTS 'character' ( \
+	);");
+	db->exec("CREATE VIRTUAL TABLE IF NOT EXISTS items USING FTS5(url, name, bulk, description, category);");
+	db->exec("CREATE TABLE IF NOT EXISTS 'character' ( \
 		'id'		INT NOT NULL, \
 		'capacity'	INT NOT NULL, \
 		'context'	TEXT, \
 		'cp'		INT NOT NULL, \
 		'data'		TEXT, \
 		PRIMARY KEY('id') \
-	); \
-	CREATE TABLE IF NOT EXISTS 'custom_items' ( \
+	);");
+	db->exec("CREATE TABLE IF NOT EXISTS 'custom_items' ( \
 		'owner'		INT NOT NULL, \
 		'name'		TEXT NOT NULL, \
 		'bulk'		REAL NOT NULL, \
@@ -38,8 +37,7 @@ unique_ptr<Database> pathfinder2::init_database(const string& path)
 		PRIMARY KEY('name','owner'), \
 		FOREIGN KEY('owner') REFERENCES 'character'('id') \
 	);");
-	query.exec();
-
 	transaction.commit();
+
 	return db;
 }
