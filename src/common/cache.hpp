@@ -2,6 +2,7 @@
 #define PATHFINDER2_CACHE
 
 #include <list>
+#include <memory>
 #include <utility>
 #include <unordered_map>
 
@@ -11,7 +12,7 @@ namespace common
 	class cache
 	{
 		private:  
-			std::list<std::pair<Key, Value>>				  			list; 
+			std::list<std::pair<Key, std::shared_ptr<Value>>>			list; 
 			std::unordered_map<Key, typename decltype(list)::iterator> 	map; 
 
 			std::size_t	size_limit; 
@@ -24,7 +25,7 @@ namespace common
 			~cache() = default;
 
 			//Add a new item to the cache
-			const Value& insert(const Key& key, const Value& value)  
+			std::shared_ptr<Value> insert(const Key& key, std::shared_ptr<Value> value)  
 			{
 				auto map_element = map.find(key); 
 
@@ -51,12 +52,12 @@ namespace common
 			}
 
 			//Given the key, get the corresponding item from the queue
-			inline const Value& get(const Key& key) const
+			inline std::shared_ptr<Value> get(const Key& key)
 			{
 				return map.at(key)->second; 
 			}
 
-			inline const Value& operator[](const Key& key) const
+			inline std::shared_ptr<Value> operator[](const Key& key)
 			{
 				return get(key);
 			}
