@@ -14,17 +14,30 @@ character::character(int _id, Database& _database):
 	database(_database),
 	_inventory(_id, _database)
 {
+	bool found = false;
+
 	Statement query (database, "SELECT cp, capacity, context, data FROM character WHERE id = ?");
 	query.bind(1, id);
 
 	while (query.executeStep())
 	{
+		found = true;
 		cp = query.getColumn(0);
 		capacity = query.getColumn(1);
 		context = string(query.getColumn(2));
 		data = string(query.getColumn(3));
 
 		break;
+	}
+
+	if (!found)
+	{
+		//New character
+		Transaction transaction (database);
+		Statement query1 (database, "INSERT INTO character (id, cp, capacity, context, data) VALUES (?, 0, 0, '', '')");
+		query1.bind(1, id);
+		query1.exec();
+		transaction.commit();
 	}
 }
 
