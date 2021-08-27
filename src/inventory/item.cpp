@@ -9,7 +9,7 @@ using pathfinder2::item;
 using SQLite::Transaction;
 using pathfinder2::item_database;
 
-item::item(const string& _owner, const string& _name, SQLite::Database& _database):
+item::item(int _owner, const string& _name, SQLite::Database& _database):
 	database(_database)
 {
 	auto& item_db = item_database::get_instance();

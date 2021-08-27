@@ -8,4 +8,4 @@ inventory_lib = library('inventory',
 						],
 						dependencies: [sqlitecpp, cache])
 
-inventory = declare_dependency(link_with: inventory_lib)
+inventory = declare_dependency(link_with: inventory_lib, include_directories: ['..'])

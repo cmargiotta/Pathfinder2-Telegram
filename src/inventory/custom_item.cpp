@@ -8,7 +8,7 @@ using SQLite::Statement;
 using SQLite::Transaction;
 using pathfinder2::custom_item;
 
-custom_item::custom_item(const string& _owner, const string& _name, Database& _database):
+custom_item::custom_item(int _owner, const string& _name, Database& _database):
 	database(_database)
 {
 	Statement query(database, "SELECT quantity, bulk, category FROM custom_items WHERE owner = ? AND name = ?");
@@ -30,7 +30,7 @@ custom_item::custom_item(const string& _owner, const string& _name, Database& _d
 	owner = _owner;
 }
 
-custom_item::custom_item(	const string& _owner, 
+custom_item::custom_item(	int _owner, 
 							const string& _name, 
 							const string& _category,
 							const string& _bulk,

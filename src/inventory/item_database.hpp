@@ -7,7 +7,7 @@
 #include <functional>
 #include <SQLiteCpp/SQLiteCpp.h>
 
-#include "cache.hpp"
+#include "common/cache.hpp"
 
 namespace pathfinder2 
 {

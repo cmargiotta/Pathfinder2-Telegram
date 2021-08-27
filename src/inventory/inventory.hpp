@@ -14,13 +14,13 @@ namespace pathfinder2
 	class inventory
 	{
 		private: 
-			std::string														 				owner;
+			int																 				owner;
 			SQLite::Database& 																database; 
 			std::unordered_map<std::string, std::list<std::shared_ptr<inventory_entry>>>	content_category;
 			std::unordered_map<std::string, std::shared_ptr<inventory_entry>> 				content_name;
 
 		public: 
-			inventory(const std::string& owner, SQLite::Database& database); 
+			inventory(int owner, SQLite::Database& database); 
 			~inventory() = default;
 
 			//Add an item from database or an item already in this inventory
@@ -29,6 +29,8 @@ namespace pathfinder2
 			void add_item(const std::string& name, const std::string& bulk, const std::string& category);
 
 			void remove_item(const std::string& name);
+
+
 	};
 }
 

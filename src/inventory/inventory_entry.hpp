@@ -8,7 +8,7 @@ namespace pathfinder2
 {
 	class inventory_entry {
 		protected: 
-			std::string			owner; 
+			int					owner; 
 			std::string 		name; 
 			std::string			category;
 			std::string			bulk_string;
@@ -17,8 +17,7 @@ namespace pathfinder2
 
 		public: 
 			inventory_entry() = default;
-			inventory_entry(const std::string& owner, const std::string& name, float bulk, const std::string& category);
-			inventory_entry(const char* owner, const char* name, float bulk, const char* category);
+			inventory_entry(int owner, const std::string& name, float bulk, const std::string& category);
 			virtual ~inventory_entry();
 
 			const std::string& get_name() const;

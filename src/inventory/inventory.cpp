@@ -14,7 +14,7 @@ using pathfinder2::item;
 using SQLite::Transaction;
 using pathfinder2::inventory;
 
-inventory::inventory(const string& _owner, Database& _database):
+inventory::inventory(int _owner, Database& _database):
 	owner(_owner),
 	database(_database)
 {

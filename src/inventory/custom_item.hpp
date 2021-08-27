@@ -14,9 +14,9 @@ namespace pathfinder2
 		
 		public: 
 			//Select an existing item from database
-			custom_item(const std::string& owner, const std::string& name, SQLite::Database& database); 
+			custom_item(int owner, const std::string& name, SQLite::Database& database); 
 			//Select an existing item from database, if it does not exist a new custom item is created
-			custom_item(const std::string& owner, 
+			custom_item(int owner, 
 						const std::string& name, 
 						const std::string& category,
 						const std::string& bulk,

@@ -16,7 +16,7 @@ namespace pathfinder2
 			SQLite::Database& 							database; 
 		
 		public: 
-			item(const std::string& owner, const std::string& _name, SQLite::Database& database); 
+			item(int owner, const std::string& _name, SQLite::Database& database); 
 			~item() override;
 
 			const std::string& get_url() const override; 

@@ -1,1 +1,1 @@
-cache = declare_dependency(include_directories: ['.'])
+cache = declare_dependency(include_directories: ['..'])
