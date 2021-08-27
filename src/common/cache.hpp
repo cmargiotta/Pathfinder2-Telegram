@@ -61,6 +61,11 @@ namespace common
 			{
 				return get(key);
 			}
+
+			inline bool contains(const Key& key)
+			{
+				return map.find(key) != map.end();
+			}
 	};
 }
 
