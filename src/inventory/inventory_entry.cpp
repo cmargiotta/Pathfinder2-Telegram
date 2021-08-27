@@ -5,7 +5,7 @@
 using std::string;
 using pathfinder2::inventory_entry;
 
-inventory_entry::inventory_entry(int _owner, const std::string& _name, float _bulk, const std::string& _category):
+inventory_entry::inventory_entry(int _owner, const std::string& _name, double _bulk, const std::string& _category):
 	owner(_owner),
 	name(_name),
 	category(_category),
@@ -27,7 +27,7 @@ const std::string& inventory_entry::get_category() const
 	return category;
 }
 
-float inventory_entry::get_bulk() const
+double inventory_entry::get_bulk() const
 {
 	return bulk;
 }

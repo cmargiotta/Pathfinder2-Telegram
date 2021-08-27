@@ -17,7 +17,7 @@ namespace pathfinder2
 		std::string name; 
 		std::string description;
 		std::string category;
-		float		bulk; 
+		double		bulk; 
 	};
 
 	class item_database
@@ -30,15 +30,18 @@ namespace pathfinder2
 
 			//Singleton, private constructor
 			item_database(SQLite::Database& database);
+			std::shared_ptr<item_database_entry> get_nonconst_item(const std::string& name);
 
 		public:  
 			static item_database& get_instance(SQLite::Database* database = nullptr); 
+
+			void register_new_item(const std::string& name, const std::string& url, const std::string& category, const std::string& description, const std::string& bulk);
 
 			void update_url(const std::string& name, const std::string& url);
 			void update_category(const std::string& name, const std::string& category);
 			void update_description(const std::string& name, const std::string& description);
 			void update_bulk(const std::string& name, const std::string& bulk);
-			void update_bulk(const std::string& name, float bulk);
+			void update_bulk(const std::string& name, double bulk);
 
 			const std::vector<std::shared_ptr<const item_database_entry>> search_items(const std::string& name);
 			std::shared_ptr<const item_database_entry> get_item(const std::string& name);

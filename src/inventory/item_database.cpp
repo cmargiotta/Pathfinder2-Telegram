@@ -33,6 +33,25 @@ item_database& item_database::get_instance(Database* database)
 	return instance;
 }
 
+void item_database::register_new_item(const string& name, const string& url, const string& category, const string& description, const string& bulk)
+{
+	Transaction transaction (database);
+
+	Statement query (database, "INSERT INTO items (name, url, category, description, bulk) VALUES (?, ?, ?, ?, 0)");
+	query.bind(1, name);
+	query.bind(2, url);
+	query.bind(3, category);
+	query.bind(4, description);
+	query.exec();
+
+	transaction.commit();
+
+	//Load the new item in cache
+	get_item(name);
+
+	update_bulk(name, bulk);
+}
+
 const std::vector<std::shared_ptr<const item_database_entry>> item_database::search_items(const std::string& name)
 {
 	std::vector<std::shared_ptr<const item_database_entry>> result;
@@ -60,7 +79,7 @@ const std::vector<std::shared_ptr<const item_database_entry>> item_database::sea
 	return result; 
 }
 
-std::shared_ptr<const item_database_entry> item_database::get_item(const std::string& name)
+std::shared_ptr<item_database_entry> item_database::get_nonconst_item(const std::string& name)
 {
 	try 
 	{
@@ -95,9 +114,14 @@ std::shared_ptr<const item_database_entry> item_database::get_item(const std::st
 	}
 }
 
+std::shared_ptr<const item_database_entry> item_database::get_item(const std::string& name)
+{
+	return get_nonconst_item(name);
+}
+
 void item_database::update_url(const std::string& name, const std::string& url)
 {
-	item_cache[name]->url = url;
+	get_nonconst_item(name)->url = url;
 	Transaction transaction(database);
 	
 	Statement query(database, "UPDATE items SET url = ? WHERE name = ?");
@@ -110,7 +134,7 @@ void item_database::update_url(const std::string& name, const std::string& url)
 
 void item_database::update_description(const std::string& name, const std::string& description)
 {
-	item_cache[name]->description = description;
+	get_nonconst_item(name)->description = description;
 	Transaction transaction(database);
 	
 	Statement query(database, "UPDATE items SET description = ? WHERE name = ?");
@@ -121,9 +145,9 @@ void item_database::update_description(const std::string& name, const std::strin
 	transaction.commit();
 }
 
-void item_database::update_bulk(const std::string& name, float bulk)
+void item_database::update_bulk(const std::string& name, double bulk)
 {
-	item_cache[name]->bulk = bulk;
+	get_nonconst_item(name)->bulk = bulk;
 	Transaction transaction(database);
 	
 	Statement query(database, "UPDATE items SET bulk = ? WHERE name = ?");
@@ -136,7 +160,7 @@ void item_database::update_bulk(const std::string& name, float bulk)
 
 void item_database::update_category(const std::string& name, const std::string& category)
 {
-	item_cache[name]->category = category;
+	get_nonconst_item(name)->category = category;
 	Transaction transaction(database);
 	
 	Statement query(database, "UPDATE items SET category = ? WHERE name = ?");
@@ -149,6 +173,6 @@ void item_database::update_category(const std::string& name, const std::string& 
 
 void item_database::update_bulk(const std::string& name, const std::string& _bulk)
 {
-	float bulk = _bulk[0] == 'L' ? 0.1f : atoi(_bulk.c_str());
+	double bulk = _bulk[0] == 'L' ? 0.1f : atoi(_bulk.c_str());
 	update_bulk(name, bulk);
 }

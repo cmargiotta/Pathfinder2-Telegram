@@ -22,7 +22,7 @@ namespace pathfinder2
 			const std::string& get_url() const override; 
 			const std::string& get_description() const override; 
 			const std::string& get_category() const override;
-			float get_bulk() const override;
+			double get_bulk() const override;
 
 			void update_quantity(int delta) override;
 			void set_url(const std::string& url) override;

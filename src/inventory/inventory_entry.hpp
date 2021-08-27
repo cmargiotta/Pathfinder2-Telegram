@@ -12,19 +12,19 @@ namespace pathfinder2
 			std::string 		name; 
 			std::string			category;
 			std::string			bulk_string;
-			float	   			bulk; 
+			double	   			bulk; 
 			int					quantity; 
 
 		public: 
 			inventory_entry() = default;
-			inventory_entry(int owner, const std::string& name, float bulk, const std::string& category);
+			inventory_entry(int owner, const std::string& name, double bulk, const std::string& category);
 			virtual ~inventory_entry();
 
 			const std::string& get_name() const;
 			int get_quantity() const;
 
 			virtual const std::string& get_category() const;
-			virtual float get_bulk() const; 
+			virtual double get_bulk() const; 
 			virtual const std::string& get_url() const; 
 			virtual const std::string& get_description() const; 
 

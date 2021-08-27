@@ -18,11 +18,9 @@ custom_item::custom_item(int _owner, const string& _name, Database& _database):
 	while (query.executeStep())
 	{
 		quantity = query.getColumn(0);
+		bulk = query.getColumn(1);
 		category = string(query.getColumn(2));
-
-		auto bulk_str = query.getColumn(1);
-		bulk = bulk_str[0] == 'L' ? 0.1f : atoi(bulk_str);
-
+		
 		break;
 	}
 
@@ -37,13 +35,14 @@ custom_item::custom_item(	int _owner,
 							Database& _database):
 	database(_database)
 {
+	owner = _owner;
 	quantity = 1;
 	name = _name;
 	category = _category;
 	bulk = _bulk[0] == 'L' ? 0.1f : atoi(_bulk.c_str());
 
 	Transaction transaction(database);
-	Statement query (database, "INSERT INTO custom_items (owner, name, category, bulk) VALUES (?, ?, ?, ?)");
+	Statement query (database, "INSERT INTO custom_items (owner, name, category, bulk, quantity) VALUES (?, ?, ?, ?, 1)");
 	query.bind(1, owner);
 	query.bind(2, name);
 	query.bind(3, category);
