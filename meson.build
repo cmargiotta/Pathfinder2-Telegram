@@ -7,7 +7,11 @@ cpp = meson.get_compiler('cpp')
 sqlitecpp_opt = cmake.subproject_options()
 sqlitecpp_opt.append_compile_args('cpp', '-DSQLITE_ENABLE_FTS5=1')
 sqlitecpp_opt.append_compile_args('c', '-DSQLITE_ENABLE_FTS5=1')
+
+# CMake subprojects
 sqlitecpp_pro = cmake.subproject('sqlitecpp', options: sqlitecpp_opt)
+tgbot_pro = cmake.subproject('tgbot-cpp')
+json_pro = subproject('json')
 
 # External dependencies
 dl = cpp.find_library('dl', required : true)
@@ -20,6 +24,8 @@ sqlitecpp = declare_dependency(
 		sqlitecpp_pro.dependency('sqlite3')
 	]
 )
+tgbot = tgbot_pro.dependency('TgBot')
+json = json_pro.get_variable('nlohmann_json_dep')
 
 
 subdir('src')
