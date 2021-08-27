@@ -18,9 +18,8 @@ inventory::inventory(int _owner, Database& _database):
 	owner(_owner),
 	database(_database)
 {
-	Statement query (database, "SELECT name FROM FROM inventory WHERE owner = ?");
+	Statement query (database, "SELECT name FROM inventory WHERE owner = ?");
 	query.bind(1, owner);
-
 	while (query.executeStep())
 	{
 		string name = query.getColumn(0);
@@ -35,7 +34,7 @@ inventory::inventory(int _owner, Database& _database):
 
 	while (query1.executeStep())
 	{
-		string name = query.getColumn(0);
+		string name = query1.getColumn(0);
 		auto _item = make_shared<custom_item>(owner, name, database);
 
 		content_category[_item->get_category()].push_back(_item);
@@ -77,7 +76,7 @@ void inventory::add_item(const string& name, const string& bulk, const string& c
 	catch (...)
 	{
 		//This is a new custom_item
-		auto _item = make_shared<custom_item>(owner, name, bulk, category, database);
+		auto _item = make_shared<custom_item>(owner, name, category, bulk, database);
 		content_category[_item->get_category()].push_back(_item);
 		content_name[_item->get_name()] = _item;
 	}
