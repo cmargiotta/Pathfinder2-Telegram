@@ -3,19 +3,47 @@
 #include <stdlib.h>
 #include <stdexcept>
 #include <algorithm>
+#include <functional>
 
 using std::string;
 using std::make_shared;
 using SQLite::Database;
 using SQLite::Statement;
 using SQLite::Transaction;
-using std::reference_wrapper;
 using pathfinder2::item_database;
 using pathfinder2::item_database_entry;
 
+std::shared_ptr<item_database_entry> item_database::build_entry(const std::string& name)
+{
+	//Load item from database
+	Statement query(database, "SELECT url, name, bulk, description FROM items WHERE name MATCH ?");
+	query.bind(1, name);  
+
+	auto item = make_shared<item_database_entry>();
+
+	while (query.executeStep())
+	{
+		item->name = string(query.getColumn(1));
+
+		if (name == item->name)
+		{
+			//Item found, names match
+			item->url = string(query.getColumn(0));
+			item->description = string(query.getColumn(3));
+
+			auto bulk_str = string(query.getColumn(2));
+			item->bulk = bulk_str[0] == 'L' ? 0.1f : atoi(bulk_str.c_str());
+
+			return item;
+		}
+	}
+
+	throw std::runtime_error("Name not matching.");
+}
+
 item_database::item_database(Database& _database): 
 	database(_database),
-	item_cache(CACHE_SIZE_LIMIT)
+	item_cache(CACHE_SIZE_LIMIT, std::bind(&item_database::build_entry, this, std::placeholders::_1))
 {}
 
 item_database& item_database::get_instance(Database* database)
@@ -81,37 +109,7 @@ const std::vector<std::shared_ptr<const item_database_entry>> item_database::sea
 
 std::shared_ptr<item_database_entry> item_database::get_nonconst_item(const std::string& name)
 {
-	try 
-	{
-		return item_cache[name];
-	}
-	catch(...)
-	{
-		//Load item from database
-		Statement query(database, "SELECT url, name, bulk, description FROM items WHERE name MATCH ?");
-		query.bind(1, name);  
-
-		auto item = make_shared<item_database_entry>();
-
-		while (query.executeStep())
-		{
-			item->name = string(query.getColumn(1));
-
-			if (name == item->name)
-			{
-				//Item found, names match
-				item->url = string(query.getColumn(0));
-				item->description = string(query.getColumn(3));
-
-				auto bulk_str = string(query.getColumn(2));
-				item->bulk = bulk_str[0] == 'L' ? 0.1f : atoi(bulk_str.c_str());
-
-				return item_cache.insert(item->name, item);
-			}
-		}
-
-		throw std::runtime_error("Name not matching.");
-	}
+	return item_cache[name];
 }
 
 std::shared_ptr<const item_database_entry> item_database::get_item(const std::string& name)

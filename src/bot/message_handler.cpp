@@ -1,6 +1,7 @@
 #include "message_handler.hpp"
 
 #include <memory>
+#include <iostream>
 
 #include "keyboards.hpp"
 #include "local_data.hpp"
@@ -34,6 +35,25 @@ void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, 
 
 	if (context.empty())
 	{
-		pathfinder2::commands.at(message->text)(bot, message, database);
+		try
+		{			
+			std::string message_;
+			for (auto i = messages.begin(); i != messages.end(); ++i)
+			{
+				if (i.value() == message->text)
+				{
+					message_ = i.key();
+					break;
+				}
+			}
+
+			pathfinder2::commands.at(message_)(bot, message, database);
+		}
+		catch(...)
+		{
+			bot.getApi().sendMessage(character_->get_id(), messages["error"]);
+		}
+		
+		
 	}
 }

@@ -4,6 +4,7 @@
 #include <list>
 #include <memory>
 #include <utility>
+#include <functional>
 #include <unordered_map>
 
 namespace common
@@ -15,10 +16,13 @@ namespace common
 			std::list<std::pair<Key, std::shared_ptr<Value>>>			list; 
 			std::unordered_map<Key, typename decltype(list)::iterator> 	map; 
 
+			std::function<std::shared_ptr<Value>(const Key&)> build_cached;
+
 			std::size_t	size_limit; 
 
 		public:  
-			explicit cache(std::size_t _size_limit):  
+			cache(std::size_t _size_limit, std::function<std::shared_ptr<Value>(const Key&)> _build_cached):  
+				build_cached(_build_cached),
 				size_limit(_size_limit)
 			{}
 			
@@ -54,7 +58,14 @@ namespace common
 			//Given the key, get the corresponding item from the queue
 			inline std::shared_ptr<Value> get(const Key& key)
 			{
-				return map.at(key)->second; 
+				try
+				{
+					return map.at(key)->second; 
+				}
+				catch(...)
+				{
+					return insert(key, build_cached(key));
+				}
 			}
 
 			inline std::shared_ptr<Value> operator[](const Key& key)

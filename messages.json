@@ -1,4 +1,12 @@
 {
+	"/start": "/start",
+	"/reset": "/reset",
+	"error": "( ͡° ͜ʖ ͡°)",
+	"add": "Aggiungi",
+
+	"add_response": "Scrivi il nome dell'oggetto che vuoi aggiungere o sceglilo dalla lista degli oggetti del tuo inventario.",
+	"cancel": "Niente, annulla",
+
 	"capacity_request": "Quanto puoi trasportare?",
 	"reset_done": "Reset effettuato!"
 }

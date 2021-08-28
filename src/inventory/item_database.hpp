@@ -32,6 +32,8 @@ namespace pathfinder2
 			item_database(SQLite::Database& database);
 			std::shared_ptr<item_database_entry> get_nonconst_item(const std::string& name);
 
+			std::shared_ptr<item_database_entry> build_entry(const std::string& name);
+
 		public:  
 			static item_database& get_instance(SQLite::Database* database = nullptr); 
 

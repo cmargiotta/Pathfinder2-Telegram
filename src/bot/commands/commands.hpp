@@ -13,6 +13,7 @@ namespace pathfinder2
 
 	void _start(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
 	void _reset(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
+	void _add(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
 }
 #endif // COMMANDS_HPP_
 
@@ -26,9 +27,11 @@ COMMAND SNIPPET
 
 using pathfinder2::character;
 
-void pathfinder2::command_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
+void pathfinder2::_command(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
 	static auto& messages = pathfinder2::get_messages();
+
+	auto id = message->chat->id;
 	auto character_ = pathfinder2::character_cache[id];
 
 	character_->set_context(context);

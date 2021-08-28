@@ -7,7 +7,7 @@
 #include "message_handler.hpp"
 
 using namespace pathfinder2;
-#include <iostream>
+
 bot::bot(SQLite::Database& _database):
 	// _bot(getenv("PF2_BOT_TOKEN")),
 	_bot("1996957656:AAGPYXXLrs4IDKl6dqT7bFPCTjJB-8bxoSQ"),

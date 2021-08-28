@@ -3,9 +3,12 @@ bot_lib = library(	'bot',
 						'bot.cpp',
 						'keyboards.cpp',
 						'local_data.cpp',
-						'commands/start.cpp',
 						'message_handler.cpp',
-						'commands/commands.cpp'
+						
+						'commands/commands.cpp',
+						'commands/add.cpp',
+						'commands/start.cpp',
+						'commands/reset.cpp',
 					],
 					dependencies: [tgbot, json, sqlitecpp, character, cache, inventory])
 

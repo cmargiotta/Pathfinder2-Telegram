@@ -5,13 +5,12 @@
 #include "item.hpp"
 #include "custom_item.hpp"
 
+using std::list;
 using std::string;
-using std::shared_ptr;
 using std::make_shared;
 using SQLite::Database;
 using SQLite::Statement;
 using pathfinder2::item;
-using SQLite::Transaction;
 using pathfinder2::inventory;
 
 inventory::inventory(int _owner, Database& _database):
@@ -27,6 +26,7 @@ inventory::inventory(int _owner, Database& _database):
 		
 		content_category[_item->get_category()].push_back(_item);
 		content_name[_item->get_name()] = _item;
+		item_names.push_back(_item->get_name());
 	}
 
 	Statement query1 (database, "SELECT name FROM custom_items WHERE owner = ?");
@@ -39,6 +39,7 @@ inventory::inventory(int _owner, Database& _database):
 
 		content_category[_item->get_category()].push_back(_item);
 		content_name[_item->get_name()] = _item;
+		item_names.push_back(_item->get_name());
 	}
 }
 
@@ -57,6 +58,7 @@ void inventory::add_item(const string& name)
 			auto _item = make_shared<item>(owner, name, database);
 			content_category[_item->get_category()].push_back(_item);
 			content_name[_item->get_name()] = _item;
+			item_names.push_back(_item->get_name());
 		}
 		catch(...)
 		{
@@ -79,6 +81,7 @@ void inventory::add_item(const string& name, const string& bulk, const string& c
 		auto _item = make_shared<custom_item>(owner, name, category, bulk, database);
 		content_category[_item->get_category()].push_back(_item);
 		content_name[_item->get_name()] = _item;
+		item_names.push_back(_item->get_name());
 	}
 }
 
@@ -95,6 +98,7 @@ void inventory::remove_item(const string& name)
 			content_name.erase(name);
 
 			auto& category_list = content_category[_item->get_category()];
+			std::remove(item_names.begin(), item_names.end(), _item->get_name());
 			std::remove(category_list.begin(), category_list.end(), _item);
 		}
 	}
@@ -121,4 +125,9 @@ void inventory::reset()
 
 	content_category.clear();
 	content_name.clear();
+}
+
+const list<string>& inventory::get_item_list()
+{
+	return item_names;
 }

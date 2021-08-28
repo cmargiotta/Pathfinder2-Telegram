@@ -9,9 +9,11 @@
 
 using pathfinder2::character;
 
-void pathfinder2::reset(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
+void pathfinder2::_reset(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
 	static auto& messages = pathfinder2::get_messages();
+	
+	auto id = message->chat->id;
 	auto character_ = pathfinder2::character_cache[id];
 
 	character_->get_inventory().reset();

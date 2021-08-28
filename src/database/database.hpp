@@ -7,6 +7,6 @@
 
 namespace pathfinder2
 {
-	std::unique_ptr<SQLite::Database> init_database(const std::string& path);
+	SQLite::Database& init_database(const std::string& path = "");
 }
 #endif // DATABASE_HPP_
