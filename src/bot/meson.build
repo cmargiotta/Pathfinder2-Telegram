@@ -9,6 +9,7 @@ bot_lib = library(	'bot',
 						'commands/add.cpp',
 						'commands/start.cpp',
 						'commands/reset.cpp',
+						'commands/remove.cpp',
 					],
 					dependencies: [tgbot, json, sqlitecpp, character, cache, inventory])
 
