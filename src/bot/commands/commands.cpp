@@ -5,5 +5,7 @@ const std::unordered_map<std::string, std::function<void(TgBot::Bot&, TgBot::Mes
 	{"reset", _reset},
 	{"add", _add},
 	{"remove", _remove},
-	{"list", _list}
+	{"list", _list},
+	{"set_capacity", _set_capacity},
+	{"money_transaction", _money_transaction}
 };

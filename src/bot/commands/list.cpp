@@ -4,8 +4,6 @@
 #include "../local_data.hpp"
 #include "character/character_cache.hpp"
 
-using pathfinder2::character;
-
 void pathfinder2::_list(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
 	static auto& messages = pathfinder2::get_messages();

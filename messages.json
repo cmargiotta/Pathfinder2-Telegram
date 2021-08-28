@@ -4,7 +4,8 @@
 	"add_response": "Scrivi il nome dell'oggetto che vuoi aggiungere o sceglilo dalla lista degli oggetti del tuo inventario.",
 	"remove_response": "Quale oggetto desideri rimuovere? Se ci sono più oggetti corrispondenti alla richiesta, ne verrà eliminato uno soltanto.",
 	"list_response": "Scegli.",
+	"set_capacity_response": "Quanto puoi trasportare?",
+	"money_transaction_response": "Quante monete di rame? Numero negativo per pagare.",
 
-	"capacity_request": "Quanto puoi trasportare?",
 	"reset_done": "Reset effettuato!"
 }
