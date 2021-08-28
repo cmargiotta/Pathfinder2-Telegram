@@ -30,7 +30,9 @@ namespace pathfinder2
 
 			void remove_item(const std::string& name);
 
+			double get_occupied_bulk();
 
+			void reset();
 	};
 }
 

@@ -99,3 +99,26 @@ void inventory::remove_item(const string& name)
 		}
 	}
 }
+
+double inventory::get_occupied_bulk()
+{
+	double b = 0.0;
+
+	for (auto& i: content_name)
+	{
+		b += i.second->get_bulk();
+	}
+
+	return b;
+}
+
+void inventory::reset()
+{
+	for (auto& i: content_name)
+	{
+		i.second->remove();
+	}
+
+	content_category.clear();
+	content_name.clear();
+}

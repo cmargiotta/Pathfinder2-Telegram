@@ -29,6 +29,7 @@ namespace pathfinder2
 			virtual const std::string& get_description() const; 
 
 			virtual void update_quantity(int delta);
+			virtual void remove() = 0;
 			virtual void set_category(const std::string& category);
 			virtual void set_bulk(const std::string& bulk);
 			virtual void set_description(const std::string& description);

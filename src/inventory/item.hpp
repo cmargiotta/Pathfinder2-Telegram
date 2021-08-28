@@ -29,6 +29,7 @@ namespace pathfinder2
 			void set_bulk(const std::string& bulk) override;
 			void set_category(const std::string& category) override;
 			void set_description(const std::string& description) override;
+			void remove() override;
 	};
 }
 

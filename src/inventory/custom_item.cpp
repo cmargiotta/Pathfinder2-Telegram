@@ -59,26 +59,23 @@ void custom_item::update_quantity(int delta)
 {
 	inventory_entry::update_quantity(delta);
 
-	Transaction transaction(database);
-
 	if (quantity > 0)
 	{	
+		Transaction transaction(database);
+
 		Statement query(database, "UPDATE custom_items SET quantity = ? WHERE owner = ? AND name = ?");
 		query.bind(1, quantity);
 		query.bind(2, owner);
 		query.bind(3, name);
-		query.exec(); 	
+		query.exec();
+
+		transaction.commit();
 	}
 	else  
 	{
 		//Quantity reached 0, remove this item
-		Statement query(database, "DELETE FROM custom_items WHERE owner = ? AND name = ?");
-		query.bind(1, owner);
-		query.bind(2, name);
-		query.exec(); 	
+		remove();	
 	}
-
-	transaction.commit();
 }
 
 void custom_item::set_bulk(const string& bulk)
@@ -109,4 +106,18 @@ void custom_item::set_category(const string& category)
 	transaction.commit();
 
 	inventory_entry::set_category(category);
+}
+
+void custom_item::remove()
+{
+	Transaction transaction(database);
+	Statement query(database, "DELETE FROM custom_items WHERE owner = ? AND name = ?");
+
+	query.bind(1, owner);
+	query.bind(2, name);
+
+	query.exec();
+	transaction.commit();
+
+	quantity = 0;
 }
