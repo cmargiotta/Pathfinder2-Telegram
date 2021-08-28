@@ -9,5 +9,9 @@
 	"set_capacity_response": "Quanto puoi trasportare?",
 	"money_transaction_response": "Quante monete di rame? Numero negativo per pagare.",
 
+	"add_item_request": "Scegli l'oggetto che vuoi aggiungere! Se è un oggetto personalizzato, scegli il tasto corrispondente.",
+
+	"add_done": "Aggiunto!",
+
 	"reset_done": "Reset effettuato!"
 }

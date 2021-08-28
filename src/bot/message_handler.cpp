@@ -7,6 +7,7 @@
 #include "local_data.hpp"
 #include "commands/commands.hpp"
 #include "character/character_cache.hpp"
+#include "context_commands/context_commands.hpp"
 
 using std::shared_ptr;
 using std::make_shared;
@@ -34,10 +35,10 @@ void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, 
 
 	auto& context = character_->get_context();
 
-	if (context.empty())
+	try
 	{
-		try
-		{			
+		if (context.empty())
+		{		
 			std::string cmd;
 			for (auto i = keys.begin(); i != keys.end(); ++i)
 			{
@@ -48,13 +49,25 @@ void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, 
 				}
 			}
 
-			pathfinder2::commands.at(cmd)(bot, message, database);
+			pathfinder2::commands.at(cmd)(bot, message, database);	
 		}
-		catch(...)
+		else
 		{
-			bot.getApi().sendMessage(character_->get_id(), messages["error"]);
+			std::string last_request;
+			for (auto i = messages.begin(); i != messages.end(); ++i)
+			{
+				if (i.value() == context)
+				{
+					last_request = i.key();
+					break;
+				}
+			}
+
+			pathfinder2::context_commands.at(last_request)(bot, message, database);	
 		}
-		
-		
+	}
+	catch(...)
+	{
+		bot.getApi().sendMessage(character_->get_id(), messages["error"]);
 	}
 }
