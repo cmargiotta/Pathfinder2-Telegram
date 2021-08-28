@@ -15,6 +15,7 @@ using pathfinder2::character;
 void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
 	static auto& messages = pathfinder2::get_messages();
+	static auto& keys = pathfinder2::get_commands();
 
 	auto id = message->chat->id;
 	shared_ptr<character> character_;
@@ -37,17 +38,17 @@ void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, 
 	{
 		try
 		{			
-			std::string message_;
-			for (auto i = messages.begin(); i != messages.end(); ++i)
+			std::string cmd;
+			for (auto i = keys.begin(); i != keys.end(); ++i)
 			{
 				if (i.value() == message->text)
 				{
-					message_ = i.key();
+					cmd = i.key();
 					break;
 				}
 			}
 
-			pathfinder2::commands.at(message_)(bot, message, database);
+			pathfinder2::commands.at(cmd)(bot, message, database);
 		}
 		catch(...)
 		{

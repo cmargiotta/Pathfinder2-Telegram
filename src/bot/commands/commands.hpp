@@ -15,6 +15,7 @@ namespace pathfinder2
 	void _reset(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
 	void _add(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
 	void _remove(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
+	void _list(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
 }
 #endif // COMMANDS_HPP_
 

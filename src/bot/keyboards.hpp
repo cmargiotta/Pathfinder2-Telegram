@@ -37,6 +37,8 @@ namespace pathfinder2
 		return keyboard;
 	}
 
+	TgBot::ReplyKeyboardMarkup::Ptr create_one_column_keyboard(const std::vector<std::string>& buttons);
+
 	const TgBot::ReplyKeyboardRemove::Ptr remove_keyboard;
 }
 #endif // KEYBOARDS_HPP_

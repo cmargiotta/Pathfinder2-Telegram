@@ -7,13 +7,13 @@
 using std::vector;
 using std::string;
 using std::ifstream;
-using pathfinder2::get_keys;
+using pathfinder2::get_commands;
 using TgBot::KeyboardButton;
 using TgBot::ReplyKeyboardMarkup;
 
 ReplyKeyboardMarkup::Ptr pathfinder2::create_keyboard(const vector<vector<string>>& button_layout)
 {
-	ReplyKeyboardMarkup::Ptr keyboard;
+	auto keyboard = std::make_shared<TgBot::ReplyKeyboardMarkup>();
 
 	for (size_t i = 0; i < button_layout.size(); ++i) 
 	{
@@ -21,10 +21,28 @@ ReplyKeyboardMarkup::Ptr pathfinder2::create_keyboard(const vector<vector<string
 
 		for (size_t j = 0; j < button_layout[i].size(); ++j) 
 		{
-			KeyboardButton::Ptr button(new KeyboardButton);
+			auto button = std::make_shared<KeyboardButton>();
 			button->text = button_layout[i][j];
 			row.push_back(button);
 		}
+
+		keyboard->keyboard.push_back(row);
+	}
+
+	return keyboard;
+}
+
+ReplyKeyboardMarkup::Ptr pathfinder2::create_one_column_keyboard(const vector<string>& buttons)
+{
+	auto keyboard = std::make_shared<TgBot::ReplyKeyboardMarkup>();
+
+	for (auto& text: buttons) 
+	{
+		vector<KeyboardButton::Ptr> row;
+
+		auto button = std::make_shared<KeyboardButton>();
+		button->text = text;
+		row.push_back(button);
 
 		keyboard->keyboard.push_back(row);
 	}
@@ -43,7 +61,7 @@ void pathfinder2::add_button_row(ReplyKeyboardMarkup::Ptr keyboard, const string
 
 ReplyKeyboardMarkup::Ptr& pathfinder2::get_default_keyboard()
 {
-	static auto& keys = get_keys();
+	static auto& keys = get_commands();
 	static auto keyboard = pathfinder2::create_keyboard({
 		{keys["add"], keys["remove"]},
 		{keys["list"]},

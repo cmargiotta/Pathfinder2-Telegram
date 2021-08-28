@@ -1,0 +1,13 @@
+{
+	"start": "/start",
+	"reset": "/reset",
+	"add": "Aggiungi",
+	"remove": "Rimuovi",
+	"list": "Elenco",
+	"set_capacity": "Imposta cap.",
+	"money": "Portafogli",
+	"money_transaction": "Wall street",
+	"cancel": "Niente, annulla",
+	"list_brief": "Sintetico",
+	"list_detail": "Dettagliato"
+}

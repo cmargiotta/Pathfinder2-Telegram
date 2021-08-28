@@ -2,18 +2,18 @@
 
 #include <fstream>
 
-nlohmann::json& pathfinder2::get_keys()
+nlohmann::json& pathfinder2::get_commands()
 {
-	static nlohmann::json keys;
+	static nlohmann::json commands;
 	static bool init = false;
 
 	if (!init)
 	{
 		init = true;
-		std::ifstream("keyboards.json") >> keys;
+		std::ifstream("command.json") >> commands;
 	}
 
-	return keys;
+	return commands;
 }
 
 nlohmann::json& pathfinder2::get_messages()

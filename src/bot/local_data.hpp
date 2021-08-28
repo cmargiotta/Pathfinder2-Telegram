@@ -5,7 +5,7 @@
 
 namespace pathfinder2
 {
-	nlohmann::json& get_keys();
+	nlohmann::json& get_commands();
 	nlohmann::json& get_messages();
 }
 #endif // LOCAL_DATA_HPP_
