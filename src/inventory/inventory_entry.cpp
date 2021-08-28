@@ -77,3 +77,8 @@ void inventory_entry::set_description(const string& description)
 
 void inventory_entry::set_url(const string& url) 
 {}
+
+const std::string& inventory_entry::get_bulk_string() const
+{
+	return bulk_string;
+}

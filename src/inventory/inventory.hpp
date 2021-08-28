@@ -18,7 +18,7 @@ namespace pathfinder2
 			SQLite::Database& 																database; 
 			std::unordered_map<std::string, std::list<std::shared_ptr<inventory_entry>>>	content_category;
 			std::unordered_map<std::string, std::shared_ptr<inventory_entry>> 				content_name;
-			std::list<std::string>														item_names;
+			std::list<std::string>															item_names;
 
 		public: 
 			inventory(int owner, SQLite::Database& database); 
@@ -33,6 +33,8 @@ namespace pathfinder2
 
 			double get_occupied_bulk();
 			const std::list<std::string>& get_item_list();
+
+			const decltype(content_category)& get_categorised_items();
 
 			void reset();
 

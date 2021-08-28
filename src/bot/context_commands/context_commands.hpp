@@ -12,6 +12,7 @@ namespace pathfinder2
 	extern const std::unordered_map<std::string, std::function<void(TgBot::Bot&, TgBot::Message::Ptr, SQLite::Database&)>> context_commands;
     
     void add_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
+    void list_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
 }
 
 /*****

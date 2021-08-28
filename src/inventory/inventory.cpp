@@ -131,3 +131,8 @@ const list<string>& inventory::get_item_list()
 {
 	return item_names;
 }
+
+const decltype(inventory::content_category)& inventory::get_categorised_items()
+{
+	return content_category;
+}

@@ -27,6 +27,7 @@ namespace pathfinder2
 			virtual double get_bulk() const; 
 			virtual const std::string& get_url() const; 
 			virtual const std::string& get_description() const; 
+			const std::string& get_bulk_string() const;
 
 			virtual void update_quantity(int delta);
 			virtual void remove() = 0;
