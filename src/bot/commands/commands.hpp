@@ -18,6 +18,7 @@ namespace pathfinder2
 	void _list(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
 	void _set_capacity(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
 	void _money_transaction(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
+	void _get_money(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
 }
 #endif // COMMANDS_HPP_
 

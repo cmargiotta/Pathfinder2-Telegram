@@ -12,7 +12,8 @@ bot_lib = library(	'bot',
 						'commands/remove.cpp',
 						'commands/list.cpp',
 						'commands/set_capacity.cpp',
-						'commands/money_transaction.cpp'
+						'commands/money_transaction.cpp',
+						'commands/get_money.cpp'
 					],
 					dependencies: [tgbot, json, sqlitecpp, character, cache, inventory])
 
