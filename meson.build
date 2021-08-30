@@ -26,6 +26,8 @@ sqlitecpp = declare_dependency(
 )
 tgbot = tgbot_pro.dependency('TgBot')
 json = json_pro.get_variable('nlohmann_json_dep')
+catch2 = declare_dependency(include_directories: ['subprojects/catch2/single_include/'])
 
 
 subdir('src')
+subdir('test')
