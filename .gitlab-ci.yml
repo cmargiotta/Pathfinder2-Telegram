@@ -1,3 +1,5 @@
+image: docker:19.03.12
+
 stages:
   - build
   - test
@@ -5,11 +7,12 @@ stages:
 build-job:
   stage: build
   script:
-    - meson build
-    - ninja -C build
+    - docker login -u "$CI_JOB_USER" -p "$CI_JOB_TOKEN" $CI_REGISTRY
+    - docker build -t registry.gitlab.com/car.margiotta/pathfinder2-telegram .
+    - docker push registry.gitlab.com/car.margiotta/pathfinder2-telegram
 
 unit-test-job:
   stage: test
   script:
-    - ninja -C build test
+    - docker run registry.gitlab.com/car.margiotta/pathfinder2-telegram "inventory_test"
 
