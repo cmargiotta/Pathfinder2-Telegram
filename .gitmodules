@@ -7,3 +7,6 @@
 [submodule "subprojects/json"]
 	path = subprojects/json
 	url = https://github.com/nlohmann/json
+[submodule "subprojects/catch2"]
+	path = subprojects/catch2
+	url = https://github.com/catchorg/Catch2
