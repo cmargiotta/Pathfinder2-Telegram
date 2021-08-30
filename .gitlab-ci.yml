@@ -10,6 +10,7 @@ build-job:
        alias: docker
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker pull $CI_REGISTRY/car.margiotta/pathfinder2-telegram:latest
     - docker build -t $CI_REGISTRY/car.margiotta/pathfinder2-telegram .
     - docker push $CI_REGISTRY/car.margiotta/pathfinder2-telegram:latest
 
