@@ -1,4 +1,4 @@
-database_lib = library(	'database',
+database_lib = static_library(	'database',
 						[
 							'database.cpp',
 						],

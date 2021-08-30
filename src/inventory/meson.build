@@ -1,4 +1,4 @@
-inventory_lib = library('inventory',
+inventory_lib = static_library('inventory',
 						[
 							'custom_item.cpp',
 							'inventory_entry.cpp',

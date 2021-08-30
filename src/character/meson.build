@@ -1,4 +1,4 @@
-character_lib = library('character',
+character_lib = static_library('character',
 						[
 							'character.cpp',
 							'character_cache.cpp'

@@ -1,4 +1,4 @@
-bot_lib = library(	'bot',
+bot_lib = static_library(	'bot',
 					[
 						'bot.cpp',
 						'keyboards.cpp',
