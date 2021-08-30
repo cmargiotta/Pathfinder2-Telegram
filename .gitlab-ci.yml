@@ -1,18 +1,21 @@
-image: docker:19.03.12
-
 stages:
   - build
   - test
 
 build-job:
   stage: build
+  image: docker:19.03.12
+  services:
+     - name: docker:19.03.12-dind
+       alias: docker
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker build -t $CI_REGISTRY/car.margiotta/pathfinder2-telegram .
-    - docker push $CI_REGISTRY/car.margiotta/pathfinder2-telegram
+    - docker push $CI_REGISTRY/car.margiotta/pathfinder2-telegram:latest
 
 unit-test-job:
+  image: $CI_REGISTRY/car.margiotta/pathfinder2-telegram:latest
   stage: test
   script:
-    - docker run registry.gitlab.com/car.margiotta/pathfinder2-telegram "inventory_test"
+    - ./inventory_test
 
