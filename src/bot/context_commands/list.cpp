@@ -54,7 +54,7 @@ void pathfinder2::list_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Da
 
         pathfinder2::add_button_row(keyboard, buttons["cancel"]);
 
-        character_->set_context(messages["list_detail_response"]);
+        character_->set_context(messages["list_detail_selection"]);
         bot.getApi().sendMessage(id, character_->get_context(), false, 0, keyboard);
     }
     else

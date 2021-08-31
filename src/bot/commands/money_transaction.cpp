@@ -11,6 +11,6 @@ void pathfinder2::_money_transaction(TgBot::Bot& bot, TgBot::Message::Ptr messag
 	auto id = message->chat->id;
 	auto character_ = pathfinder2::character_cache[id];
 
-	character_->set_context(messages["money_transaction_response"]);
+	character_->set_context(messages["money_transaction_request"]);
 	bot.getApi().sendMessage(id, character_->get_context(), false, 0, pathfinder2::remove_keyboard);
 }

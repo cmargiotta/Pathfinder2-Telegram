@@ -16,6 +16,6 @@ void pathfinder2::_remove(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::
     auto keyboard = pathfinder2::create_one_column_keyboard(item_list.begin(), item_list.end());
     pathfinder2::add_button_row(keyboard, buttons["cancel"]);
 
-	character_->set_context(messages["remove_response"]);
+	character_->set_context(messages["item_remove_select"]);
 	bot.getApi().sendMessage(character_->get_id(), character_->get_context(), false, 0, keyboard);
 }

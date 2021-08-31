@@ -10,7 +10,7 @@ nlohmann::json& pathfinder2::get_commands()
 	if (!init)
 	{
 		init = true;
-		std::ifstream("command.json") >> commands;
+		std::ifstream("commands.json") >> commands;
 	}
 
 	return commands;

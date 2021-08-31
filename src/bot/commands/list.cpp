@@ -14,6 +14,6 @@ void pathfinder2::_list(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Da
 
     auto keyboard = pathfinder2::create_one_column_keyboard({buttons["list_brief"], buttons["list_detail"]});
 
-	character_->set_context(messages["list_response"]);
+	character_->set_context(messages["list_granularity_request"]);
 	bot.getApi().sendMessage(character_->get_id(), character_->get_context(), false, 0, keyboard);
 }

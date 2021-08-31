@@ -66,7 +66,7 @@ ReplyKeyboardMarkup::Ptr& pathfinder2::get_default_keyboard()
 		{keys["add"], keys["remove"]},
 		{keys["list"]},
 		{keys["set_capacity"]},
-		{keys["money"], keys["money_transaction"]}
+		{keys["get_money"], keys["money_transaction"]}
 	});
 
 	return keyboard;

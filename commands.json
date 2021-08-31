@@ -1,15 +1,15 @@
 {
-	"start": "/start",
-	"reset": "/reset",
-	"add": "Aggiungi",
-	"remove": "Rimuovi",
-	"list": "Elenco",
-	"set_capacity": "Imposta cap.",
-	"get_money": "Portafogli",
-	"money_transaction": "Wall street",
-	"cancel": "Niente, annulla",
-	"ask_master": "Chiedi al master di aggiungerlo",
+	"start"				: "/start",
+	"reset"				: "/reset",
+	"add"				: "Aggiungi",
+	"remove"			: "Rimuovi",
+	"list"				: "Elenco",
+	"set_capacity"		: "Imposta cap.",
+	"get_money"			: "Portafogli",
+	"money_transaction"	: "Wall street",
+	"cancel"			: "Niente, annulla",
+	"ask_master"		: "Chiedi al master di aggiungerlo",
 	"create_custom_item": "È un oggetto custom",
-	"list_brief": "Sintetico",
-	"list_detail": "Dettagliato"
+	"list_brief"		: "Sintetico",
+	"list_detail"		: "Dettagliato"
 }

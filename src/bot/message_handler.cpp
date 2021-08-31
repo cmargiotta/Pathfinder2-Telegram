@@ -37,7 +37,7 @@ void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, 
 		}
 		else
 		{
-			if (context == keys["cancel"])
+			if (message->text == keys["cancel"])
 			{
 				character_->set_context("");
 				bot.getApi().sendMessage(character_->get_id(), messages["cancel_done"]);
@@ -57,8 +57,12 @@ void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, 
 			pathfinder2::context_commands.at(last_request)(bot, message, database);	
 		}
 	}
-	catch(...)
+	catch(std::runtime_error& e)
 	{
-		bot.getApi().sendMessage(character_->get_id(), messages["error"]);
+		bot.getApi().sendMessage(character_->get_id(), e.what());
 	}
+	// catch(...)
+	// {
+	// 	bot.getApi().sendMessage(character_->get_id(), messages["generic_error"]);
+	// }
 }
