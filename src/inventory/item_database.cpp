@@ -39,7 +39,7 @@ std::shared_ptr<item_database_entry> item_database::build_entry(const std::strin
 		}
 	}
 
-	throw std::runtime_error("Name not matching.");
+	throw std::runtime_error("item_not_found");
 }
 
 item_database::item_database(Database& _database): 
@@ -66,12 +66,12 @@ void item_database::register_new_item(const string& name, const string& url, con
 {
 	if (item_cache.contains(name))
 	{
-		throw std::runtime_error("Item already in database.");
+		throw std::runtime_error("no_duplicate_items");
 	}
 
 	if (bulk.empty() || (!std::all_of(bulk.begin(), bulk.end(), ::isdigit) && !(bulk.size() == 1 && bulk[0] == 'L')))
 	{
-		throw std::runtime_error("Bulk string not valid");
+		throw std::runtime_error("bulk_error");
 	}
 
 	double bulk_ = bulk[0] == 'L' ? 0.1 : atoi(bulk.c_str());

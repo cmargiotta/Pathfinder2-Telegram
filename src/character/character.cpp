@@ -75,7 +75,7 @@ void character::update_cp(int delta)
 {
 	if (delta > cp)
 	{
-		throw std::runtime_error("Cannot have negative money.");
+		throw std::runtime_error("no_money_error");
 	}
 
 	cp += delta;

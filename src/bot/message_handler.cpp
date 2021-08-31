@@ -42,6 +42,7 @@ void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, 
 				character_->set_context("");
 				bot.getApi().sendMessage(character_->get_id(), messages["cancel_done"]);
 				bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard());
+				return;
 			}
 
 			std::string last_request;
@@ -59,10 +60,10 @@ void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, 
 	}
 	catch(std::runtime_error& e)
 	{
-		bot.getApi().sendMessage(character_->get_id(), e.what());
+		bot.getApi().sendMessage(character_->get_id(), messages[e.what()]);
 	}
-	// catch(...)
-	// {
-	// 	bot.getApi().sendMessage(character_->get_id(), messages["generic_error"]);
-	// }
+	catch(...)
+	{
+		bot.getApi().sendMessage(character_->get_id(), messages["generic_error"]);
+	}
 }

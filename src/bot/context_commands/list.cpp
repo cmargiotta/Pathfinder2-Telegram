@@ -59,6 +59,6 @@ void pathfinder2::list_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Da
     }
     else
     {
-        throw std::runtime_error("Wrong option");
+        throw std::runtime_error("selection_error");
     }	
 }

@@ -63,7 +63,7 @@ void inventory::add_item(const string& name)
 		catch(...)
 		{
 			//Item not in database, error
-			throw std::runtime_error("Item name not registered.");
+			throw std::runtime_error("item_not_found");
 		}
 	}
 }

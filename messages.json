@@ -15,5 +15,11 @@
 	"remove_done"					: "Rimosso!",
 	"cancel_done"					: "OK, annullato.",
 
-	"reset_done"					: "Reset effettuato!"
+	"reset_done"					: "Reset effettuato!",
+
+	"selection_error"				: "Scelta invalida.",
+	"no_money_error"				: "Non hai abbastanza soldi, F.",
+	"bulk_error"					: "Formato del bulk non valido.",
+	"item_not_found"				: "Errore, nessun oggetto con questo nome nel database.",
+	"no_duplicate_items"			: "Oggetto gia' nel database, impossibile crearne uno nuovo."
 }

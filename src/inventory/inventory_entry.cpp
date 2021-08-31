@@ -72,7 +72,7 @@ void inventory_entry::set_bulk(const string& bulk)
 {
 	if (bulk.empty() || (!std::all_of(bulk.begin(), bulk.end(), ::isdigit) && (bulk.size() != 1 && bulk[0] != 'L')))
 	{
-		throw std::runtime_error("Bulk string not valid");
+		throw std::runtime_error("bulk_error");
 	}
 
 	bulk_string = bulk;
