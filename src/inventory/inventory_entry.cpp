@@ -1,6 +1,8 @@
 #include "inventory_entry.hpp"
 
 #include <cstdlib>
+#include <algorithm>
+#include <stdexcept>
 
 using std::string;
 using pathfinder2::inventory_entry;
@@ -68,7 +70,13 @@ void inventory_entry::set_category(const string& category)
 
 void inventory_entry::set_bulk(const string& bulk) 
 {
+	if (bulk.empty() || (!std::all_of(bulk.begin(), bulk.end(), ::isdigit) && (bulk.size() != 1 && bulk[0] != 'L')))
+	{
+		throw std::runtime_error("Bulk string not valid");
+	}
+
 	bulk_string = bulk;
+
 	this->bulk = bulk_string[0] == 'L' ? 0.1f : atoi(bulk_string.c_str());
 }
 

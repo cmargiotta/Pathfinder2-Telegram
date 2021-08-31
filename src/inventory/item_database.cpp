@@ -16,7 +16,7 @@ using pathfinder2::item_database_entry;
 std::shared_ptr<item_database_entry> item_database::build_entry(const std::string& name)
 {
 	//Load item from database
-	Statement query(database, "SELECT url, name, bulk, description FROM items WHERE name MATCH ?");
+	Statement query(database, "SELECT url, name, bulk, description, category FROM items WHERE name MATCH ?");
 	query.bind(1, name);  
 
 	auto item = make_shared<item_database_entry>();
@@ -30,6 +30,7 @@ std::shared_ptr<item_database_entry> item_database::build_entry(const std::strin
 			//Item found, names match
 			item->url = string(query.getColumn(0));
 			item->description = string(query.getColumn(3));
+			item->category = string(query.getColumn(4));
 
 			auto bulk_str = string(query.getColumn(2));
 			item->bulk = bulk_str[0] == 'L' ? 0.1f : atoi(bulk_str.c_str());
@@ -63,13 +64,26 @@ item_database& item_database::get_instance(Database* database)
 
 void item_database::register_new_item(const string& name, const string& url, const string& category, const string& description, const string& bulk)
 {
+	if (item_cache.contains(name))
+	{
+		throw std::runtime_error("Item already in database.");
+	}
+
+	if (bulk.empty() || (!std::all_of(bulk.begin(), bulk.end(), ::isdigit) && !(bulk.size() == 1 && bulk[0] == 'L')))
+	{
+		throw std::runtime_error("Bulk string not valid");
+	}
+
+	double bulk_ = bulk[0] == 'L' ? 0.1 : atoi(bulk.c_str());
+
 	Transaction transaction (database);
 
-	Statement query (database, "INSERT INTO items (name, url, category, description, bulk) VALUES (?, ?, ?, ?, 0)");
+	Statement query (database, "INSERT INTO items (name, url, category, description, bulk) VALUES (?, ?, ?, ?, ?)");
 	query.bind(1, name);
 	query.bind(2, url);
 	query.bind(3, category);
 	query.bind(4, description);
+	query.bind(5, bulk_);
 	query.exec();
 
 	transaction.commit();
