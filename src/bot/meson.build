@@ -18,6 +18,7 @@ bot_lib = library(	'bot',
 						'context_commands/context_commands.cpp',
 						'context_commands/add.cpp',
 						'context_commands/list.cpp',
+						'context_commands/remove.cpp',
 					],
 					dependencies: [tgbot, json, sqlitecpp, character, cache, inventory])
 

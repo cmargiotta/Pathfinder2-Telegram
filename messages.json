@@ -12,7 +12,9 @@
 
 	"add_item_request": "Scegli l'oggetto che vuoi aggiungere! Se è un oggetto personalizzato, scegli il tasto corrispondente.",
 
-	"add_done": "Aggiunto!",
+	"add_done": "Aggiunto! x1",
+	"remove_done": "Rimosso!",
+	"cancel_done": "OK, annullato.",
 
 	"reset_done": "Reset effettuato!"
 }

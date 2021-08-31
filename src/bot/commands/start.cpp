@@ -6,7 +6,6 @@
 #include "../local_data.hpp"
 #include "character/character_cache.hpp"
 
-using std::shared_ptr;
 using std::make_shared;
 using pathfinder2::character;
 

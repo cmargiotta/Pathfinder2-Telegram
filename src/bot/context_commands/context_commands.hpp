@@ -13,6 +13,8 @@ namespace pathfinder2
     
     void add_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
     void list_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
+    void remove_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
+    void add_item_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
 }
 
 /*****

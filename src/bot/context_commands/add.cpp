@@ -24,7 +24,8 @@ void pathfinder2::add_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Dat
             //Perfect match, no need to continue, add it directly
             character_->get_inventory().add_item(item->name);
             character_->set_context("");
-            bot.getApi().sendMessage(id, messages["add_done"], false, 0, pathfinder2::get_default_keyboard());
+            bot.getApi().sendMessage(id, messages["add_done"]);
+            bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard());
             return;
         }
     }
