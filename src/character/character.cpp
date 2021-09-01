@@ -73,7 +73,7 @@ const string& character::get_data()
 
 void character::update_cp(int delta)
 {
-	if (delta > cp)
+	if (abs(delta) > cp && delta < 0)
 	{
 		throw std::runtime_error("no_money_error");
 	}

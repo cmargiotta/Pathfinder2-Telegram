@@ -1,9 +1,11 @@
 bot_lib = static_library(	'bot',
 					[
 						'bot.cpp',
+						'master.cpp',
 						'keyboards.cpp',
 						'local_data.cpp',
 						'message_handler.cpp',
+						'callback_handler.cpp',
 						
 						'commands/commands.cpp',
 						'commands/add.cpp',
@@ -20,7 +22,15 @@ bot_lib = static_library(	'bot',
 						'context_commands/list.cpp',
 						'context_commands/remove.cpp',
 						'context_commands/add_item.cpp',
+						'context_commands/list_detail.cpp',
+						'context_commands/set_capacity.cpp',
+						'context_commands/add_custom_item.cpp',
+						'context_commands/money_transaction.cpp',
+
+						'callback_commands/callback_commands.cpp',
+						'callback_commands/add.cpp',
+						'callback_commands/remove.cpp'
 					],
-					dependencies: [tgbot, json, sqlitecpp, character, cache, inventory])
+					dependencies: [tgbot, json, sqlitecpp, character, cache, inventory, string_utils])
 
 bot = declare_dependency(link_with: bot_lib, include_directories: ['..'])

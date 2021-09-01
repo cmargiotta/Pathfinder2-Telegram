@@ -18,7 +18,17 @@ custom_item::custom_item(int _owner, const string& _name, Database& _database):
 	while (query.executeStep())
 	{
 		quantity = query.getColumn(0);
-		bulk = query.getColumn(1);
+		double bulk = query.getColumn(1);
+
+		if (bulk > 0 && bulk < 1)
+		{
+			set_bulk("L");
+		}
+		else 
+		{
+			set_bulk(std::to_string(static_cast<int>(bulk)));
+		}
+
 		category = string(query.getColumn(2));
 		
 		break;
@@ -39,7 +49,8 @@ custom_item::custom_item(	int _owner,
 	quantity = 1;
 	name = _name;
 	category = _category;
-	bulk = _bulk[0] == 'L' ? 0.1f : atoi(_bulk.c_str());
+	
+	set_bulk(_bulk);
 
 	Transaction transaction(database);
 	Statement query (database, "INSERT INTO custom_items (owner, name, category, bulk, quantity) VALUES (?, ?, ?, ?, 1)");

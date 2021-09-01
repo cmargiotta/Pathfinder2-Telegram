@@ -60,7 +60,14 @@ void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, 
 	}
 	catch(std::runtime_error& e)
 	{
-		bot.getApi().sendMessage(character_->get_id(), messages[e.what()]);
+		try
+		{
+			bot.getApi().sendMessage(character_->get_id(), messages[e.what()]);
+		}
+		catch(...)
+		{
+			bot.getApi().sendMessage(character_->get_id(), e.what());
+		}
 	}
 	catch(...)
 	{

@@ -110,7 +110,7 @@ double inventory::get_occupied_bulk()
 
 	for (auto& i: content_name)
 	{
-		b += i.second->get_bulk();
+		b += i.second->get_bulk() * i.second->get_quantity();
 	}
 
 	return b;
@@ -135,4 +135,16 @@ const list<string>& inventory::get_item_list()
 const decltype(inventory::content_category)& inventory::get_categorised_items()
 {
 	return content_category;
+}
+
+std::shared_ptr<const pathfinder2::inventory_entry> inventory::get_item(const string& name) const
+{
+	try
+	{
+		return content_name.at(name);
+	}
+	catch(...)
+	{
+		throw std::runtime_error("item_not_found");
+	}
 }

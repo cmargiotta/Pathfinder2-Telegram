@@ -1,6 +1,7 @@
 {
 	"generic_error"					: "( ͡° ͜ʖ ͡°)",
 	"default_message"				: "Cosa vuoi fare?",
+	"generic_done"					: "OK, fatto",
 
 	"add_response"					: "Scrivi il nome dell'oggetto che vuoi aggiungere o sceglilo dalla lista degli oggetti del tuo inventario.",
 	"item_remove_select"			: "Quale oggetto desideri rimuovere? Se ci sono più oggetti corrispondenti alla richiesta, ne verrà eliminato uno soltanto.",
@@ -8,10 +9,11 @@
 	"list_detail_selection"			: "Seleziona un oggetto dal tuo inventario.",
 	"money_transaction_request"		: "Quante monete di rame? Numero negativo per pagare.",
 	"capacity_request"				: "Quanto puoi trasportare?",
+	"custom_item_info_request"		: "Indicare bulk (obbligatorio) e categoria (opzionale) separati da virgola.",
 
 	"add_item_request"				: "Scegli l'oggetto che vuoi aggiungere! Se è un oggetto personalizzato, scegli il tasto corrispondente.",
 
-	"add_done"						: "Aggiunto! x1",
+	"add_done"						: "Aggiunto!",
 	"remove_done"					: "Rimosso!",
 	"cancel_done"					: "OK, annullato.",
 
@@ -20,6 +22,6 @@
 	"selection_error"				: "Scelta invalida.",
 	"no_money_error"				: "Non hai abbastanza soldi, F.",
 	"bulk_error"					: "Formato del bulk non valido.",
-	"item_not_found"				: "Errore, nessun oggetto con questo nome nel database.",
+	"item_not_found"				: "Errore, nessun oggetto con questo nome trovato.",
 	"no_duplicate_items"			: "Oggetto gia' nel database, impossibile crearne uno nuovo."
 }

@@ -1,4 +1,4 @@
-project('pathfinder2-telegram', 'cpp', default_options : ['cpp_std=c++17'])
+project('pathfinder2-telegram', 'cpp', default_options: ['cpp_std=c++17'])
 
 cmake = import('cmake')
 cpp = meson.get_compiler('cpp')

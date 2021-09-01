@@ -45,6 +45,10 @@ Database& pathfinder2::init_database(const string& path)
 			PRIMARY KEY('name','owner'), \
 			FOREIGN KEY('owner') REFERENCES 'character'('id') \
 		);");
+		db.exec("CREATE TABLE IF NOT EXISTS 'master' (\
+			'id' INT NOT NULL, \
+			PRIMARY KEY('id') \
+		);");
 		transaction.commit();
 
 		initialised = true;

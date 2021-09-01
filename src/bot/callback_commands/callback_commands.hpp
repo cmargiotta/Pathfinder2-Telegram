@@ -17,22 +17,22 @@ namespace pathfinder2
 
 /*****
 COMMAND SNIPPET
-#include "context_commands.hpp"
+#include "callback_commands.hpp"
 
 #include "../keyboards.hpp"
 #include "../local_data.hpp"
+#include "common/string_utils.hpp"
 #include "character/character_cache.hpp"
 
-void pathfinder2::command(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
+void pathfinder2::add(TgBot::Bot& bot, TgBot::CallbackQuery::Ptr query, SQLite::Database& database)
 {
 	static auto& messages = pathfinder2::get_messages();
     static auto& buttons = pathfinder2::get_commands();
 
-    auto& text = message->text;
-	auto id = message->chat->id;
+    auto& text = query->message->text;
+	auto id = query->message->chat->id;
 	auto character_ = pathfinder2::character_cache[id];
 
-	character_->set_context(context);
 	bot.getApi().sendMessage(id, character_->get_context(), false, 0, pathfinder2::remove_keyboard);
 }
 */

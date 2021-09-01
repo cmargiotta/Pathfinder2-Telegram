@@ -5,6 +5,7 @@
 #include <functional>
 
 #include "message_handler.hpp"
+#include "callback_handler.hpp"
 
 using namespace pathfinder2;
 
@@ -15,9 +16,14 @@ bot::bot(SQLite::Database& _database):
 {
 	using namespace std::placeholders;
 
-	_bot.getEvents().onAnyMessage([this](TgBot::Message::Ptr msg){message_handler(this->_bot, msg, this->database);});
+	_bot.getEvents().onAnyMessage([this](TgBot::Message::Ptr msg){message_handler(_bot, msg, database);});
 
-	try {
+	_bot.getEvents().onCallbackQuery([this](TgBot::CallbackQuery::Ptr query) {
+        callback_handler(_bot, query, database);
+    });
+
+	try 
+	{
 		std::cout << "Bot username: " << _bot.getApi().getMe()->username << std::endl;
 
         TgBot::TgLongPoll longPoll(_bot);

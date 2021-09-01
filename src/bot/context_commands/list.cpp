@@ -24,7 +24,11 @@ void pathfinder2::list_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Da
 
         for (auto& category: character_->get_inventory().get_categorised_items())
         {
-            message_text << '*' << category.first << "*:\n";
+			if (category.first != "")
+			{
+            	message_text << '*' << category.first << "*:\n";
+			}
+			
             for (auto& item: category.second)
             {
                 message_text << '\t' << item->get_name() << ", bulk: " << item->get_bulk_string();

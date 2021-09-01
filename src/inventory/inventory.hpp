@@ -31,6 +31,8 @@ namespace pathfinder2
 
 			void remove_item(const std::string& name);
 
+			std::shared_ptr<const inventory_entry> get_item(const std::string& name) const;
+
 			double get_occupied_bulk();
 			const std::list<std::string>& get_item_list();
 

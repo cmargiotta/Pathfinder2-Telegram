@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 
+#include "../master.hpp"
 #include "../keyboards.hpp"
 #include "../local_data.hpp"
 #include "character/character_cache.hpp"
@@ -21,11 +22,18 @@ void pathfinder2::add_item_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite
 
     if (text == buttons["ask_master"])
     {
-        //TODO
+        auto& master = master::get_instance();
+		master.send_message(std::string(message->from->username) + ": " + character_->get_data());
+
+		character_->set_context("");
+
+        bot.getApi().sendMessage(id, messages["generic_done"]);
+        bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard(), "Markdown");
     }
     else if (text == buttons["create_custom_item"])
     {
-        //TODO
+		character_->set_context(messages["custom_item_info_request"]);
+		bot.getApi().sendMessage(id, character_->get_context(), false, 0, pathfinder2::remove_keyboard);
     }
     else
     {
@@ -49,10 +57,8 @@ void pathfinder2::add_item_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite
         character_->get_inventory().add_item(text);
         character_->set_context("");
 
-        bot.getApi().sendMessage(id, messages["add_done"]);
-	    bot.getApi().sendMessage(id, character_->get_context(), false, 0, keyboard);
+		std::string text = messages["add_done"];
+        bot.getApi().sendMessage(id, text + " x1", false, 0, keyboard);
         bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard(), "Markdown");
     }
-
-	
 }

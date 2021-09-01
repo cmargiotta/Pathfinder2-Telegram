@@ -1,5 +1,7 @@
 #include "item.hpp"
 
+#include <stdlib.h>
+
 #include "item_database.hpp"
 
 using std::string;
@@ -65,6 +67,22 @@ const std::string& item::get_url() const
 const std::string& item::get_description() const
 {
 	return data->description;
+}
+
+const std::string& item::get_bulk_string() const
+{
+	static std::string bulk_string;
+	
+	if (data->bulk > 0 && data->bulk < 1)
+	{
+		bulk_string = "L";
+	}
+	else 
+	{
+		bulk_string = std::to_string(data->bulk);
+	}
+
+	return bulk_string;
 }
 
 void item::update_quantity(int delta)
