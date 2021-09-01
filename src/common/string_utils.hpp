@@ -7,6 +7,11 @@
 
 namespace common
 {
+	static inline bool is_number(const std::string& s)
+	{
+		return std::all_of(s.begin(), s.end(), ::isdigit);
+	}
+
 	static inline void rtrim(std::string &s) 
 	{
 		s.erase(std::find_if(s.rbegin(), s.rend(),
