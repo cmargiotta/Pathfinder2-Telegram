@@ -1,15 +1,37 @@
 #include "master.hpp"
 
+#include <iostream>
 #include <exception>
 
 using pathfinder2::master;
 
-master::master(int _id, TgBot::Bot& _bot):
-	id(_id),
-	bot(_bot)
-{}
+master::master(SQLite::Database& _database, TgBot::Bot& _bot):
+	bot(_bot),
+	database(_database)
+{
+	load_id();
+}
 
-master& master::get_instance(int id, TgBot::Bot* bot)
+void master::load_id()
+{
+	if (id_set)
+	{
+		return;
+	}
+
+	try
+	{
+		id = database.execAndGet("SELECT id FROM master");
+		id_set = true;
+	}
+	catch(...)
+	{
+		std::cout << "Warning, master not in database.\n";
+		id_set = false;
+	}
+}
+
+master& master::get_instance(SQLite::Database* database, TgBot::Bot* bot)
 {
 	static bool init = false;
 
@@ -18,7 +40,7 @@ master& master::get_instance(int id, TgBot::Bot* bot)
 		throw std::runtime_error("No master registered");
 	}
 
-	static master instance (id, *bot);
+	static master instance (*database, *bot);
 	init = true;
 
 	return instance;
@@ -26,10 +48,31 @@ master& master::get_instance(int id, TgBot::Bot* bot)
 
 int master::get_id()
 {
-	return id;
+	load_id();
+
+	if (id_set)
+	{
+		return id;
+	}
+	else
+	{
+		throw std::runtime_error("No master registered");
+	}
 }
 
 void master::send_message(const std::string& message)
 {
 	bot.getApi().sendMessage(get_id(), message);
+}
+
+void master::set_id(int _id)
+{
+	id = _id;
+	id_set = true;
+
+	SQLite::Transaction transaction (database);
+	SQLite::Statement query (database, "DELETE FROM master; INSERT INTO master (id) VALUES (?)");
+	query.bind(1, id);
+	query.exec();
+	transaction.commit();
 }

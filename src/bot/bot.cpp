@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <functional>
 
+#include "master.hpp"
 #include "message_handler.hpp"
 #include "callback_handler.hpp"
 #include "common/string_utils.hpp"
@@ -28,6 +29,8 @@ bot::bot(SQLite::Database& _database):
 
 	const char* port = getenv("PF2_BOT_PORT");
 	const char* webhook_url = getenv("WEBHOOK_URL");
+
+	master::get_instance(&database, &_bot);
 
 	if (port != nullptr && webhook_url != nullptr)
 	{
