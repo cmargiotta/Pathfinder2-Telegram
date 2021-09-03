@@ -5,6 +5,7 @@
 #include "item.hpp"
 #include "custom_item.hpp"
 
+using std::set;
 using std::list;
 using std::string;
 using std::make_shared;
@@ -26,7 +27,7 @@ inventory::inventory(int _owner, Database& _database):
 		
 		content_category[_item->get_category()].push_back(_item);
 		content_name[_item->get_name()] = _item;
-		item_names.push_back(_item->get_name());
+		item_names.insert(_item->get_name());
 	}
 
 	Statement query1 (database, "SELECT name FROM custom_items WHERE owner = ?");
@@ -39,7 +40,7 @@ inventory::inventory(int _owner, Database& _database):
 
 		content_category[_item->get_category()].push_back(_item);
 		content_name[_item->get_name()] = _item;
-		item_names.push_back(_item->get_name());
+		item_names.insert(_item->get_name());
 	}
 }
 
@@ -58,7 +59,7 @@ void inventory::add_item(const string& name)
 			auto _item = make_shared<item>(owner, name, database);
 			content_category[_item->get_category()].push_back(_item);
 			content_name[_item->get_name()] = _item;
-			item_names.push_back(_item->get_name());
+			item_names.insert(_item->get_name());
 		}
 		catch(...)
 		{
@@ -81,7 +82,7 @@ void inventory::add_item(const string& name, const string& bulk, const string& c
 		auto _item = make_shared<custom_item>(owner, name, category, bulk, database);
 		content_category[_item->get_category()].push_back(_item);
 		content_name[_item->get_name()] = _item;
-		item_names.push_back(_item->get_name());
+		item_names.insert(_item->get_name());
 	}
 }
 
@@ -91,7 +92,7 @@ void inventory::erase_item(const string& name)
 	content_name.erase(name);
 
 	auto& category_list = content_category[_item->get_category()];
-	std::remove(item_names.begin(), item_names.end(), _item->get_name());
+	item_names.erase(_item->get_name());
 	std::remove(category_list.begin(), category_list.end(), _item);
 
 	_item->remove();
@@ -152,13 +153,13 @@ void inventory::delete_invalid_items()
 			content_name.erase(entry.first);
 
 			auto& category_list = content_category[entry.second->get_category()];
-			std::remove(item_names.begin(), item_names.end(), entry.second->get_name());
+			item_names.erase(entry.second->get_name());
 			std::remove(category_list.begin(), category_list.end(), entry.second);
 		}
 	}
 }
 
-const list<string>& inventory::get_item_list()
+const set<string>& inventory::get_item_list()
 {
 	delete_invalid_items();
 

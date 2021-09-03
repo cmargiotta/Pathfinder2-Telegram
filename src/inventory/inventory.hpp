@@ -1,6 +1,7 @@
 #ifndef INVENTORY_HPP_
 #define INVENTORY_HPP_
 
+#include <set>
 #include <list>
 #include <string>
 #include <memory>
@@ -18,7 +19,7 @@ namespace pathfinder2
 			SQLite::Database& 																database; 
 			std::unordered_map<std::string, std::list<std::shared_ptr<inventory_entry>>>	content_category;
 			std::unordered_map<std::string, std::shared_ptr<inventory_entry>> 				content_name;
-			std::list<std::string>															item_names;
+			std::set<std::string>															item_names;
 
 			void delete_invalid_items();
 			void erase_item(const std::string& name);
@@ -37,7 +38,7 @@ namespace pathfinder2
 			std::shared_ptr<const inventory_entry> get_item(const std::string& name) const;
 
 			double get_occupied_bulk();
-			const std::list<std::string>& get_item_list();
+			const std::set<std::string>& get_item_list();
 
 			const decltype(content_category)& get_categorised_items();
 
