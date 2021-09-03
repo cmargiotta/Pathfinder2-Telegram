@@ -3,8 +3,8 @@ RUN apk add git boost meson ninja g++ cmake zlib-dev openssl-dev boost-dev curl-
 
 RUN git clone https://gitlab.com/car.margiotta/pathfinder2-telegram.git --recursive
 RUN	cd pathfinder2-telegram && \
-	meson build && ninja -C build
-RUN mv pathfinder2-telegram/build/src/inventory_bot ./ && \
+	meson build && ninja -C build && \
+	mv pathfinder2-telegram/build/src/inventory_bot ./ && \
 	mv pathfinder2-telegram/build/test/inventory_test ./ && \
 	rm -r pathfinder2-telegram
 

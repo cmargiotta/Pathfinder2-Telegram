@@ -18,5 +18,6 @@ unit-test-job:
   image: $CI_REGISTRY/car.margiotta/pathfinder2-telegram:latest
   stage: test
   script:
+    - ls
     - ./inventory_test
 
