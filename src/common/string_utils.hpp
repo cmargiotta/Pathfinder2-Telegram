@@ -12,22 +12,14 @@ namespace common
 		return std::all_of(s.begin(), s.end(), ::isdigit);
 	}
 
-	static inline void rtrim(std::string &s) 
+	static inline void trim(std::string& str, const std::string& whitespace = " \t\n")
 	{
-		s.erase(std::find_if(s.rbegin(), s.rend(),
-				std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
-	}
+		const auto str_begin = str.find_first_not_of(whitespace);
 
-	static inline void ltrim(std::string &s) 
-	{
-		s.erase(s.begin(), std::find_if(s.begin(), s.end(),
-				std::not1(std::ptr_fun<int, int>(std::isspace))));
-	}
+		const auto str_end = str.find_last_not_of(whitespace);
+		const auto str_range = str_end - str_begin + 1;
 
-	static inline void trim(std::string &s) 
-	{
-		ltrim(s);
-		rtrim(s);
+		str = str.substr(str_begin, str_range);
 	}
 
 	static inline std::vector<std::string> split (const std::string& s, std::string delimiter) 

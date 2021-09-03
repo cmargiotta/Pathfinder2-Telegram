@@ -85,9 +85,21 @@ void inventory::add_item(const string& name, const string& bulk, const string& c
 	}
 }
 
+void inventory::erase_item(const string& name)
+{
+	auto _item = content_name[name];
+	content_name.erase(name);
+
+	auto& category_list = content_category[_item->get_category()];
+	std::remove(item_names.begin(), item_names.end(), _item->get_name());
+	std::remove(category_list.begin(), category_list.end(), _item);
+
+	_item->remove();
+}
+
 void inventory::remove_item(const string& name)
 {
-	if (content_name.count(name) != 0)
+	if (content_name.find(name) != content_name.end())
 	{
 		auto _item = content_name[name];
 		_item->update_quantity(-1);
@@ -95,11 +107,7 @@ void inventory::remove_item(const string& name)
 		if (_item->get_quantity() == 0)
 		{
 			//Quantity reached 0, remove this item from inventory
-			content_name.erase(name);
-
-			auto& category_list = content_category[_item->get_category()];
-			std::remove(item_names.begin(), item_names.end(), _item->get_name());
-			std::remove(category_list.begin(), category_list.end(), _item);
+			erase_item(name);
 		}
 	}
 }
@@ -110,6 +118,12 @@ double inventory::get_occupied_bulk()
 
 	for (auto& i: content_name)
 	{
+		if (!i.second->is_valid())
+		{
+			erase_item(i.first);
+			continue;
+		}
+		
 		b += i.second->get_bulk() * i.second->get_quantity();
 	}
 
@@ -127,13 +141,28 @@ void inventory::reset()
 	content_name.clear();
 }
 
+void inventory::delete_invalid_items()
+{
+	for (auto& entry: content_name)
+	{
+		if (!entry.second->is_valid())
+		{
+			erase_item(entry.first);
+		}
+	}
+}
+
 const list<string>& inventory::get_item_list()
 {
+	delete_invalid_items();
+
 	return item_names;
 }
 
 const decltype(inventory::content_category)& inventory::get_categorised_items()
 {
+	delete_invalid_items();
+
 	return content_category;
 }
 

@@ -19,6 +19,7 @@ namespace pathfinder2
 COMMAND SNIPPET
 #include "callback_commands.hpp"
 
+#include "../master.hpp"
 #include "../keyboards.hpp"
 #include "../local_data.hpp"
 #include "common/string_utils.hpp"

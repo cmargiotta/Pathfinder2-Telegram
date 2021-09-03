@@ -8,12 +8,12 @@ namespace pathfinder2
 {
 	class inventory_entry {
 		protected: 
-			int					owner; 
-			std::string 		name; 
-			std::string			category;
-			std::string			bulk_string;
-			double	   			bulk; 
-			int					quantity; 
+			int						owner; 
+			std::string 			name; 
+			std::string				category;
+			mutable std::string		bulk_string;
+			double	   				bulk; 
+			int						quantity; 
 
 		public: 
 			inventory_entry() = default;
@@ -35,6 +35,8 @@ namespace pathfinder2
 			virtual void set_bulk(const std::string& bulk);
 			virtual void set_description(const std::string& description);
 			virtual void set_url(const std::string& url);
+
+			virtual bool is_valid();
 	};
 }
 

@@ -3,6 +3,7 @@
 #include <memory>
 #include <iostream>
 
+#include "master.hpp"
 #include "keyboards.hpp"
 #include "local_data.hpp"
 #include "commands/commands.hpp"
@@ -41,7 +42,7 @@ void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, 
 			{
 				character_->set_context("");
 				bot.getApi().sendMessage(character_->get_id(), messages["cancel_done"]);
-				bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard());
+				bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard(master::get_instance().is_master(id)));
 				return;
 			}
 

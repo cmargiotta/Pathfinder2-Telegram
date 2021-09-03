@@ -71,15 +71,13 @@ const std::string& item::get_description() const
 
 const std::string& item::get_bulk_string() const
 {
-	static std::string bulk_string;
-	
 	if (data->bulk > 0 && data->bulk < 1)
 	{
 		bulk_string = "L";
 	}
 	else 
 	{
-		bulk_string = std::to_string(data->bulk);
+		bulk_string = std::to_string(static_cast<int>(data->bulk));
 	}
 
 	return bulk_string;
@@ -140,4 +138,9 @@ void item::set_description(const std::string& description)
 {
 	auto& item_db = item_database::get_instance();
 	item_db.update_description(name, description);
+}
+
+bool item::is_valid()
+{
+	return !data->deleted;
 }

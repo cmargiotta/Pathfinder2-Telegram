@@ -65,13 +65,23 @@ void master::send_message(const std::string& message)
 	bot.getApi().sendMessage(get_id(), message);
 }
 
+bool master::is_master(int id)
+{
+	if (!id_set)
+	{
+		return false;
+	}
+
+	return id == this->id;
+}
+
 void master::set_id(int _id)
 {
 	id = _id;
 	id_set = true;
 
 	SQLite::Transaction transaction (database);
-	SQLite::Statement query (database, "DELETE FROM master; INSERT INTO master (id) VALUES (?)");
+	SQLite::Statement query (database, "INSERT INTO master (id) VALUES (?)");
 	query.bind(1, id);
 	query.exec();
 	transaction.commit();

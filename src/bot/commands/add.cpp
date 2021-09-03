@@ -1,5 +1,6 @@
 #include "commands.hpp"
 
+#include "../master.hpp"
 #include "../keyboards.hpp"
 #include "../local_data.hpp"
 #include "character/character_cache.hpp"
@@ -13,7 +14,7 @@ void pathfinder2::_add(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Dat
 	auto character_ = pathfinder2::character_cache[id];
 
     auto& item_list = character_->get_inventory().get_item_list();
-    auto keyboard = pathfinder2::create_one_column_keyboard(item_list.begin(), item_list.end());
+    auto keyboard = pathfinder2::create_keyboard(item_list.begin(), item_list.end());
     pathfinder2::add_button_row(keyboard, buttons["cancel"]);
 
 	character_->set_context(messages["add_response"]);

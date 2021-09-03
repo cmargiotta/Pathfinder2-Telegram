@@ -3,6 +3,7 @@
 #include <string>
 #include <exception>
 
+#include "../master.hpp"
 #include "../keyboards.hpp"
 #include "../local_data.hpp"
 #include "character/character_cache.hpp"
@@ -29,7 +30,7 @@ void pathfinder2::list_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Da
             	message_text << '*' << category.first << "*:\n";
 			}
 			
-            for (auto& item: category.second)
+            for (std::shared_ptr<inventory_entry> item: category.second)
             {
                 message_text << '\t' << item->get_name() << ", bulk: " << item->get_bulk_string();
 
@@ -45,11 +46,11 @@ void pathfinder2::list_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Da
 
         character_->set_context("");
         bot.getApi().sendMessage(id, message_text.str());
-	    bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard(), "Markdown");
+	    bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard(master::get_instance().is_master(id)), "Markdown");
     }
     else if (text == buttons["list_detail"])
     {
-        auto keyboard = pathfinder2::create_one_column_keyboard({});
+        auto keyboard = pathfinder2::create_keyboard({});
 
         for (auto& item: character_->get_inventory().get_item_list())
         {

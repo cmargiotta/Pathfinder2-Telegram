@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "../master.hpp"
+#include "../master.hpp"
 #include "../keyboards.hpp"
 #include "../local_data.hpp"
 #include "character/character_cache.hpp"
@@ -16,7 +17,8 @@ void pathfinder2::_start(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::D
 	auto character_ = make_shared<character>(message->chat->id, database);
 	pathfinder2::character_cache.insert(character_->get_id(), character_);
 
-	if (message->from->username == getenv("PF2_INV_MASTER"))
+	const char* master_username = getenv("PF2_INV_MASTER");
+	if (master_username != nullptr && message->from->username == master_username)
 	{
 		pathfinder2::master::get_instance().set_id(message->chat->id);
 	}

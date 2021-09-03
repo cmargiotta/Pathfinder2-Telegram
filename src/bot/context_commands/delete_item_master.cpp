@@ -1,13 +1,12 @@
 #include "context_commands.hpp"
 
-#include <stdlib.h>
-
 #include "../master.hpp"
 #include "../keyboards.hpp"
 #include "../local_data.hpp"
+#include "inventory/item_database.hpp"
 #include "character/character_cache.hpp"
 
-void pathfinder2::set_capacity_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
+void pathfinder2::delete_item_master_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
 	static auto& messages = pathfinder2::get_messages();
     static auto& buttons = pathfinder2::get_commands();
@@ -16,7 +15,8 @@ void pathfinder2::set_capacity_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQ
 	auto id = message->chat->id;
 	auto character_ = pathfinder2::character_cache[id];
 
-	character_->set_capacity(atoi(text.c_str()));
+	auto& item_db = item_database::get_instance();
+	item_db.delete_item(text);
 
 	character_->set_context("");
 	bot.getApi().sendMessage(id, messages["generic_done"]);

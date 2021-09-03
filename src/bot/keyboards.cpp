@@ -11,6 +11,8 @@ using pathfinder2::get_commands;
 using TgBot::KeyboardButton;
 using TgBot::ReplyKeyboardMarkup;
 
+const TgBot::ReplyKeyboardRemove::Ptr pathfinder2::remove_keyboard = std::make_shared<TgBot::ReplyKeyboardRemove>();
+
 ReplyKeyboardMarkup::Ptr pathfinder2::create_keyboard(const vector<vector<string>>& button_layout)
 {
 	auto keyboard = std::make_shared<TgBot::ReplyKeyboardMarkup>();
@@ -32,24 +34,6 @@ ReplyKeyboardMarkup::Ptr pathfinder2::create_keyboard(const vector<vector<string
 	return keyboard;
 }
 
-ReplyKeyboardMarkup::Ptr pathfinder2::create_one_column_keyboard(const vector<string>& buttons)
-{
-	auto keyboard = std::make_shared<TgBot::ReplyKeyboardMarkup>();
-
-	for (auto& text: buttons) 
-	{
-		vector<KeyboardButton::Ptr> row;
-
-		auto button = std::make_shared<KeyboardButton>();
-		button->text = text;
-		row.push_back(button);
-
-		keyboard->keyboard.push_back(row);
-	}
-
-	return keyboard;
-}
-
 void pathfinder2::add_button_row(ReplyKeyboardMarkup::Ptr keyboard, const string& text)
 {
 	vector<KeyboardButton::Ptr> row;
@@ -59,15 +43,33 @@ void pathfinder2::add_button_row(ReplyKeyboardMarkup::Ptr keyboard, const string
 	keyboard->keyboard.push_back(row);
 }
 
-ReplyKeyboardMarkup::Ptr& pathfinder2::get_default_keyboard()
+ReplyKeyboardMarkup::Ptr pathfinder2::get_default_keyboard(bool master)
 {
 	static auto& keys = get_commands();
+
 	static auto keyboard = pathfinder2::create_keyboard({
 		{keys["add"], keys["remove"]},
 		{keys["list"]},
 		{keys["set_capacity"]},
 		{keys["get_money"], keys["money_transaction"]}
 	});
+	
+	static auto master_keyboard = pathfinder2::create_keyboard({
+		{keys["add"], keys["remove"]},
+		{keys["list"]},
+		{keys["set_capacity"]},
+		{keys["get_money"], keys["money_transaction"]},
+		{keys["register_item_master"]},
+		{keys["delete_item_master"]},
+		{keys["edit_item_master"]}
+	});
 
-	return keyboard;
+	if (!master)
+	{
+		return keyboard;
+	}
+	else
+	{
+		return master_keyboard;
+	}
 }

@@ -1,5 +1,6 @@
 #include "context_commands.hpp"
 
+#include "../master.hpp"
 #include "../keyboards.hpp"
 #include "../local_data.hpp"
 #include "inventory/item_database.hpp"
@@ -37,7 +38,7 @@ void pathfinder2::add_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Dat
         }
     }
 
-    auto keyboard = pathfinder2::create_one_column_keyboard({});
+    auto keyboard = pathfinder2::create_keyboard({});
 
 	for (auto& item: matches)
     {

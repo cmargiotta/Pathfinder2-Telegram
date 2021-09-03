@@ -1,5 +1,6 @@
 #include "context_commands.hpp"
 
+#include "../master.hpp"
 #include "../keyboards.hpp"
 #include "../local_data.hpp"
 #include "common/string_utils.hpp"
@@ -47,5 +48,5 @@ void pathfinder2::add_custom_item_(TgBot::Bot& bot, TgBot::Message::Ptr message,
 
 	character_->set_context("");
 	bot.getApi().sendMessage(id, messages["add_done"], false, 0, keyboard);
-    bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard(), "Markdown");
+    bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard(master::get_instance().is_master(id)), "Markdown");
 }

@@ -11,7 +11,7 @@
 namespace pathfinder2
 {
 	TgBot::ReplyKeyboardMarkup::Ptr create_keyboard(const std::vector<std::vector<std::string>>& button_layout);
-	TgBot::ReplyKeyboardMarkup::Ptr& get_default_keyboard();
+	TgBot::ReplyKeyboardMarkup::Ptr get_default_keyboard(bool master = false);
 
 	void add_button_row(TgBot::ReplyKeyboardMarkup::Ptr keyboard, const std::string& text);
 
@@ -21,7 +21,7 @@ namespace pathfinder2
 		std::is_same<typename std::iterator_traits<T>::value_type, std::string>::value,
 		TgBot::ReplyKeyboardMarkup::Ptr
 	>::type
-	create_one_column_keyboard(const T buttons_start, const T buttons_end)
+	create_keyboard(const T buttons_start, const T buttons_end)
 	{
 		auto keyboard = std::make_shared<TgBot::ReplyKeyboardMarkup>();
 
@@ -37,8 +37,6 @@ namespace pathfinder2
 		return keyboard;
 	}
 
-	TgBot::ReplyKeyboardMarkup::Ptr create_one_column_keyboard(const std::vector<std::string>& buttons);
-
-	const TgBot::ReplyKeyboardRemove::Ptr remove_keyboard;
+	extern const TgBot::ReplyKeyboardRemove::Ptr remove_keyboard;
 }
 #endif // KEYBOARDS_HPP_

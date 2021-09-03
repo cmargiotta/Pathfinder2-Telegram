@@ -22,6 +22,7 @@ namespace pathfinder2
 
 			void send_message(const std::string& message);
 			int get_id(); 
+			bool is_master(int id);
 
 			void load_id();
 

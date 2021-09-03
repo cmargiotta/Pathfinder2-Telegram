@@ -55,6 +55,12 @@ namespace common
 				return list.front().second;
 			}
 
+			inline void remove(const Key& key)
+			{
+				list.erase(map.at(key));
+				map.erase(key);
+			}
+
 			//Given the key, get the corresponding item from the queue
 			inline std::shared_ptr<Value> get(const Key& key)
 			{

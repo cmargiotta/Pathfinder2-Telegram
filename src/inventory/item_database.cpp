@@ -32,8 +32,7 @@ std::shared_ptr<item_database_entry> item_database::build_entry(const std::strin
 			item->description = string(query.getColumn(3));
 			item->category = string(query.getColumn(4));
 
-			auto bulk_str = string(query.getColumn(2));
-			item->bulk = bulk_str[0] == 'L' ? 0.1f : atoi(bulk_str.c_str());
+			item->bulk = query.getColumn(2);
 
 			return item;
 		}
@@ -74,8 +73,6 @@ void item_database::register_new_item(const string& name, const string& url, con
 		throw std::runtime_error("bulk_error");
 	}
 
-	double bulk_ = bulk[0] == 'L' ? 0.1 : atoi(bulk.c_str());
-
 	Transaction transaction (database);
 
 	Statement query (database, "INSERT INTO items (name, url, category, description, bulk) VALUES (?, ?, ?, ?, ?)");
@@ -83,15 +80,29 @@ void item_database::register_new_item(const string& name, const string& url, con
 	query.bind(2, url);
 	query.bind(3, category);
 	query.bind(4, description);
-	query.bind(5, bulk_);
+	query.bind(5, bulk);
 	query.exec();
 
 	transaction.commit();
+}
 
-	//Load the new item in cache
-	get_item(name);
+void item_database::delete_item(const std::string& name)
+{
+	item_cache[name]->deleted = true;
+	
+	Transaction transaction (database);
 
-	update_bulk(name, bulk);
+	Statement query (database, "DELETE FROM inventory WHERE name = ?");
+	query.bind(1, name);
+	query.exec();
+
+	Statement query1 (database, "DELETE FROM items WHERE name = ?");
+	query1.bind(1, name);
+	query1.exec();
+
+	transaction.commit();
+
+	item_cache.remove(name);
 }
 
 const std::vector<std::shared_ptr<const item_database_entry>> item_database::search_items(const std::string& name)
@@ -159,7 +170,6 @@ void item_database::update_description(const std::string& name, const std::strin
 
 void item_database::update_bulk(const std::string& name, double bulk)
 {
-	get_nonconst_item(name)->bulk = bulk;
 	Transaction transaction(database);
 	
 	Statement query(database, "UPDATE items SET bulk = ? WHERE name = ?");
@@ -168,6 +178,8 @@ void item_database::update_bulk(const std::string& name, double bulk)
 	query.exec(); 
 
 	transaction.commit();
+
+	get_nonconst_item(name)->bulk = bulk;
 }
 
 void item_database::update_category(const std::string& name, const std::string& category)

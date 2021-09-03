@@ -2,6 +2,7 @@
 
 #include <string>
 
+#include "../master.hpp"
 #include "../keyboards.hpp"
 #include "../local_data.hpp"
 #include "common/string_utils.hpp"
@@ -26,5 +27,5 @@ void pathfinder2::list_detail_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQL
 
 	character_->set_context("");
 	bot.getApi().sendMessage(id, message_.str(), false, 0, pathfinder2::remove_keyboard, "Markdown");
-	bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard(), "Markdown");
+	bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard(master::get_instance().is_master(id)), "Markdown");
 }

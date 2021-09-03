@@ -18,6 +18,8 @@ namespace pathfinder2
 		std::string description;
 		std::string category;
 		double		bulk; 
+
+		bool 		deleted = false;
 	};
 
 	class item_database
@@ -38,6 +40,7 @@ namespace pathfinder2
 			static item_database& get_instance(SQLite::Database* database = nullptr); 
 
 			void register_new_item(const std::string& name, const std::string& url, const std::string& category, const std::string& description, const std::string& bulk);
+			void delete_item(const std::string& name);
 
 			void update_url(const std::string& name, const std::string& url);
 			void update_category(const std::string& name, const std::string& category);

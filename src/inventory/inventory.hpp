@@ -20,6 +20,9 @@ namespace pathfinder2
 			std::unordered_map<std::string, std::shared_ptr<inventory_entry>> 				content_name;
 			std::list<std::string>															item_names;
 
+			void delete_invalid_items();
+			void erase_item(const std::string& name);
+
 		public: 
 			inventory(int owner, SQLite::Database& database); 
 			~inventory() = default;
@@ -39,8 +42,6 @@ namespace pathfinder2
 			const decltype(content_category)& get_categorised_items();
 
 			void reset();
-
-
 	};
 }
 

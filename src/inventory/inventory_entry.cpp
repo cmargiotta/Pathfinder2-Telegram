@@ -86,6 +86,11 @@ void inventory_entry::set_description(const string& description)
 void inventory_entry::set_url(const string& url) 
 {}
 
+bool inventory_entry::is_valid()
+{
+	return true;
+}
+
 const std::string& inventory_entry::get_bulk_string() const
 {
 	return bulk_string;

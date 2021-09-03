@@ -19,6 +19,10 @@ namespace pathfinder2
 	void _set_capacity(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
 	void _money_transaction(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
 	void _get_money(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
+
+	void _edit_item_master(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
+	void _delete_item_master(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
+	void _register_item_master(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
 }
 #endif // COMMANDS_HPP_
 
@@ -26,6 +30,7 @@ namespace pathfinder2
 COMMAND SNIPPET
 #include "commands.hpp"
 
+#include "../master.hpp"
 #include "../keyboards.hpp"
 #include "../local_data.hpp"
 #include "character/character_cache.hpp"
