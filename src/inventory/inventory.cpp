@@ -115,16 +115,18 @@ void inventory::remove_item(const string& name)
 double inventory::get_occupied_bulk()
 {
 	double b = 0.0;
+	auto last_i = content_name.begin();
 
-	for (auto& i: content_name)
+	for (auto i = content_name.begin(); i != content_name.end(); ++i)
 	{
-		if (!i.second->is_valid())
+		if (!i->second->is_valid())
 		{
-			erase_item(i.first);
+			erase_item(i->first);
+			i = last_i;
 			continue;
 		}
-		
-		b += i.second->get_bulk() * i.second->get_quantity();
+		last_i = i;
+		b += i->second->get_bulk() * i->second->get_quantity();
 	}
 
 	return b;
@@ -147,7 +149,11 @@ void inventory::delete_invalid_items()
 	{
 		if (!entry.second->is_valid())
 		{
-			erase_item(entry.first);
+			content_name.erase(entry.first);
+
+			auto& category_list = content_category[entry.second->get_category()];
+			std::remove(item_names.begin(), item_names.end(), entry.second->get_name());
+			std::remove(category_list.begin(), category_list.end(), entry.second);
 		}
 	}
 }

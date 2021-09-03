@@ -32,14 +32,17 @@ void pathfinder2::list_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Da
 			
             for (std::shared_ptr<inventory_entry> item: category.second)
             {
-                message_text << '\t' << item->get_name() << ", bulk: " << item->get_bulk_string();
+				if (item)
+				{
+					message_text << '\t' << item->get_name() << ", bulk: " << item->get_bulk_string();
 
-                if (item->get_quantity() > 1)
-                {
-                    message_text << " (" << item->get_quantity() << ')';
-                }
+					if (item->get_quantity() > 1)
+					{
+						message_text << " (" << item->get_quantity() << ')';
+					}
 
-                message_text << '\n';
+					message_text << '\n';
+				}
             }
             
         }

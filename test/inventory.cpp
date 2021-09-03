@@ -1,5 +1,7 @@
 #include "catch2/catch.hpp"
 
+#include <iostream>
+
 #include "database/database.hpp"
 #include "inventory/inventory.hpp"
 #include "inventory/item_database.hpp"
@@ -73,6 +75,68 @@ SCENARIO("Item database can be accessed and modified")
 				item_db.update_bulk("test", "2");
 				REQUIRE(item->bulk == 2);
 			}
+		}
+	}
+}
+
+SCENARIO("Items can be deleted from database")
+{
+	auto& item_db = item_database::get_instance();
+
+	WHEN("A non existing item is deleted from database")
+	{
+		THEN("An exception is thrown")
+		{
+			REQUIRE_THROWS(item_db.delete_item("fake_item"));
+		}
+	}
+
+	WHEN("An item is deleted")
+	{
+		auto test_item = item_db.get_item("test");
+		THEN("No exceptions are thrown and it is no more accessible")
+		{
+			REQUIRE_NOTHROW(item_db.delete_item("test"));
+			REQUIRE_THROWS(item_db.get_item("test"));
+			REQUIRE(test_item->deleted);
+		}
+	}
+}
+
+SCENARIO("An inventory can handle an heterogeneous set of items")
+{
+	auto& db = pathfinder2::init_database("test.db");
+	pathfinder2::inventory inv (1, db);
+	auto& item_db = item_database::get_instance(&db);
+
+	WHEN("A custom item is added to the inventory")
+	{
+		THEN("No exceptions are thrown")
+		{
+			REQUIRE_NOTHROW(inv.add_item("custom_test", "3", "custom"));
+		}
+		AND_THEN("Data are correctly considered")
+		{
+			REQUIRE(inv.get_occupied_bulk() >= 3);
+			REQUIRE(inv.get_item_list().size() == 1);
+		}
+	}
+	
+	WHEN("An item from database is added")
+	{
+		THEN("No exceptions are thrown")
+		{
+			item_db.register_new_item("test_inv", "test", "test", "test", "1");
+			item_db.register_new_item("test", "test", "test", "test", "1");
+
+			REQUIRE_NOTHROW(inv.add_item("test"));
+			REQUIRE_NOTHROW(inv.add_item("test_inv"));
+		}
+		AND_THEN("Its fields are correctly retrieved from the database")
+		{
+			for (auto& item: inv.get_item_list())
+				std::cout << item << std::endl;
+			REQUIRE(inv.get_occupied_bulk() == 5);
 		}
 	}
 }
