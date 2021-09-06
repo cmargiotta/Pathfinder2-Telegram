@@ -35,7 +35,7 @@ bot::bot(SQLite::Database& _database):
 		TgBot::TgWebhookTcpServer webhook_server(8080, _bot);
 		_bot.getApi().setWebhook(std::string(webhook_url));
 
-		std::cout << "Starting webhook server at " << webhook_url << ":" << port << std::endl;
+		std::cout << "Starting webhook server at " << webhook_url << std::endl;
 
         webhook_server.start();
 	}
