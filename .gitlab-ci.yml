@@ -9,7 +9,37 @@ build-job:
      - name: docker:19.03.12-dind
        alias: docker
   only:
-    - changes:
+    changes:
+      - Dockerfile
+      - src/*
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker pull $CI_REGISTRY/car.margiotta/pathfinder2-telegram:latest
+    - docker build -t $CI_REGISTRY/car.margiotta/pathfinder2-telegram .
+    - docker push $CI_REGISTRY/car.margiotta/pathfinder2-telegram:latest
+
+unit-test-job:
+  image: 
+    name: $CI_REGISTRY/car.margiotta/pathfinder2-telegram:latest
+    entrypoint: [""]
+  stage: test
+  script:
+    - cd /
+    - ls
+    - ./inventory_test
+
+stages:
+  - build
+  - test
+
+build-job:
+  stage: build
+  image: docker:19.03.12
+  services:
+     - name: docker:19.03.12-dind
+       alias: docker
+  only:
+    changes:
       - Dockerfile
       - src/*
   script:
