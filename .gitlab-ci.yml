@@ -40,8 +40,8 @@ build-job:
        alias: docker
   rules:
     - changes:
-      - Dockerfile
-      - src/*
+        - Dockerfile
+        - src/*
       when: always
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY

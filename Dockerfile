@@ -1,4 +1,5 @@
 FROM alpine:3.14
+
 RUN apk add git boost meson ninja g++ cmake zlib-dev openssl-dev boost-dev curl-dev
 
 RUN git clone https://gitlab.com/car.margiotta/pathfinder2-telegram.git --recursive
