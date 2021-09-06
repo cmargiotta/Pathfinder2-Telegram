@@ -27,21 +27,14 @@ bot::bot(SQLite::Database& _database):
 
 	std::cout << "Bot username: " << _bot.getApi().getMe()->username << std::endl;
 
-	const char* port = getenv("PF2_BOT_PORT");
 	const char* webhook_url = getenv("WEBHOOK_URL");
 
 	master::get_instance(&database, &_bot);
 
-	if (port != nullptr && webhook_url != nullptr)
-	{
-		if (!common::is_number(port))
-		{
-			throw std::runtime_error("Port not valid.");
-		}
-
-		
-		TgBot::TgWebhookTcpServer webhook_server(atoi(port), _bot);
-		_bot.getApi().setWebhook(std::string(webhook_url) + ":" + port);
+	if (webhook_url != nullptr)
+	{	
+		TgBot::TgWebhookTcpServer webhook_server(8080, _bot);
+		_bot.getApi().setWebhook(std::string(webhook_url));
 
 		std::cout << "Starting webhook server at " << webhook_url << ":" << port << std::endl;
 
