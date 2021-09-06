@@ -13,8 +13,7 @@
 using namespace pathfinder2;
 
 bot::bot(SQLite::Database& _database):
-	// _bot(getenv("PF2_BOT_TOKEN")),
-	_bot("1996957656:AAGPYXXLrs4IDKl6dqT7bFPCTjJB-8bxoSQ"),
+	 _bot(getenv("PF2_INV_BOT_TOKEN")),
 	database(_database)
 {
 	using namespace std::placeholders;
@@ -27,7 +26,7 @@ bot::bot(SQLite::Database& _database):
 
 	std::cout << "Bot username: " << _bot.getApi().getMe()->username << std::endl;
 
-	const char* webhook_url = getenv("WEBHOOK_URL");
+	const char* webhook_url = getenv("PF2_INV_WEBHOOK_URL");
 
 	master::get_instance(&database, &_bot);
 
