@@ -8,7 +8,7 @@ build-job:
   services:
      - name: docker:19.03.12-dind
        alias: docker
-  rules:
+  only:
     - changes:
       - Dockerfile
       - src/*
