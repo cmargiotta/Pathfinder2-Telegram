@@ -24,5 +24,7 @@ unit-test-job:
     entrypoint: [""]
   stage: test
   script:
-    - ../inventory_test
+    - cd ..
+    - ls
+    - ./inventory_test
 
