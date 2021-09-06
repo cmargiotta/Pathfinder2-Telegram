@@ -15,7 +15,9 @@ build-job:
     - docker push $CI_REGISTRY/car.margiotta/pathfinder2-telegram:latest
 
 unit-test-job:
-  image: $CI_REGISTRY/car.margiotta/pathfinder2-telegram:latest
+  image: 
+    name: $CI_REGISTRY/car.margiotta/pathfinder2-telegram:latest
+    entrypoint: [""]
   stage: test
   script:
     - ls
