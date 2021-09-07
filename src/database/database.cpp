@@ -20,6 +20,7 @@ Database& pathfinder2::init_database(const string& path)
 	if (!initialised)
 	{
 		Transaction transaction(db);
+		
 		db.exec("CREATE TABLE IF NOT EXISTS 'inventory' ( \
 			'owner'		INT NOT NULL, \
 			'name'		TEXT NOT NULL, \
