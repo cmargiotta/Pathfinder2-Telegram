@@ -48,7 +48,7 @@ The easiest way to run this bot is to use the preconfigured Docker environment.
 
 ```bash
 docker pull registry.gitlab.com/car.margiotta/pathfinder2-telegram
-docker run pathfinder2-telegram --env-file config.env -p 8080:8080
+docker run registry.gitlab.com/car.margiotta/pathfinder2-telegram --env-file config.env -p 8080:8080
 ```
 
 With an environment defined in the file `config.env`, it will expose port 8080.
@@ -61,7 +61,7 @@ Requirements:
     - ninja
 
 ```
-git clone https://gitlab.com/-/ide/project/car.margiotta/pathfinder2-telegram/
+git clone https://gitlab.com/-/ide/project/car.margiotta/pathfinder2-telegram/ --recursive
 cd pathfinder2-telegram
 meson build
 ninja -C build test
