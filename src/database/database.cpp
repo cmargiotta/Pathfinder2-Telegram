@@ -49,6 +49,14 @@ Database& pathfinder2::init_database(const string& path)
 			'id' INT NOT NULL, \
 			PRIMARY KEY('id') \
 		);");
+
+		db.exec("CREATE INDEX IF NOT EXISTS 'inventory_owner' ON 'inventory' ( \
+			'owner' \
+		);");
+		db.exec("CREATE INDEX IF NOT EXISTS 'custom_items_owner' ON 'custom_items' ( \
+			'owner' \
+		);");
+			
 		transaction.commit();
 
 		initialised = true;
