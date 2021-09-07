@@ -40,7 +40,7 @@ build-job:
        alias: docker
   only:
     changes:
-        - gitlab-ci.yml
+        - .gitlab-ci.yml
         - Dockerfile
         - src/**
         - src/**/*
