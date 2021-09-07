@@ -9,7 +9,14 @@ using std::string;
 
 int main()
 {
-	auto& db = init_database(getenv("PF2_INV_DB_PATH"));
+	char* db_path = getenv("PF2_INV_DB_PATH");
+
+	if (db_path == nullptr)
+	{
+		db_path = "./pf2_inv.db";
+	}
+
+	auto& db = init_database(db_path);
 	item_database::get_instance(&db);
 	
 	bot b (db);
