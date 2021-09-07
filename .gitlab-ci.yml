@@ -38,11 +38,11 @@ build-job:
   services:
      - name: docker:19.03.12-dind
        alias: docker
-  rules:
-    - changes:
+  only:
+    changes:
         - Dockerfile
         - src/**
-      when: always
+        - src/**/*
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker pull $CI_REGISTRY/car.margiotta/pathfinder2-telegram:latest
