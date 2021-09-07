@@ -25,18 +25,22 @@
 The parameters are passed to the bot using runtime environment. 
 The following variables must be defined:
 ```
-PF2_INV_PORT=port
-PF2_INV_DB_PATH=DB path
 PF2_INV_BOT_TOKEN=BOT TOKEN
 PF2_INV_MASTER=Master username
 ```
 
 These are optional ones:
 ```
+PF2_INV_PORT=port
+PF2_INV_DB_PATH=DB path
 PF2_INV_WEBHOOK_URL=URL
 ```
 
 If `PF2_INV_WEBHOOK_URL` is not defined the bot will run in active poll mode, a more resource greedy mode that does not require port forwarding and static external IP/dynamic DNS.
+
+Other default values (when not specified):
+- `PF2_INV_PORT`: 8080
+- `PF2_INV_DB_PATH`: ./pf2_inv.db
 
 ### Docker
 
