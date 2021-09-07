@@ -25,6 +25,7 @@
 The parameters are passed to the bot using runtime environment. 
 The following variables must be defined:
 ```
+PF2_INV_DB_PATH=DB path
 PF2_INV_BOT_TOKEN=BOT TOKEN
 PF2_INV_MASTER=Master username
 ```
