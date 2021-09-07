@@ -41,17 +41,7 @@ bot::bot(SQLite::Database& _database):
 	}
 	else 
 	{
-		std::cout << "Warning, webhook ";
-
-		if (port == nullptr)
-		{
-			std::cout << "port ";
-		}
-		else
-		{
-			std::cout << "url ";
-		}
-		std::cout << "not set, starting long poll mode.\n";
+		std::cout << "Warning, webhook url not set, starting long poll mode.\n";
 
 		TgBot::TgLongPoll long_poll(_bot);
 		while (true) 
