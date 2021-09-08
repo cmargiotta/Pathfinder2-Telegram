@@ -44,7 +44,7 @@ bot::bot(SQLite::Database& _database):
 	if (webhook_url != nullptr)
 	{	
 		TgBot::TgWebhookTcpServer webhook_server(atoi(port), _bot);
-		_bot.getApi().setWebhook(std::string(webhook_url));
+		_bot.getApi().setWebhook(std::string(webhook_url), TgBot::InputFile::fromFile("/usr/share/inventory_bot/certs/public.pem", "application/x-pem-file"));
 
 		std::cout << "Starting webhook server at " << webhook_url << std::endl;
 
