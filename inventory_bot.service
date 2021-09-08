@@ -1,0 +1,13 @@
+[Unit]
+Description=Pathfinder 2 inventory manager for Telegram
+After=network.target
+
+[Service]
+EnvironmentFile=/etc/inventory_bot.env
+Type=simple
+Restart=always
+RestartSec=1
+ExecStart=/usr/bin/inventory_bot
+
+[Install]
+WantedBy=multi-user.target
