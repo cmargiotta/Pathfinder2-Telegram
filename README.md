@@ -56,9 +56,11 @@ With an environment defined in the file `config.env`, it will expose port 8080.
 ### Build from source
 
 Requirements:
-    - meson
-    - boost
-    - ninja
+- meson
+- boost
+- ninja
+- cmake
+- libssl
 
 ```
 git clone https://gitlab.com/-/ide/project/car.margiotta/pathfinder2-telegram/ --recursive
