@@ -61,6 +61,7 @@ Requirements:
 - ninja
 - cmake
 - libssl
+- libcurl
 
 ```
 git clone https://gitlab.com/-/ide/project/car.margiotta/pathfinder2-telegram/ --recursive
