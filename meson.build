@@ -31,3 +31,7 @@ catch2 = declare_dependency(include_directories: ['subprojects/catch2/single_inc
 
 subdir('src')
 subdir('test')
+
+# Install data
+install_data('inventory_bot.service', install_dir: '/usr/lib/systemd/system/')
+install_data('inventory_bot.env', install_dir: '/etc/')

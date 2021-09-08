@@ -18,7 +18,7 @@ int main()
 
 	auto& db = init_database(db_path);
 	item_database::get_instance(&db);
-	
+
 	bot b (db);
 
 	return 0;
