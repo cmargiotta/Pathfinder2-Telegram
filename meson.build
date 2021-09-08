@@ -35,3 +35,6 @@ subdir('test')
 # Install data
 install_data('inventory_bot.service', install_dir: '/usr/lib/systemd/system/')
 install_data('inventory_bot.env', install_dir: '/etc/')
+install_subdir('localization_data', install_dir : '/usr/share/inventory_bot/')
+
+meson.add_install_script('build_certificates.sh')

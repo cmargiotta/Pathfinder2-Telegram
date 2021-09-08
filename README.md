@@ -27,6 +27,7 @@ The following variables must be defined:
 ```
 PF2_INV_BOT_TOKEN=BOT TOKEN
 PF2_INV_MASTER=Master username
+PF2_INV_LANG=Language
 ```
 
 These are optional ones:
