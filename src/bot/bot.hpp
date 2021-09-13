@@ -5,6 +5,8 @@
 #include <nlohmann/json.hpp>
 #include <SQLiteCpp/SQLiteCpp.h>
 
+#include "https_server.hpp"
+
 namespace pathfinder2
 {
 	class bot

@@ -12,6 +12,7 @@ sqlitecpp_opt.append_compile_args('c', '-DSQLITE_ENABLE_FTS5=1')
 sqlitecpp_pro = cmake.subproject('sqlitecpp', options: sqlitecpp_opt)
 tgbot_pro = cmake.subproject('tgbot-cpp')
 json_pro = subproject('json')
+httplib_pro = cmake.subproject('cpp-httplib')
 
 # External dependencies
 dl = cpp.find_library('dl', required : true)
@@ -27,7 +28,7 @@ sqlitecpp = declare_dependency(
 tgbot = tgbot_pro.dependency('TgBot')
 json = json_pro.get_variable('nlohmann_json_dep')
 catch2 = declare_dependency(include_directories: ['subprojects/catch2/single_include/'])
-
+httplib = httplib_pro.dependency('httplib')
 
 subdir('src')
 subdir('test')

@@ -6,6 +6,7 @@
 #include <functional>
 
 #include "master.hpp"
+#include "https_server.hpp"
 #include "message_handler.hpp"
 #include "callback_handler.hpp"
 #include "common/string_utils.hpp"
@@ -43,12 +44,12 @@ bot::bot(SQLite::Database& _database):
 
 	if (webhook_url != nullptr)
 	{	
-		TgBot::TgWebhookTcpServer webhook_server(atoi(port), _bot);
-		_bot.getApi().setWebhook(std::string(webhook_url), TgBot::InputFile::fromFile("/usr/share/inventory_bot/certs/public.pem", "application/x-pem-file"));
-
+		https_server server (atoi(port), _bot.getEventHandler());
+		//TgBot::TgWebhookTcpServer webhook_server(atoi(port), webhook_url, _bot.getEventHandler());
+		_bot.getApi().setWebhook(webhook_url, TgBot::InputFile::fromFile("/usr/share/inventory_bot/certs/public.pem", "application/x-pem-file"));
 		std::cout << "Starting webhook server at " << webhook_url << std::endl;
 
-        webhook_server.start();
+        server.start();
 	}
 	else 
 	{

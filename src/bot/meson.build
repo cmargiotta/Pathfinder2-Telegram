@@ -4,6 +4,7 @@ bot_lib = static_library(	'bot',
 						'master.cpp',
 						'keyboards.cpp',
 						'local_data.cpp',
+						'https_server.cpp',
 						'message_handler.cpp',
 						'callback_handler.cpp',
 						
@@ -39,6 +40,6 @@ bot_lib = static_library(	'bot',
 						'callback_commands/add.cpp',
 						'callback_commands/remove.cpp'
 					],
-					dependencies: [tgbot, json, sqlitecpp, character, cache, inventory, string_utils])
+					dependencies: [tgbot, json, sqlitecpp, character, cache, inventory, string_utils, httplib])
 
 bot = declare_dependency(link_with: bot_lib, include_directories: ['..'])

@@ -10,3 +10,6 @@
 [submodule "subprojects/catch2"]
 	path = subprojects/catch2
 	url = https://github.com/catchorg/Catch2
+[submodule "subprojects/cpp-httplib"]
+	path = subprojects/cpp-httplib
+	url = https://github.com/yhirose/cpp-httplib
