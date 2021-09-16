@@ -18,5 +18,5 @@ https_server::https_server(int _port, const TgBot::EventHandler& handler):
 
 void https_server::start()
 {
-	server.listen("localhost", port);
+	server.listen("0.0.0.0", port);
 }

@@ -1,5 +1,6 @@
 #include "bot.hpp"
 
+#include <ctime>
 #include <cstdlib>
 #include <iostream>
 #include <stdlib.h>
@@ -12,6 +13,15 @@
 #include "common/string_utils.hpp"
 
 using namespace pathfinder2;
+
+std::string timestamp_to_readble(const time_t rawtime)
+{
+    struct tm * dt;
+    char buffer [30];
+    dt = localtime(&rawtime);
+    strftime(buffer, sizeof(buffer), "%m/%d/%y %H:%M", dt);
+    return std::string(buffer);
+}
 
 bot::bot(SQLite::Database& _database):
 	 _bot(getenv("PF2_INV_BOT_TOKEN")),
@@ -46,8 +56,11 @@ bot::bot(SQLite::Database& _database):
 	{	
 		https_server server (atoi(port), _bot.getEventHandler());
 		//TgBot::TgWebhookTcpServer webhook_server(atoi(port), webhook_url, _bot.getEventHandler());
-		_bot.getApi().setWebhook(webhook_url, TgBot::InputFile::fromFile("/usr/share/inventory_bot/certs/public.pem", "application/x-pem-file"));
-		std::cout << "Starting webhook server at " << webhook_url << std::endl;
+		_bot.getApi().setWebhook(webhook_url, TgBot::InputFile::fromFile("/usr/share/inventory_bot/certs/public.crt", "application/x-pem-file"));
+		std::cout << "Starting webhook server at " << _bot.getApi().getWebhookInfo()->url << std::endl;
+		std::cout << "Last error: " << _bot.getApi().getWebhookInfo()->lastErrorMessage << " at " << timestamp_to_readble(_bot.getApi().getWebhookInfo()->lastErrorDate) << std::endl;
+		std::cout << "Pending updates: " << _bot.getApi().getWebhookInfo()->pendingUpdateCount << std::endl;
+		std::cout << "Has custom certificate: " << (_bot.getApi().getWebhookInfo()->hasCustomCertificate ? "yes" : "no") << std::endl;
 
         server.start();
 	}
