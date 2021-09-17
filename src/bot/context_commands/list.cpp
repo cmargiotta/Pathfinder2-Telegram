@@ -27,14 +27,14 @@ void pathfinder2::list_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Da
         {
 			if (category.first != "")
 			{
-            	message_text << "**" << category.first << "**:\n";
+            	message_text << '*' << category.first << "*:\n";
 			}
 			
             for (std::shared_ptr<inventory_entry> item: category.second)
             {
 				if (item)
 				{
-					message_text << '\t' << item->get_name() << ", bulk: " << item->get_bulk_string();
+					message_text << "   " << item->get_name() << ", bulk: " << item->get_bulk_string();
 
 					if (item->get_quantity() > 1)
 					{
@@ -48,8 +48,8 @@ void pathfinder2::list_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Da
         }
 
         character_->set_context("");
-        bot.getApi().sendMessage(id, message_text.str(), false, 0, pathfinder2::remove_keyboard, "Markdown");
-	    bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard(master::get_instance().is_master(id)), "Markdown");
+        bot.getApi().sendMessage(id, message_text.str(), false, 0, pathfinder2::remove_keyboard, "MarkdownV2");
+	    bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard(master::get_instance().is_master(id)), "MarkdownV2");
     }
     else if (text == buttons["list_detail"])
     {

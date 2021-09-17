@@ -20,5 +20,5 @@ void pathfinder2::delete_item_master_(TgBot::Bot& bot, TgBot::Message::Ptr messa
 
 	character_->set_context("");
 	bot.getApi().sendMessage(id, messages["generic_done"]);
-	bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard(master::get_instance().is_master(id)), "Markdown");
+	bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard(master::get_instance().is_master(id)), "MarkdownV2");
 }
