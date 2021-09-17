@@ -48,7 +48,7 @@ void pathfinder2::list_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Da
         }
 
         character_->set_context("");
-        bot.getApi().sendMessage(id, message_text.str());
+        bot.getApi().sendMessage(id, message_text.str(), false, 0, pathfinder2::remove_keyboard, "Markdown");
 	    bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard(master::get_instance().is_master(id)), "Markdown");
     }
     else if (text == buttons["list_detail"])
