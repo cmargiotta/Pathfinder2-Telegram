@@ -20,5 +20,5 @@ void pathfinder2::set_capacity_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQ
 
 	character_->set_context("");
 	bot.getApi().sendMessage(id, messages["generic_done"]);
-	bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard(master::get_instance().is_master(id)), "MarkdownV2");
+	bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard(master::get_instance().is_master(id)));
 }

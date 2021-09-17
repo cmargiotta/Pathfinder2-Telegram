@@ -8,7 +8,7 @@
 	"item_remove_select"			: "Quale oggetto desideri rimuovere? Se ci sono più oggetti corrispondenti alla richiesta, ne verrà eliminato uno soltanto.",
 	"item_delete_request"			: "Quale oggetto vuoi eliminare dal database? Scrivi il nome, serve la corrispondenza esatta.",
 	"item_edit_request"				: "Quale oggetto vuoi modificare? Scrivi il nome, serve la corrispondenza esatta.",
-	"item_register_request"			: "Inserire i dati dell'oggetto separati ogni campo andando accapo. Il template da seguire e':\nnome\nurl\nbulk\n\"descrizione\"\n\nLa descrizione puo' essere multilinea, purche' sia tra virgolette. E' importante che il nome sia il primo campo. Gli unici campi obbligatori sono nome e bulk.",
+	"item_register_request"			: "Inserire i dati dell'oggetto separando ogni campo andando accapo. Il template da seguire è:\nnome\nurl\nbulk\n\"descrizione\"\n\nLa descrizione puo' essere multilinea, purché sia tra virgolette. È importante che il nome sia il primo campo. Gli unici campi obbligatori sono nome e bulk.",
 	"list_granularity_request"		: "Scegli.",
 	"edit_selection"				: "Quale campo vuoi modificare?",
 	"list_detail_selection"			: "Seleziona un oggetto dal tuo inventario.",

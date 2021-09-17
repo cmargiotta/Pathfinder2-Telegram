@@ -1,15 +1,37 @@
 #ifndef STRING_UTILS_HPP_
 #define STRING_UTILS_HPP_
 
+#include <set>
+#include <cctype>
 #include <string>
 #include <vector>
 #include <algorithm>
 
 namespace common
 {
+	static inline const std::set<char> to_escape ({'.', '-', '+', '(', ')'});
+
+	//Used for escaping description when loading from/in database
+	static inline std::string escape(const std::string& src, const std::set<char>& escapee, const char marker)
+	{
+		std::string r;
+
+		for (char c: src)
+		{
+			if (escapee.find(c) != escapee.end())
+			{
+				r += marker;
+			}
+
+			r += c; 
+		}
+
+		return r;
+	}
+
 	static inline bool is_number(const std::string& s)
 	{
-		return std::all_of(s.begin(), s.end(), ::isdigit);
+		return (std::isdigit(s[0]) || s[0] == '-') && std::all_of(s.begin()+1, s.end(), ::isdigit);
 	}
 
 	static inline void trim(std::string& str, const std::string& whitespace = " \t\n")

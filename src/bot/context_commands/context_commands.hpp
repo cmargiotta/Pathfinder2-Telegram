@@ -45,7 +45,7 @@ void pathfinder2::command_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite:
 	auto character_ = pathfinder2::character_cache[id];
 
 	character_->set_context(context);
-	bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard(master::get_instance().is_master(id)), "MarkdownV2");
+	bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard(master::get_instance().is_master(id)));
 }
 */
 #endif // __CONTEXT_COMMANDS_H__

@@ -1,8 +1,10 @@
 #include "item.hpp"
 
+#include <set>
 #include <stdlib.h>
 
 #include "item_database.hpp"
+#include "common/string_utils.hpp"
 
 using std::string;
 using SQLite::Database;
@@ -137,7 +139,7 @@ void item::set_category(const string& category)
 void item::set_description(const std::string& description)
 {
 	auto& item_db = item_database::get_instance();
-	item_db.update_description(name, description);
+	item_db.update_description(name, common::escape(description, common::to_escape, '\\'));
 }
 
 bool item::is_valid()
