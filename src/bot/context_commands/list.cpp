@@ -17,13 +17,13 @@ std::string progress_bar(float progress)
 
     for (int i = 0; i < bar_width; ++i) 
     {
-        if (i <= pos) 
+        if (i < pos) 
         {
             bar += "█";
         }
         else 
         {
-            bar += "-";
+            bar += "\-";
         }
     }
 
