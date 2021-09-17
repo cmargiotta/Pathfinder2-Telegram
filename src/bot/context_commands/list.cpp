@@ -12,22 +12,18 @@ std::string progress_bar(float progress)
 {
     std::string bar ("");
 
-    while (progress < 1.0) 
+    int bar_width = 30;
+    int pos = bar_width * progress;
+
+    for (int i = 0; i < bar_width; ++i) 
     {
-        int bar_width = 30;
-
-        int pos = bar_width * progress;
-
-        for (int i = 0; i < bar_width; ++i) 
+        if (i <= pos) 
         {
-            if (i <= pos) 
-            {
-                bar += "█";
-            }
-            else 
-            {
-                bar += "-";
-            }
+            bar += "█";
+        }
+        else 
+        {
+            bar += "-";
         }
     }
 
