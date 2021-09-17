@@ -8,6 +8,32 @@
 #include "../local_data.hpp"
 #include "character/character_cache.hpp"
 
+std::string progress_bar(float progress)
+{
+    std::string bar ("");
+
+    while (progress < 1.0) 
+    {
+        int bar_width = 30;
+
+        int pos = bar_width * progress;
+
+        for (int i = 0; i < bar_width; ++i) 
+        {
+            if (i <= pos) 
+            {
+                bar += "█";
+            }
+            else 
+            {
+                bar += "-";
+            }
+        }
+    }
+
+    return bar;
+}
+
 void pathfinder2::list_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
 	static auto& messages = pathfinder2::get_messages();
@@ -21,7 +47,10 @@ void pathfinder2::list_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Da
     {
         std::stringstream message_text; 
 
-        message_text << static_cast<int>(character_->get_inventory().get_occupied_bulk()) << '/' << character_->get_capacity() << '\n' << '\n';
+        float occupied = character_->get_inventory().get_occupied_bulk();
+        auto capacity = character_->get_capacity();
+        message_text << static_cast<int>(occupied) << '/' << capacity << '\n';
+        message_text << progress_bar(occupied/capacity) << "\n\n";
 
         for (auto& category: character_->get_inventory().get_categorised_items())
         {
