@@ -27,7 +27,7 @@ void pathfinder2::list_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Da
         {
 			if (category.first != "")
 			{
-            	message_text << '*' << category.first << "*:\n";
+            	message_text << "**" << category.first << "**:\n";
 			}
 			
             for (std::shared_ptr<inventory_entry> item: category.second)
