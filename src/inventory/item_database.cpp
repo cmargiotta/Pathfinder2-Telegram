@@ -18,7 +18,7 @@ using pathfinder2::item_database_entry;
 std::shared_ptr<item_database_entry> item_database::build_entry(const std::string& name)
 {
 	//Load item from database
-	Statement query(database, "SELECT url, name, bulk, description, category FROM items WHERE name MATCH ?");
+	Statement query(database, "SELECT url, name, bulk, description, category FROM items WHERE name = ?");
 	query.bind(1, name);  
 
 	auto item = make_shared<item_database_entry>();
@@ -115,10 +115,9 @@ const std::vector<std::shared_ptr<const item_database_entry>> item_database::sea
 	Statement query(database, "SELECT url, name, bulk, description FROM items WHERE name MATCH ?");
 	query.bind(1, name);  
 
-	auto item = make_shared<item_database_entry>();
-
 	while (query.executeStep())
 	{
+		auto item = make_shared<item_database_entry>();
 		//Build the new item instance
 		item->url = string(query.getColumn(0));
 		item->name = string(query.getColumn(1));
@@ -186,6 +185,7 @@ void item_database::update_bulk(const std::string& name, double bulk)
 
 void item_database::update_category(const std::string& name, const std::string& category)
 {
+	auto a = get_nonconst_item(name);
 	get_nonconst_item(name)->category = category;
 	Transaction transaction(database);
 	

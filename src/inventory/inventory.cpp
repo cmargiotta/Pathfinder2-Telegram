@@ -169,6 +169,19 @@ const decltype(inventory::content_category)& inventory::get_categorised_items()
 {
 	delete_invalid_items();
 
+	for (auto& cat: content_category)
+	{
+		for (auto item = cat.second.begin(); item != cat.second.end(); ++item)
+		{
+			if (item->get()->get_category() != cat.first)
+			{
+				cat.second.erase(item);
+				content_category[item->get()->get_category()].push_back(*item);
+				item = cat.second.begin();
+			}
+		}
+	}
+
 	return content_category;
 }
 

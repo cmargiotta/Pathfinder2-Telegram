@@ -16,25 +16,25 @@ void pathfinder2::edit_value_request_(TgBot::Bot& bot, TgBot::Message::Ptr messa
     auto& text = message->text;
 	auto id = message->chat->id;
 	auto character_ = pathfinder2::character_cache[id];
-	auto fields = common::split(text, ",");
+	auto fields = common::split(character_->get_data(), ",");
 	auto& name = fields[0];
 	auto& field = fields[1];
 
 	if (field == buttons["edit_field_category"])
 	{
-		item_db.update_category(name, field);
+		item_db.update_category(name, text);
 	}
 	else if	(field == buttons["edit_field_bulk"])
 	{
-		item_db.update_bulk(name, field);
+		item_db.update_bulk(name, text);
 	}
 	else if	(field == buttons["edit_field_description"])
 	{
-		item_db.update_description(name, field);
+		item_db.update_description(name, text);
 	}
 	else if (field == buttons["edit_field_url"])
 	{
-		item_db.update_url(name, field);
+		item_db.update_url(name, text);
 	}
 	else
 	{

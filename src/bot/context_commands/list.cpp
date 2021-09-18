@@ -6,6 +6,7 @@
 #include "../master.hpp"
 #include "../keyboards.hpp"
 #include "../local_data.hpp"
+#include "common/string_utils.hpp"
 #include "character/character_cache.hpp"
 
 std::string progress_bar(float progress)
@@ -50,16 +51,13 @@ void pathfinder2::list_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Da
 
         for (auto& category: character_->get_inventory().get_categorised_items())
         {
-			if (category.first != "")
-			{
-            	message_text << '*' << category.first << "*:\n";
-			}
+			message_text << '*' << ((category.first != "") ? category.first : std::string(messages["default_category"])) << "*:\n";
 			
             for (std::shared_ptr<inventory_entry> item: category.second)
             {
 				if (item)
 				{
-					message_text << "   " << item->get_name() << ", bulk: " << item->get_bulk_string();
+					message_text << "   " << common::escape(item->get_name(), common::to_escape, '\\') << ", bulk: " << item->get_bulk_string();
 
 					if (item->get_quantity() > 1)
 					{

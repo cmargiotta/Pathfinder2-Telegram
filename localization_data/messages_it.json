@@ -30,5 +30,6 @@
 	"bulk_error"					: "Formato del bulk non valido.",
 	"item_not_found"				: "Errore, nessun oggetto con questo nome trovato.",
 	"no_duplicate_items"			: "Oggetto gia' nel database, impossibile crearne uno nuovo.",
-	"no_bulk_name"					: "Il nome e il bulk sono obbligatori."
+	"no_bulk_name"					: "Il nome e il bulk sono obbligatori.",
+	"default_category"				: "Altro"
 }
