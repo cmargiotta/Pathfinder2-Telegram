@@ -7,7 +7,7 @@
 
 void pathfinder2::remove_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
-	static auto& messages = pathfinder2::get_messages();
+	static auto& messages = pathfinder2::get_messages(message->from->languageCode);
 
     auto& text = message->text;
 	auto id = message->chat->id;

@@ -14,7 +14,7 @@ void pathfinder2::callback_handler(TgBot::Bot& bot, TgBot::CallbackQuery::Ptr qu
 	auto id = query->message->chat->id;
 	auto character_ = pathfinder2::character_cache[id];
 	
-	static auto& messages = pathfinder2::get_messages();
+	static auto& messages = pathfinder2::get_messages(message->from->languageCode);
 
 	try
 	{

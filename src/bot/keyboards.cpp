@@ -45,7 +45,7 @@ void pathfinder2::add_button_row(ReplyKeyboardMarkup::Ptr keyboard, const string
 
 ReplyKeyboardMarkup::Ptr pathfinder2::get_default_keyboard(bool master)
 {
-	static auto& keys = get_commands();
+	static auto& keys = get_commands(message->from->languageCode);
 
 	static auto keyboard = pathfinder2::create_keyboard({
 		{keys["add"], keys["remove"]},

@@ -7,8 +7,8 @@
 
 void pathfinder2::edit_item_master_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
-	static auto& messages = pathfinder2::get_messages();
-    static auto& buttons = pathfinder2::get_commands();
+	static auto& messages = pathfinder2::get_messages(message->from->languageCode);
+    static auto& buttons = pathfinder2::get_commands(message->from->languageCode);
 	static auto keyboard = create_keyboard({
 		{std::string(buttons["edit_field_category"])},
 		{std::string(buttons["edit_field_bulk"])},

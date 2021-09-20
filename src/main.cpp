@@ -11,7 +11,7 @@ int main()
 {
 	char* db_path = getenv("PF2_INV_DB_PATH");
 
-	if (db_path == nullptr)
+	if (db_path == nullptr || db_path[0] == '\0')
 	{
 		db_path = "./pf2_inv.db";
 	}

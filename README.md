@@ -43,17 +43,6 @@ Other default values (when not specified):
 - `PF2_INV_PORT`: 8080
 - `PF2_INV_DB_PATH`: ./pf2_inv.db
 
-### Docker
-
-The easiest way to run this bot is to use the preconfigured Docker environment.
-
-```bash
-docker pull registry.gitlab.com/car.margiotta/pathfinder2-telegram
-docker run registry.gitlab.com/car.margiotta/pathfinder2-telegram --env-file config.env -p 8080:8080
-```
-
-With an environment defined in the file `config.env`, it will expose port 8080.
-
 ### Build from source
 
 Requirements:
@@ -71,4 +60,27 @@ meson build
 ninja -C build test
 ```
 
-The executable will be at `build/src/pathfinder2_inv`
+The executable will be at `build/src/pathfinder2_inv`.
+
+To install: 
+
+```
+cd build
+sudo meson install
+```
+
+This will install the executable in `/usr/bin/inventory_bot`, a `.service` file, the environment file in `/etc/inventory_bot.env` and the localized JSONs in `/usr/share/inventory_bot/localized_data/`. You will need to provide SSL certificates in `/usr/share/inventory_bot/certs/public.crt` and `/usr/share/inventory_bot/private.key`.
+
+You can generate custom certificates with:
+
+```
+openssl req -newkey rsa:2048 -sha256 -nodes -keyout /usr/share/inventory_bot/certs/private.key -x509 -days 365 -out /usr/share/inventory_bot/certs/public.crt -subj "/C=IT/CN=$PF2_INV_WEBHOOK_URL"
+```
+
+You are free to edit `/usr/share/inventory_bot/localized_data/[messages, commands]_language.json` to customize messages and keyboards and to add new languages support.
+
+To run the bot service: 
+
+```
+sudo systemctl start inventory_bot
+```

@@ -13,7 +13,7 @@ using pathfinder2::character;
 
 void pathfinder2::_start(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
-	static auto& messages = pathfinder2::get_messages();
+	static auto& messages = pathfinder2::get_messages(message->from->languageCode);
 	auto character_ = make_shared<character>(message->chat->id, database);
 	pathfinder2::character_cache.insert(character_->get_id(), character_);
 

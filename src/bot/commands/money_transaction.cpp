@@ -7,7 +7,7 @@
 
 void pathfinder2::_money_transaction(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
-	static auto& messages = pathfinder2::get_messages();
+	static auto& messages = pathfinder2::get_messages(message->from->languageCode);
 
 	auto id = message->chat->id;
 	auto character_ = pathfinder2::character_cache[id];

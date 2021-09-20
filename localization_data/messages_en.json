@@ -1,0 +1,35 @@
+{
+	"generic_error"					: "( ͡° ͜ʖ ͡°)",
+	"default_message"				: "What do you want to do?",
+	"generic_done"					: "OK, done.",
+	
+	"edit_value_request"			: "Value?.",
+	"add_response"					: "Provide the name of the item you want to add or select it from the given list.",
+	"item_remove_select"			: "Please select the item you want to remove. If the selected item's quantity is more than one, it will be decreased by one.",
+	"item_delete_request"			: "Please provide the name of the item you want to remove from the database. Only exact matches are accepted.",
+	"item_edit_request"				: "Please provide the name of the item you want to edit from the database. Only exact matches are accepted.",
+	"item_register_request"			: "Please provide the new item's data in this form:\nname\nurl\nbulk\n\"description\"\n\nDescription can be multiline, please respect the order. Every field is optional, name and bulk are mandatory.",
+	"list_granularity_request"		: "Choose.",
+	"edit_selection"				: "What do you want to edit?",
+	"list_detail_selection"			: "Select an item from your inventory.",
+	"money_transaction_request"		: "How many copper coins? Negative number for paying.",
+	"capacity_request"				: "What is your capacity?",
+	"custom_item_info_request"		: "Provide bulk (mandatory) and category (optional) separated by commas.",
+
+	"add_item_request"				: "Which item do you want to add? If it is a custom item, select the right button",
+
+	"add_done"						: "Added!",
+	"remove_done"					: "Removed!",
+	"cancel_done"					: "OK.",
+
+	"reset_done"					: "Reset done!",
+
+	"selection_error"				: "Not valid.",
+	"authorization_error"			: "Not authorized.",
+	"no_money_error"				: "Not enough money, F.",
+	"bulk_error"					: "Bulk format invalid.",
+	"item_not_found"				: "Error, this item does not exist.",
+	"no_duplicate_items"			: "Error, item already in database.",
+	"no_bulk_name"					: "Error. Name and bulk are mandatory.",
+	"default_category"				: "Miscellaneous"
+}

@@ -8,9 +8,9 @@
 
 void pathfinder2::add_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
-	static auto& messages = pathfinder2::get_messages();
+	static auto& messages = pathfinder2::get_messages(message->from->languageCode);
     static auto& item_db = pathfinder2::item_database::get_instance();
-    static auto& buttons = pathfinder2::get_commands();
+    static auto& buttons = pathfinder2::get_commands(message->from->languageCode);
 
     auto& text = message->text;
 	auto id = message->chat->id;

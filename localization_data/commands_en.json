@@ -1,0 +1,22 @@
+{
+	"start"					: "/start",
+	"reset"					: "/reset",
+	"add"					: "Add",
+	"remove"				: "Remove",
+	"list"					: "List",
+	"set_capacity"			: "Set capacity",
+	"get_money"				: "Wallet",
+	"money_transaction"		: "Wall street",
+	"cancel"				: "Cancel",
+	"ask_master"			: "Ask the master to add it",
+	"create_custom_item"	: "It is a custom item",
+	"list_brief"			: "Brief",
+	"list_detail"			: "Detailed",
+	"register_item_master"	: "Register new item",
+	"delete_item_master"	: "Delete item",
+	"edit_item_master"		: "Edit item",
+	"edit_field_category"	: "Category",
+	"edit_field_bulk"		: "Bulk",
+	"edit_field_description": "Description",
+	"edit_field_url"		: "URL"
+}

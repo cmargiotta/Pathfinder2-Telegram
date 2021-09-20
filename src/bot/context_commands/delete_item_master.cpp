@@ -8,8 +8,8 @@
 
 void pathfinder2::delete_item_master_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
-	static auto& messages = pathfinder2::get_messages();
-    static auto& buttons = pathfinder2::get_commands();
+	static auto& messages = pathfinder2::get_messages(message->from->languageCode);
+    static auto& buttons = pathfinder2::get_commands(message->from->languageCode);
 
     auto& text = message->text;
 	auto id = message->chat->id;
