@@ -12,8 +12,8 @@
 
 void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
-	static auto& messages = pathfinder2::get_messages(query->message->from->languageCode);
-	static auto& keys = pathfinder2::get_commands(query->message->from->languageCode);
+	static auto& messages = pathfinder2::get_messages(message->from->languageCode);
+	static auto& keys = pathfinder2::get_commands(message->from->languageCode);
 
 	auto id = message->chat->id;
 	auto character_ = pathfinder2::character_cache[id];
