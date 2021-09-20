@@ -138,6 +138,7 @@ void inventory::reset()
 
 	content_category.clear();
 	content_name.clear();
+	item_names.clear();
 }
 
 void inventory::delete_invalid_items()
