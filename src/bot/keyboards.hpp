@@ -11,7 +11,7 @@
 namespace pathfinder2
 {
 	TgBot::ReplyKeyboardMarkup::Ptr create_keyboard(const std::vector<std::vector<std::string>>& button_layout);
-	TgBot::ReplyKeyboardMarkup::Ptr get_default_keyboard(bool master = false);
+	TgBot::ReplyKeyboardMarkup::Ptr get_default_keyboard(const std::string& locale, bool master = false);
 
 	void add_button_row(TgBot::ReplyKeyboardMarkup::Ptr keyboard, const std::string& text);
 

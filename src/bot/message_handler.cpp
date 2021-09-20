@@ -12,8 +12,8 @@
 
 void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
-	static auto& messages = pathfinder2::get_messages(message->from->languageCode);
-	static auto& keys = pathfinder2::get_commands(message->from->languageCode);
+	static auto& messages = pathfinder2::get_messages(query->message->from->languageCode);
+	static auto& keys = pathfinder2::get_commands(query->message->from->languageCode);
 
 	auto id = message->chat->id;
 	auto character_ = pathfinder2::character_cache[id];
@@ -42,7 +42,7 @@ void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, 
 			{
 				character_->set_context("");
 				bot.getApi().sendMessage(character_->get_id(), messages["cancel_done"]);
-				bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard(master::get_instance().is_master(id)));
+				bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard(message->from->languageCode, master::get_instance().is_master(id)));
 				return;
 			}
 

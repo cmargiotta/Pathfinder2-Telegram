@@ -43,9 +43,9 @@ void pathfinder2::add_button_row(ReplyKeyboardMarkup::Ptr keyboard, const string
 	keyboard->keyboard.push_back(row);
 }
 
-ReplyKeyboardMarkup::Ptr pathfinder2::get_default_keyboard(bool master)
+ReplyKeyboardMarkup::Ptr pathfinder2::get_default_keyboard(const std::string& locale, bool master)
 {
-	static auto& keys = get_commands(message->from->languageCode);
+	static auto& keys = get_commands(locale);
 
 	static auto keyboard = pathfinder2::create_keyboard({
 		{keys["add"], keys["remove"]},
