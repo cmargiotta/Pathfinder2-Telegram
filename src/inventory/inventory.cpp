@@ -93,7 +93,7 @@ void inventory::erase_item(const string& name)
 
 	auto& category_list = content_category[_item->get_category()];
 	item_names.erase(_item->get_name());
-	std::remove(category_list.begin(), category_list.end(), _item);
+	category_list.remove(_item);
 
 	_item->remove();
 }
@@ -152,7 +152,6 @@ void inventory::delete_invalid_items()
 			item_names.erase(entry.second->get_name());
 
 			category_list.remove(entry.second);
-			content_name.erase(entry.second->get_name());
 			return delete_invalid_items();
 		}
 	}

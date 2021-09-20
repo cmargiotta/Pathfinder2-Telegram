@@ -82,11 +82,6 @@ void custom_item::update_quantity(int delta)
 
 		transaction.commit();
 	}
-	else  
-	{
-		//Quantity reached 0, remove this item
-		remove();	
-	}
 }
 
 void custom_item::set_bulk(const string& bulk)
