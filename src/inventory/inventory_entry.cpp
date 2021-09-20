@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <algorithm>
 #include <stdexcept>
+#include <common/string_utils.hpp>
 
 using std::string;
 using pathfinder2::inventory_entry;
@@ -70,7 +71,8 @@ void inventory_entry::set_category(const string& category)
 
 void inventory_entry::set_bulk(const string& bulk) 
 {
-	if (bulk.empty() || (!std::all_of(bulk.begin(), bulk.end(), ::isdigit) && (bulk.size() != 1 && bulk[0] != 'L')))
+	if (bulk.empty() || 
+		!(common::is_number(bulk) || (bulk.size() == 1 && bulk[0] == 'L')))
 	{
 		throw std::runtime_error("bulk_error");
 	}
