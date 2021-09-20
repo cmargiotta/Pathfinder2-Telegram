@@ -1,3 +1,3 @@
 #!/bin/sh
 
-cp -u inventory_bot.env /etc/
+cp -n ../inventory_bot.env /etc/

@@ -16,7 +16,7 @@ using std::filesystem::directory_iterator;
 set<string> parse_installed_languages()
 {
 	static set<string> languages;
-	bool parsed = false; 
+	static bool parsed = false; 
 
 	if (!parsed)
 	{
@@ -26,15 +26,18 @@ set<string> parse_installed_languages()
 		for (auto& file: directory_iterator("/usr/share/inventory_bot/localization_data/"))
 		{
 			string path = file.path();
-			string lang = path.substr(path.size()-7, path.size()-5);
+			string lang = path.substr(path.size()-7, 2);
 			languages.insert(lang);
+		}
 
-			std::cout << lang << " ";
+		for (auto& lang: languages)
+		{
+			std::cout << lang << ' ';
 		}
 
 		std::cout << '\n';
 	}
-	
+
 	return languages;
 }
 
@@ -47,7 +50,7 @@ nlohmann::json& pathfinder2::get_commands(const std::string& locale)
 	if (!init)
 	{
 		for (auto& l: parse_installed_languages())
-		{	
+		{
 			std::ifstream(std::string("/usr/share/inventory_bot/localization_data/commands_") + l + ".json") >> commands[l];
 		}
 
