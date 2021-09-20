@@ -13,7 +13,7 @@ std::string progress_bar(float progress)
 {
     std::string bar ("");
 
-    int bar_width = 30;
+    int bar_width = 25;
     int pos = bar_width * progress;
 
     for (int i = 0; i < bar_width; ++i) 
@@ -24,7 +24,7 @@ std::string progress_bar(float progress)
         }
         else 
         {
-            bar += "\\-";
+            bar += "▒";
         }
     }
 
@@ -47,7 +47,7 @@ void pathfinder2::list_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Da
         float occupied = character_->get_inventory().get_occupied_bulk();
         auto capacity = character_->get_capacity();
         message_text << static_cast<int>(occupied) << '/' << capacity << '\n';
-        message_text << progress_bar(occupied/capacity) << "\n\n";
+        message_text << "```" << progress_bar(occupied/capacity) << "```\n\n";
 
         for (auto& category: character_->get_inventory().get_categorised_items())
         {
