@@ -14,8 +14,8 @@ using std::make_shared;
 
 void pathfinder2::remove(TgBot::Bot& bot, TgBot::CallbackQuery::Ptr query, SQLite::Database& database)
 {
-	static auto& messages = pathfinder2::get_messages(message->from->languageCode);
-    static auto& buttons = pathfinder2::get_commands(message->from->languageCode);
+	static auto& messages = pathfinder2::get_messages(query->message->from->languageCode);
+    static auto& buttons = pathfinder2::get_commands(query->message->from->languageCode);
 
     auto& text = query->message->text;
 	auto id = query->message->chat->id;
