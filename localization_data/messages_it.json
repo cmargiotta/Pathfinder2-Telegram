@@ -31,5 +31,6 @@
 	"item_not_found"				: "Errore, nessun oggetto con questo nome trovato.",
 	"no_duplicate_items"			: "Oggetto gia' nel database, impossibile crearne uno nuovo.",
 	"no_bulk_name"					: "Il nome e il bulk sono obbligatori.",
-	"default_category"				: "Altro"
+	"default_category"				: "Altro",
+	"command_error"					: "Comando non valido"
 }

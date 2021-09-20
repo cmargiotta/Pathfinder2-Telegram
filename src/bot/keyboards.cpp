@@ -7,7 +7,6 @@
 using std::vector;
 using std::string;
 using std::ifstream;
-using pathfinder2::get_commands;
 using TgBot::KeyboardButton;
 using TgBot::ReplyKeyboardMarkup;
 
@@ -45,23 +44,21 @@ void pathfinder2::add_button_row(ReplyKeyboardMarkup::Ptr keyboard, const string
 
 ReplyKeyboardMarkup::Ptr pathfinder2::get_default_keyboard(const std::string& locale, bool master)
 {
-	static auto& keys = get_commands(locale);
-
 	static auto keyboard = pathfinder2::create_keyboard({
-		{keys["add"], keys["remove"]},
-		{keys["list"]},
-		{keys["set_capacity"]},
-		{keys["get_money"], keys["money_transaction"]}
+		{get_command("add", locale), get_command("remove", locale)},
+		{get_command("list", locale)},
+		{get_command("set_capacity", locale)},
+		{get_command("get_money", locale), get_command("money_transaction", locale)}
 	});
 	
 	static auto master_keyboard = pathfinder2::create_keyboard({
-		{keys["add"], keys["remove"]},
-		{keys["list"]},
-		{keys["set_capacity"]},
-		{keys["get_money"], keys["money_transaction"]},
-		{keys["register_item_master"]},
-		{keys["delete_item_master"]},
-		{keys["edit_item_master"]}
+		{get_command("add", locale), get_command("remove", locale)},
+		{get_command("list", locale)},
+		{get_command("set_capacity", locale)},
+		{get_command("get_money", locale), get_command("money_transaction", locale)},
+		{get_command("register_item_master", locale)},
+		{get_command("delete_item_master", locale)},
+		{get_command("edit_item_master", locale)}
 	});
 
 	if (!master)

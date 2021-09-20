@@ -8,9 +8,6 @@
 
 void pathfinder2::delete_item_master_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
-	static auto& messages = pathfinder2::get_messages(message->from->languageCode);
-    static auto& buttons = pathfinder2::get_commands(message->from->languageCode);
-
     auto& text = message->text;
 	auto id = message->chat->id;
 	auto character_ = pathfinder2::character_cache[id];
@@ -19,6 +16,6 @@ void pathfinder2::delete_item_master_(TgBot::Bot& bot, TgBot::Message::Ptr messa
 	item_db.delete_item(text);
 
 	character_->set_context("");
-	bot.getApi().sendMessage(id, messages["generic_done"]);
-	bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard(message->from->languageCode, master::get_instance().is_master(id)));
+	bot.getApi().sendMessage(id, get_message("generic_done", message->from->languageCode));
+	bot.getApi().sendMessage(id, get_message("default_message", message->from->languageCode), false, 0, pathfinder2::get_default_keyboard(message->from->languageCode, master::get_instance().is_master(id)));
 }

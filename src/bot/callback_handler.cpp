@@ -14,8 +14,6 @@ void pathfinder2::callback_handler(TgBot::Bot& bot, TgBot::CallbackQuery::Ptr qu
 	auto id = query->message->chat->id;
 	auto character_ = pathfinder2::character_cache[id];
 	
-	static auto& messages = pathfinder2::get_messages(query->message->from->languageCode);
-
 	try
 	{
 		pathfinder2::callback_commands.at(query->data[0])(bot, query, database);
@@ -24,7 +22,7 @@ void pathfinder2::callback_handler(TgBot::Bot& bot, TgBot::CallbackQuery::Ptr qu
 	{
 		try
 		{
-			bot.getApi().sendMessage(character_->get_id(), messages[e.what()]);
+			bot.getApi().sendMessage(character_->get_id(), get_message(e.what(), query->message->from->languageCode));
 		}
 		catch(...)
 		{
@@ -33,6 +31,6 @@ void pathfinder2::callback_handler(TgBot::Bot& bot, TgBot::CallbackQuery::Ptr qu
 	}
 	catch(...)
 	{
-		bot.getApi().sendMessage(character_->get_id(), messages["generic_error"]);
+		bot.getApi().sendMessage(character_->get_id(), get_message("generic_error", query->message->from->languageCode));
 	}
 }

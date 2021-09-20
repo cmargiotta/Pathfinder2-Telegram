@@ -41,40 +41,121 @@ set<string> parse_installed_languages()
 	return languages;
 }
 
-nlohmann::json& pathfinder2::get_commands(const std::string& locale)
+const std::string& pathfinder2::get_command(const std::string& key, const std::string& locale)
 {
 	static std::string default_locale = getenv("PF2_INV_LANG");
-	static map<string, nlohmann::json> commands;
+	static map<string, map<string, string>> commands;
 	static bool init = false;
 
 	if (!init)
 	{
 		for (auto& l: parse_installed_languages())
 		{
-			std::ifstream(std::string("/usr/share/inventory_bot/localization_data/commands_") + l + ".json") >> commands[l];
+			nlohmann::json commands_json;
+			std::ifstream(std::string("/usr/share/inventory_bot/localization_data/commands_") + l + ".json") >> commands_json;
+
+			for (auto i = commands_json.begin(); i != commands_json.end(); ++i)
+			{
+				commands[l][i.key()] = i.value();
+			}
+		}
+	}
+
+	try 
+	{
+		return commands[(locale == "") ? default_locale : locale].at(key);
+	}
+	catch(...)
+	{
+		return key;
+	}
+}
+
+const std::string& pathfinder2::get_command_id(const std::string& key, const std::string& locale)
+{
+	static std::string default_locale = getenv("PF2_INV_LANG");
+	static map<string, map<string, string>> commands;
+	static bool init = false;
+
+	if (!init)
+	{
+		for (auto& l: parse_installed_languages())
+		{
+			nlohmann::json commands_json;
+			std::ifstream(std::string("/usr/share/inventory_bot/localization_data/commands_") + l + ".json") >> commands_json;
+
+			for (auto i = commands_json.begin(); i != commands_json.end(); ++i)
+			{
+				commands[l][i.value()] = i.key();
+			}
 		}
 
 		init = true;
 	}
 
-	return commands[(locale == "") ? default_locale : locale];
+	try 
+	{
+		return commands[(locale == "") ? default_locale : locale].at(key);
+	}
+	catch(...)
+	{
+		throw std::runtime_error("command_error");
+	}
 }
 
-nlohmann::json& pathfinder2::get_messages(const std::string& locale)
+const std::string& pathfinder2::get_message(const std::string& key, const std::string& locale)
 {
 	static std::string default_locale = getenv("PF2_INV_LANG");
-	static map<string, nlohmann::json> messages;
+	static map<string, map<string, string>> messages;
 	static bool init = false;
 
 	if (!init)
 	{
 		for (auto& l: parse_installed_languages())
 		{	
-			std::ifstream(std::string("/usr/share/inventory_bot/localization_data/messages_") + l + ".json") >> messages[l];
+			nlohmann::json message_json;
+			std::ifstream(std::string("/usr/share/inventory_bot/localization_data/messages_") + l + ".json") >> message_json;
+
+			for (auto i = message_json.begin(); i != message_json.end(); ++i)
+			{
+				messages[l][i.key()] = i.value();
+			}
 		}
 
 		init = true;
 	}
 
-	return messages[(locale == "") ? default_locale : locale];
+	try 
+	{
+		return messages[(locale == "") ? default_locale : locale].at(key);
+	}
+	catch(...)
+	{
+		return key;
+	}
+}
+
+const std::string& pathfinder2::get_message_id(const std::string& key, const std::string& locale)
+{
+	static std::string default_locale = getenv("PF2_INV_LANG");
+	static map<string, map<string, string>> messages_ids;
+	static bool init = false;
+
+	if (!init)
+	{
+		for (auto& l: parse_installed_languages())
+		{
+			nlohmann::json message_json;
+			std::ifstream(std::string("/usr/share/inventory_bot/localization_data/messages_") + l + ".json") >> message_json;
+
+			for (auto i = message_json.begin(); i != message_json.end(); ++i)
+			{
+				messages_ids[l][i.value()] = i.key();
+			}
+		}
+
+		init = true;
+	}
+
+	return messages_ids[(locale == "") ? default_locale : locale].at(key);
 }

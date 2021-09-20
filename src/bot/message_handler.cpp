@@ -12,9 +12,6 @@
 
 void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
-	static auto& messages = pathfinder2::get_messages(message->from->languageCode);
-	static auto& keys = pathfinder2::get_commands(message->from->languageCode);
-
 	auto id = message->chat->id;
 	auto character_ = pathfinder2::character_cache[id];
 
@@ -24,37 +21,21 @@ void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, 
 	{
 		if (context.empty())
 		{		
-			std::string cmd;
-			for (auto i = keys.begin(); i != keys.end(); ++i)
-			{
-				if (i.value() == message->text)
-				{
-					cmd = i.key();
-					break;
-				}
-			}
+			std::string cmd = get_command_id(message->text, message->from->languageCode);
 
 			pathfinder2::commands.at(cmd)(bot, message, database);	
 		}
 		else
 		{
-			if (message->text == keys["cancel"])
+			if (message->text == get_command("cancel", message->from->languageCode))
 			{
 				character_->set_context("");
-				bot.getApi().sendMessage(character_->get_id(), messages["cancel_done"]);
-				bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard(message->from->languageCode, master::get_instance().is_master(id)));
+				bot.getApi().sendMessage(character_->get_id(), get_message("cancel_done", message->from->languageCode));
+				bot.getApi().sendMessage(id, get_message("default_message", message->from->languageCode), false, 0, pathfinder2::get_default_keyboard(message->from->languageCode, master::get_instance().is_master(id)));
 				return;
 			}
 
-			std::string last_request;
-			for (auto i = messages.begin(); i != messages.end(); ++i)
-			{
-				if (i.value() == context)
-				{
-					last_request = i.key();
-					break;
-				}
-			}
+			std::string last_request = get_message_id(context, message->from->languageCode);
 
 			pathfinder2::context_commands.at(last_request)(bot, message, database);	
 		}
@@ -63,7 +44,7 @@ void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, 
 	{
 		try
 		{
-			bot.getApi().sendMessage(character_->get_id(), messages[e.what()]);
+			bot.getApi().sendMessage(character_->get_id(), get_message(e.what(), message->from->languageCode));
 		}
 		catch(...)
 		{
@@ -72,6 +53,6 @@ void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, 
 	}
 	catch(...)
 	{
-		bot.getApi().sendMessage(character_->get_id(), messages["generic_error"]);
+		bot.getApi().sendMessage(character_->get_id(), get_message("generic_error", message->from->languageCode));
 	}
 }

@@ -31,5 +31,6 @@
 	"item_not_found"				: "Error, this item does not exist.",
 	"no_duplicate_items"			: "Error, item already in database.",
 	"no_bulk_name"					: "Error. Name and bulk are mandatory.",
-	"default_category"				: "Miscellaneous"
+	"default_category"				: "Miscellaneous",
+	"command_error"					: "Invalid command"
 }

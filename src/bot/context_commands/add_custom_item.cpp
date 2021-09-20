@@ -8,9 +8,6 @@
 
 void pathfinder2::add_custom_item_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
-	static auto& messages = pathfinder2::get_messages(message->from->languageCode);
-    static auto& buttons = pathfinder2::get_commands(message->from->languageCode);
-
     auto& text = message->text;
 	auto id = message->chat->id;
 	auto character_ = pathfinder2::character_cache[id];
@@ -47,6 +44,6 @@ void pathfinder2::add_custom_item_(TgBot::Bot& bot, TgBot::Message::Ptr message,
 	keyboard->inlineKeyboard.push_back(row0);
 
 	character_->set_context("");
-	bot.getApi().sendMessage(id, std::string(messages["add_done"]) + " x1", false, 0, keyboard);
-    bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard(message->from->languageCode, master::get_instance().is_master(id)));
+	bot.getApi().sendMessage(id, std::string(get_message("add_done", message->from->languageCode)) + " x1", false, 0, keyboard);
+    bot.getApi().sendMessage(id, get_message("default_message", message->from->languageCode), false, 0, pathfinder2::get_default_keyboard(message->from->languageCode, master::get_instance().is_master(id)));
 }

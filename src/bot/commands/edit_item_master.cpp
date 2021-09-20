@@ -7,9 +7,6 @@
 
 void pathfinder2::_edit_item_master(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
-	static auto& messages = pathfinder2::get_messages(message->from->languageCode);
-    static auto& buttons = pathfinder2::get_commands(message->from->languageCode);
-
 	auto id = message->chat->id;
 	auto character_ = pathfinder2::character_cache[id];
 
@@ -18,6 +15,6 @@ void pathfinder2::_edit_item_master(TgBot::Bot& bot, TgBot::Message::Ptr message
 		throw std::runtime_error("authorization_error");
 	}
 
-	character_->set_context(messages["item_edit_request"]);
+	character_->set_context(get_message("item_edit_request", message->from->languageCode));
 	bot.getApi().sendMessage(id, character_->get_context(), false, 0, pathfinder2::remove_keyboard);
 }

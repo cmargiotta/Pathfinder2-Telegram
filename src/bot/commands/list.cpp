@@ -7,14 +7,18 @@
 
 void pathfinder2::_list(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
-	static auto& messages = pathfinder2::get_messages(message->from->languageCode);
-    static auto& buttons = pathfinder2::get_commands(message->from->languageCode);
-
 	auto id = message->chat->id;
 	auto character_ = pathfinder2::character_cache[id];
 
-    auto keyboard = pathfinder2::create_keyboard({{buttons["list_brief"]}, {buttons["list_detail"]}});
+    auto keyboard = pathfinder2::create_keyboard({
+		{
+			get_command("list_brief")
+		}, 
+		{
+			get_command("list_detail", message->from->languageCode)
+		}
+	});
 
-	character_->set_context(messages["list_granularity_request"]);
+	character_->set_context(get_message("list_granularity_request", message->from->languageCode));
 	bot.getApi().sendMessage(character_->get_id(), character_->get_context(), false, 0, keyboard);
 }

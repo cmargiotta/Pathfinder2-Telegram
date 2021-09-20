@@ -33,14 +33,11 @@ std::string progress_bar(float progress)
 
 void pathfinder2::list_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
-	static auto& messages = pathfinder2::get_messages(message->from->languageCode);
-    static auto& buttons = pathfinder2::get_commands(message->from->languageCode);
-
     const auto& text = message->text;
 	auto id = message->chat->id;
 	auto character_ = pathfinder2::character_cache[id];
 
-    if (text == buttons["list_brief"])
+    if (text == get_command("list_brief", message->from->languageCode))
     {
         std::stringstream message_text; 
 
@@ -51,7 +48,7 @@ void pathfinder2::list_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Da
 
         for (auto& category: character_->get_inventory().get_categorised_items())
         {
-			message_text << '*' << ((category.first != "") ? category.first : std::string(messages["default_category"])) << "*:\n";
+			message_text << '*' << ((category.first != "") ? category.first : std::string(get_message("default_category", message->from->languageCode))) << "*:\n";
 			
             for (std::shared_ptr<inventory_entry> item: category.second)
             {
@@ -72,9 +69,9 @@ void pathfinder2::list_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Da
 
         character_->set_context("");
         bot.getApi().sendMessage(id, message_text.str(), false, 0, pathfinder2::remove_keyboard, "MarkdownV2");
-	    bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard(message->from->languageCode, master::get_instance().is_master(id)));
+	    bot.getApi().sendMessage(id, get_message("default_message", message->from->languageCode), false, 0, pathfinder2::get_default_keyboard(message->from->languageCode, master::get_instance().is_master(id)));
     }
-    else if (text == buttons["list_detail"])
+    else if (text == get_command("list_detail", message->from->languageCode))
     {
         auto keyboard = pathfinder2::create_keyboard({});
 
@@ -83,9 +80,9 @@ void pathfinder2::list_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Da
             pathfinder2::add_button_row(keyboard, item);
         }
 
-        pathfinder2::add_button_row(keyboard, buttons["cancel"]);
+        pathfinder2::add_button_row(keyboard, get_command("cancel", message->from->languageCode));
 
-        character_->set_context(messages["list_detail_selection"]);
+        character_->set_context(get_message("list_detail_selection", message->from->languageCode));
         bot.getApi().sendMessage(id, character_->get_context(), false, 0, keyboard);
     }
     else

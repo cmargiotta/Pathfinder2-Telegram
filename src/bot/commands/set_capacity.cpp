@@ -7,11 +7,10 @@
 
 void pathfinder2::_set_capacity(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
-	static auto& messages = pathfinder2::get_messages(message->from->languageCode);
-
+	
 	auto id = message->chat->id;
 	auto character_ = pathfinder2::character_cache[id];
 
-	character_->set_context(messages["capacity_request"]);
+	character_->set_context(get_message("capacity_request", message->from->languageCode));
 	bot.getApi().sendMessage(id, character_->get_context(), false, 0, pathfinder2::remove_keyboard);
 }

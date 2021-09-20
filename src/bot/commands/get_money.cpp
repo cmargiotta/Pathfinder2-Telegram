@@ -12,8 +12,7 @@ using std::stringstream;
 
 void pathfinder2::_get_money(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
-	static auto& messages = pathfinder2::get_messages(message->from->languageCode);
-
+	
 	auto id = message->chat->id;
 	auto character_ = pathfinder2::character_cache[id];
 
@@ -30,5 +29,5 @@ void pathfinder2::_get_money(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLit
 
 	character_->set_context("");
     bot.getApi().sendMessage(id, text.str());
-	bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard(message->from->languageCode, master::get_instance().is_master(id)));
+	bot.getApi().sendMessage(id, get_message("default_message", message->from->languageCode), false, 0, pathfinder2::get_default_keyboard(message->from->languageCode, master::get_instance().is_master(id)));
 }

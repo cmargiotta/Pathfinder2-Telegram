@@ -9,9 +9,6 @@
 
 void pathfinder2::edit_value_request_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
-	static auto& messages = pathfinder2::get_messages(message->from->languageCode);
-    static auto& buttons = pathfinder2::get_commands(message->from->languageCode);
-
 	auto& item_db = item_database::get_instance();
     auto& text = message->text;
 	auto id = message->chat->id;
@@ -20,19 +17,19 @@ void pathfinder2::edit_value_request_(TgBot::Bot& bot, TgBot::Message::Ptr messa
 	auto& name = fields[0];
 	auto& field = fields[1];
 
-	if (field == buttons["edit_field_category"])
+	if (field == get_command("edit_field_category", message->from->languageCode))
 	{
 		item_db.update_category(name, text);
 	}
-	else if	(field == buttons["edit_field_bulk"])
+	else if	(field == get_command("edit_field_bulk", message->from->languageCode))
 	{
 		item_db.update_bulk(name, text);
 	}
-	else if	(field == buttons["edit_field_description"])
+	else if	(field == get_command("edit_field_description", message->from->languageCode))
 	{
 		item_db.update_description(name, text);
 	}
-	else if (field == buttons["edit_field_url"])
+	else if (field == get_command("edit_field_url", message->from->languageCode))
 	{
 		item_db.update_url(name, text);
 	}
@@ -42,5 +39,5 @@ void pathfinder2::edit_value_request_(TgBot::Bot& bot, TgBot::Message::Ptr messa
 	}
 
 	character_->set_context("");
-	bot.getApi().sendMessage(id, messages["default_message"], false, 0, pathfinder2::get_default_keyboard(message->from->languageCode, master::get_instance().is_master(id)));
+	bot.getApi().sendMessage(id, get_message("default_message", message->from->languageCode), false, 0, pathfinder2::get_default_keyboard(message->from->languageCode, master::get_instance().is_master(id)));
 }

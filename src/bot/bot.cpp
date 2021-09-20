@@ -55,7 +55,6 @@ bot::bot(SQLite::Database& _database):
 	if (webhook_url != nullptr)
 	{	
 		https_server server (atoi(port), _bot.getEventHandler());
-		//TgBot::TgWebhookTcpServer webhook_server(atoi(port), webhook_url, _bot.getEventHandler());
 		_bot.getApi().setWebhook(webhook_url, TgBot::InputFile::fromFile("/usr/share/inventory_bot/certs/public.crt", "application/x-pem-file"));
 		std::cout << "Starting webhook server at " << _bot.getApi().getWebhookInfo()->url << std::endl;
 		std::cout << "Last error: " << _bot.getApi().getWebhookInfo()->lastErrorMessage << " at " << timestamp_to_readble(_bot.getApi().getWebhookInfo()->lastErrorDate) << std::endl;
@@ -68,6 +67,7 @@ bot::bot(SQLite::Database& _database):
 	{
 		std::cout << "Warning, webhook url not set, starting long poll mode.\n";
 
+		_bot.getApi().deleteWebhook();
 		TgBot::TgLongPoll long_poll(_bot);
 		while (true) 
 		{

@@ -8,9 +8,7 @@
 
 void pathfinder2::add_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
-	static auto& messages = pathfinder2::get_messages(message->from->languageCode);
-    static auto& item_db = pathfinder2::item_database::get_instance();
-    static auto& buttons = pathfinder2::get_commands(message->from->languageCode);
+	static auto& item_db = pathfinder2::item_database::get_instance();
 
     auto& text = message->text;
 	auto id = message->chat->id;
@@ -45,11 +43,11 @@ void pathfinder2::add_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Dat
         pathfinder2::add_button_row(keyboard, item->name);
     }
 
-    pathfinder2::add_button_row(keyboard, buttons["create_custom_item"]);
-    pathfinder2::add_button_row(keyboard, buttons["ask_master"]);
-    pathfinder2::add_button_row(keyboard, buttons["cancel"]);
+    pathfinder2::add_button_row(keyboard, get_command("create_custom_item", message->from->languageCode));
+    pathfinder2::add_button_row(keyboard, get_command("ask_master", message->from->languageCode));
+    pathfinder2::add_button_row(keyboard, get_command("cancel", message->from->languageCode));
 	
-    character_->set_context(messages["add_item_request"]);
+    character_->set_context(get_message("add_item_request", message->from->languageCode));
 	character_->set_data(text);
     bot.getApi().sendMessage(id, character_->get_context(), false, 0, keyboard);
 }

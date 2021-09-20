@@ -27,9 +27,6 @@ COMMAND SNIPPET
 
 void pathfinder2::add(TgBot::Bot& bot, TgBot::CallbackQuery::Ptr query, SQLite::Database& database)
 {
-	static auto& messages = pathfinder2::get_messages(message->from->languageCode);
-    static auto& buttons = pathfinder2::get_commands(message->from->languageCode);
-
     auto& text = query->message->text;
 	auto id = query->message->chat->id;
 	auto character_ = pathfinder2::character_cache[id];
