@@ -50,7 +50,7 @@ custom_item::custom_item(	int _owner,
 	name = _name;
 	category = _category;
 	
-	set_bulk(_bulk);
+	inventory_entry::set_bulk(_bulk);
 
 	Transaction transaction(database);
 	Statement query (database, "INSERT INTO custom_items (owner, name, category, bulk, quantity) VALUES (?, ?, ?, ?, 1)");
@@ -84,8 +84,10 @@ void custom_item::update_quantity(int delta)
 	}
 }
 
-void custom_item::set_bulk(const string& bulk)
+void custom_item::set_bulk(const string& _bulk)
 {
+	inventory_entry::set_bulk(_bulk);
+
 	Transaction transaction(database);
 	Statement query(database, "UPDATE custom_items SET bulk = ? WHERE owner = ? AND name = ?");
 
@@ -95,8 +97,6 @@ void custom_item::set_bulk(const string& bulk)
 
 	query.exec();
 	transaction.commit();
-
-	inventory_entry::set_bulk(bulk);
 }
 
 void custom_item::set_category(const string& category)
