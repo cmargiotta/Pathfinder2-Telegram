@@ -22,7 +22,7 @@ void pathfinder2::broadcast_message_content_req_master_(TgBot::Bot& bot, TgBot::
 		}
 		catch (...)
 		{
-			bot.getApi().sendMessage(id, std::string("Cannot send message to ") + std::to_string(id_dest));
+			bot.getApi().sendMessage(id, std::string("Cannot send message to @") + bot.getApi().getChat(id_dest)->username);
 		}
 	}
 
