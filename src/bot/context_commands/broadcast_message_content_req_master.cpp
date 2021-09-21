@@ -1,5 +1,7 @@
 #include "context_commands.hpp"
 
+#include <string>
+
 #include "../master.hpp"
 #include "../keyboards.hpp"
 #include "../local_data.hpp"
@@ -14,7 +16,14 @@ void pathfinder2::broadcast_message_content_req_master_(TgBot::Bot& bot, TgBot::
 
 	for (auto& id_dest: character::get_characters_ids(database))
 	{
-		bot.getApi().sendMessage(id_dest, text);
+		try
+		{
+			bot.getApi().sendMessage(id_dest, text);
+		}
+		catch (...)
+		{
+			bot.getApi().sendMessage(id, std::string("Cannot send message to ") + std::to_string(id_dest));
+		}
 	}
 
 	character_->set_context("");
