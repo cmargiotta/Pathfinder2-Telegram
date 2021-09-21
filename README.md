@@ -87,6 +87,6 @@ sudo systemctl start inventory_bot
 
 ## TODOs
 
-- Add broadcast message (master feature)
-- Add "give item to player" command (master feature)
-- Add web interface for master and players 
+- [x] Add broadcast message (master feature)
+- [ ] Add "give item to player" command (master feature)
+- [ ] Add web interface for master and players 
