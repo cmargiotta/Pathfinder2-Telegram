@@ -32,5 +32,6 @@
 	"no_duplicate_items"			: "Oggetto gia' nel database, impossibile crearne uno nuovo.",
 	"no_bulk_name"					: "Il nome e il bulk sono obbligatori.",
 	"default_category"				: "Altro",
-	"command_error"					: "Comando non valido"
+	"command_error"					: "Comando non valido",
+	"broadcast_message_content_req"	: "Cosa vuoi scrivere?"
 }

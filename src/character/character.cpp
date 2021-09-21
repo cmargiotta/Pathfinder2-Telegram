@@ -131,3 +131,16 @@ void character::set_data(const string& data)
 
 	transaction.commit();
 }
+
+const std::set<int> character::get_characters_ids(SQLite::Database& database)
+{
+	std::set<int> ids;
+	Statement query (database, "SELECT id FROM character");
+
+	while (query.executeStep())
+	{
+		ids.insert(query.getColumn(0));
+	}
+
+	return ids;
+}

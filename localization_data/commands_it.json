@@ -18,5 +18,6 @@
 	"edit_field_category"	: "Categoria",
 	"edit_field_bulk"		: "Bulk",
 	"edit_field_description": "Descrizione",
-	"edit_field_url"		: "URL"
+	"edit_field_url"		: "URL",
+	"send_broadcast"		: "Invia un messaggio a tutti"
 }

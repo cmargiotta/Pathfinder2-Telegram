@@ -32,5 +32,6 @@
 	"no_duplicate_items"			: "Error, item already in database.",
 	"no_bulk_name"					: "Error. Name and bulk are mandatory.",
 	"default_category"				: "Miscellaneous",
-	"command_error"					: "Invalid command"
+	"command_error"					: "Invalid command",
+	"broadcast_message_content_req"	: "What do you want to send?"
 }

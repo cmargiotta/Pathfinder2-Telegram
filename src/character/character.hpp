@@ -1,6 +1,7 @@
-#ifndef CHARACTER_HPP_
-#define CHARACTER_HPP_
+#ifndef CHARACTER_CHARACTER_HPP
+#define CHARACTER_CHARACTER_HPP
 
+#include <set>
 #include <string>
 #include <SQLiteCpp/SQLiteCpp.h>
 
@@ -35,6 +36,8 @@ namespace pathfinder2
 			void set_capacity(int capacity);
 			void set_context(const std::string& context);
 			void set_data(const std::string& data);
+
+			static const std::set<int> get_characters_ids(SQLite::Database& database);
 	};
 }
-#endif // CHARACTER_HPP_
+#endif /* CHARACTER_CHARACTER_HPP */

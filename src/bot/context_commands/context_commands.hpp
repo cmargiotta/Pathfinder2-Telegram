@@ -24,6 +24,7 @@ namespace pathfinder2
 	void edit_value_request_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
 	void delete_item_master_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
 	void register_item_master_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
+	void broadcast_message_content_req_master_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
 }
 
 /*****
