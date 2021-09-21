@@ -13,5 +13,6 @@ const std::unordered_map<std::string, std::function<void(TgBot::Bot&, TgBot::Mes
 	{"item_delete_request", delete_item_master_},
 	{"item_register_request", register_item_master_},
 	{"edit_selection", edit_selection_},
-	{"edit_value_request", edit_value_request_}
+	{"edit_value_request", edit_value_request_},
+	{"broadcast_message_content_req", broadcast_message_content_req_master_}
 };
