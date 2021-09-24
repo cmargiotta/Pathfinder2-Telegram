@@ -16,7 +16,7 @@ character::character(int _id, Database& _database):
 {
 	bool found = false;
 
-	Statement query (database, "SELECT cp, capacity, context, data FROM character WHERE id = ?");
+	Statement query (database, "SELECT cp, capacity, context, data, username FROM character WHERE id = ?");
 	query.bind(1, id);
 
 	while (query.executeStep())
@@ -26,6 +26,7 @@ character::character(int _id, Database& _database):
 		capacity = query.getColumn(1);
 		context = string(query.getColumn(2));
 		data = string(query.getColumn(3));
+		username = string(query.getColumn(4));
 
 		break;
 	}
@@ -66,6 +67,11 @@ const string& character::get_context()
 	return context;
 }
 
+const std::string& character::get_username()
+{
+	return username;
+}
+
 const string& character::get_data()
 {
 	return data;
@@ -84,6 +90,20 @@ void character::update_cp(int delta)
 
 	Statement query (database, "UPDATE character SET cp = ? WHERE id = ?");
 	query.bind(1, cp);
+	query.bind(2, id);
+	query.exec();
+
+	transaction.commit();
+}
+
+void character::set_username(const std::string& _username)
+{
+	this->username = _username;
+
+	Transaction transaction (database);
+
+	Statement query (database, "UPDATE character SET username = ? WHERE id = ?");
+	query.bind(1, username);
 	query.bind(2, id);
 	query.exec();
 

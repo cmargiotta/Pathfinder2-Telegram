@@ -17,6 +17,12 @@ void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, 
 
 	auto& context = character_->get_context();
 
+	if (character_->get_username().size() == 0)
+	{
+		//If no username on DB, register it
+		character_->set_username(message->from->username);
+	}
+
 	try
 	{
 		if (context.empty())

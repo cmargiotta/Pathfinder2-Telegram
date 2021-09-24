@@ -57,6 +57,9 @@ Database& pathfinder2::init_database(const string& path)
 		db.exec("CREATE INDEX IF NOT EXISTS 'custom_items_owner' ON 'custom_items' ( \
 			'owner' \
 		);");
+
+		//ALTER TABLE for backward compatibility
+		db.exec("ALTER TABLE character ADD username VARCHAR(255);");
 			
 		transaction.commit();
 
