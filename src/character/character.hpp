@@ -40,7 +40,9 @@ namespace pathfinder2
 			void set_data(const std::string& data);
 			void set_username(const std::string& username);
 
-			static const std::set<int> get_characters_ids(SQLite::Database& database);
+			static const std::set<int> get_ids(SQLite::Database& database);
+			static const std::set<std::string> get_usernames(SQLite::Database& database);
+			static const int get_id(SQLite::Database& database, const std::string& username);
 	};
 }
 #endif /* CHARACTER_CHARACTER_HPP */

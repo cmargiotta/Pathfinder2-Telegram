@@ -3,6 +3,7 @@
 	"default_message"				: "Cosa vuoi fare?",
 	"generic_done"					: "OK, fatto",
 	
+	"give_request"					: "A chi vuoi dare l'oggetto?",
 	"edit_value_request"			: "OK, scrivi pure.",
 	"add_response"					: "Scrivi il nome dell'oggetto che vuoi aggiungere o sceglilo dalla lista degli oggetti del tuo inventario.",
 	"item_remove_select"			: "Quale oggetto desideri rimuovere? Se ci sono più oggetti corrispondenti alla richiesta, ne verrà eliminato uno soltanto.",
@@ -16,7 +17,7 @@
 	"capacity_request"				: "Quanto puoi trasportare?",
 	"custom_item_info_request"		: "Indicare bulk (obbligatorio) e categoria (opzionale) separati da virgola.",
 
-	"add_item_request"				: "Scegli l'oggetto che vuoi aggiungere! Se è un oggetto personalizzato, scegli il tasto corrispondente.",
+	"add_item_request"				: "Scegli l'oggetto!",
 
 	"add_done"						: "Aggiunto!",
 	"remove_done"					: "Rimosso!",
@@ -33,5 +34,6 @@
 	"no_bulk_name"					: "Il nome e il bulk sono obbligatori.",
 	"default_category"				: "Altro",
 	"command_error"					: "Comando non valido",
-	"broadcast_message_content_req"	: "Cosa vuoi scrivere?"
+	"broadcast_message_content_req"	: "Cosa vuoi scrivere?",
+	"new_item_notification"			: "NUOVO OGGETTO PER TE\\!"
 }

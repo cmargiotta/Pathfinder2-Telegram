@@ -152,7 +152,7 @@ void character::set_data(const string& data)
 	transaction.commit();
 }
 
-const std::set<int> character::get_characters_ids(SQLite::Database& database)
+const std::set<int> character::get_ids(SQLite::Database& database)
 {
 	std::set<int> ids;
 	Statement query (database, "SELECT id FROM character");
@@ -163,4 +163,30 @@ const std::set<int> character::get_characters_ids(SQLite::Database& database)
 	}
 
 	return ids;
+}
+
+const std::set<string> character::get_usernames(SQLite::Database& database)
+{
+	std::set<string> usernames;
+	Statement query (database, "SELECT username FROM character");
+
+	while (query.executeStep())
+	{
+		usernames.insert(query.getColumn(0));
+	}
+
+	return usernames;
+}
+
+const int character::get_id(SQLite::Database& database, const std::string& username)
+{
+	Statement query (database, "SELECT id FROM character WHERE username=?");
+	query.bind(1, username);
+
+	while (query.executeStep())
+	{
+		return query.getColumn(0);
+	}
+
+	throw(std::runtime_error("generic_error"));
 }

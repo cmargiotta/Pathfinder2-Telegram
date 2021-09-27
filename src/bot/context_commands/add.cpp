@@ -43,8 +43,12 @@ void pathfinder2::add_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Dat
         pathfinder2::add_button_row(keyboard, item->name);
     }
 
-    pathfinder2::add_button_row(keyboard, get_command("create_custom_item", message->from->languageCode));
-    pathfinder2::add_button_row(keyboard, get_command("ask_master", message->from->languageCode));
+    if (character_->get_data() == "")
+    {
+        pathfinder2::add_button_row(keyboard, get_command("create_custom_item", message->from->languageCode));
+        pathfinder2::add_button_row(keyboard, get_command("ask_master", message->from->languageCode));
+    }
+    
     pathfinder2::add_button_row(keyboard, get_command("cancel", message->from->languageCode));
 	
     character_->set_context(get_message("add_item_request", message->from->languageCode));

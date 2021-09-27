@@ -12,5 +12,6 @@ const std::unordered_map<std::string, std::function<void(TgBot::Bot&, TgBot::Mes
 	{"register_item_master", _register_item_master},
 	{"delete_item_master", _delete_item_master},
 	{"edit_item_master", _edit_item_master},
-	{"send_broadcast", _send_broadcast_master}
+	{"send_broadcast", _send_broadcast_master},
+	{"give", _give_master}
 };

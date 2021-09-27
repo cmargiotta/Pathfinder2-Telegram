@@ -14,7 +14,7 @@ void pathfinder2::broadcast_message_content_req_master_(TgBot::Bot& bot, TgBot::
 	auto id = message->chat->id;
 	auto character_ = pathfinder2::character_cache[id];
 
-	for (auto& id_dest: character::get_characters_ids(database))
+	for (auto& id_dest: character::get_ids(database))
 	{
 		try
 		{

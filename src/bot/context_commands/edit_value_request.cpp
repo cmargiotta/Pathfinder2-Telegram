@@ -39,5 +39,6 @@ void pathfinder2::edit_value_request_(TgBot::Bot& bot, TgBot::Message::Ptr messa
 	}
 
 	character_->set_context("");
+	character_->set_data("");
 	bot.getApi().sendMessage(id, get_message("default_message", message->from->languageCode), false, 0, pathfinder2::get_default_keyboard(message->from->languageCode, master::get_instance().is_master(id)));
 }

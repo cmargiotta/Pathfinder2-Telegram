@@ -19,5 +19,6 @@
 	"edit_field_bulk"		: "Bulk",
 	"edit_field_description": "Description",
 	"edit_field_url"		: "URL",
-	"send_broadcast"		: "Send a broadcast message"
+	"send_broadcast"		: "Send a broadcast message",
+	"give"					: "Give an item to a player"
 }

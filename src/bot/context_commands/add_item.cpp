@@ -51,12 +51,31 @@ void pathfinder2::add_item_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite
         row0.push_back(add);
 
         keyboard->inlineKeyboard.push_back(row0);
-
-        character_->get_inventory().add_item(text);
         character_->set_context("");
 
-		std::string text = get_message("add_done", message->from->languageCode);
-        bot.getApi().sendMessage(id, text + " x1", false, 0, keyboard);
+        if (character_->get_data() != "")
+        {
+            character_ = character_cache[character::get_id(database, character_->get_data())];
+
+            character_->get_inventory().add_item(text);
+            auto item = character_->get_inventory().get_item(text);
+
+            std::stringstream message_;
+            message_ << get_message("new_item_notification", message->from->languageCode) << "\n\n";
+            message_ << "[" << text << "](" << item->get_url() << ")\n";
+            message_ << "Bulk: " + item->get_bulk_string() + "\n\n";
+            message_ << item->get_description(); 
+
+            bot.getApi().sendMessage(character_->get_id(), message_.str(), false, 0, std::make_shared<TgBot::GenericReply>(), "MarkdownV2");
+        }
+        else 
+        {
+            character_->get_inventory().add_item(text);
+
+            std::string _text = get_message("add_done", message->from->languageCode);
+            bot.getApi().sendMessage(id, _text + " x1", false, 0, keyboard);
+        }
+
         bot.getApi().sendMessage(id, get_message("default_message", message->from->languageCode), false, 0, pathfinder2::get_default_keyboard(message->from->languageCode, master::get_instance().is_master(id)));
     }
 }

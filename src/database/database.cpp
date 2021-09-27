@@ -59,8 +59,14 @@ Database& pathfinder2::init_database(const string& path)
 		);");
 
 		//ALTER TABLE for backward compatibility
-		db.exec("ALTER TABLE character ADD username VARCHAR(255);");
-			
+		try 
+		{
+			db.exec("ALTER TABLE character ADD username VARCHAR(255);");
+		}
+		catch(...)
+		{
+			;
+		}
 		transaction.commit();
 
 		initialised = true;
