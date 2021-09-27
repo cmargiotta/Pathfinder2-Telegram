@@ -20,7 +20,7 @@ namespace pathfinder2
 	void _money_transaction(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
 	void _get_money(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
 
-	void _give_master(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
+	void _give(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
 	void _edit_item_master(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
 	void _delete_item_master(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
 	void _register_item_master(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);

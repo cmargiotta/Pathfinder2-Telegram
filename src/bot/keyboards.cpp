@@ -48,7 +48,8 @@ ReplyKeyboardMarkup::Ptr pathfinder2::get_default_keyboard(const std::string& lo
 		{get_command("add", locale), get_command("remove", locale)},
 		{get_command("list", locale)},
 		{get_command("set_capacity", locale)},
-		{get_command("get_money", locale), get_command("money_transaction", locale)}
+		{get_command("get_money", locale), get_command("money_transaction", locale)},
+		{get_command("give", locale)}
 	});
 	
 	static auto master_keyboard = pathfinder2::create_keyboard({
@@ -56,11 +57,11 @@ ReplyKeyboardMarkup::Ptr pathfinder2::get_default_keyboard(const std::string& lo
 		{get_command("list", locale)},
 		{get_command("set_capacity", locale)},
 		{get_command("get_money", locale), get_command("money_transaction", locale)},
+		{get_command("give", locale)},
 		{get_command("register_item_master", locale)},
 		{get_command("delete_item_master", locale)},
 		{get_command("edit_item_master", locale)},
-		{get_command("send_broadcast", locale)},
-		{get_command("give", locale)}
+		{get_command("send_broadcast", locale)}
 	});
 
 	if (!master)

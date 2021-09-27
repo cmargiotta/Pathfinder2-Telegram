@@ -7,7 +7,7 @@
 #include "inventory/item_database.hpp"
 #include "character/character_cache.hpp"
 
-void pathfinder2::give_request_master_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
+void pathfinder2::give_request_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
     auto& text = message->text;
 	auto id = message->chat->id;
