@@ -172,7 +172,12 @@ const std::set<string> character::get_usernames(SQLite::Database& database)
 
 	while (query.executeStep())
 	{
-		usernames.insert(query.getColumn(0));
+		auto _username = std::string(query.getColumn(0));
+
+		if (_username != "")
+		{
+			usernames.insert(_username);
+		}
 	}
 
 	return usernames;
