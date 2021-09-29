@@ -52,6 +52,5 @@ void pathfinder2::add_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Dat
     pathfinder2::add_button_row(keyboard, get_command("cancel", message->from->languageCode));
 	
     character_->set_context(get_message("add_item_request", message->from->languageCode));
-	character_->set_data(text);
     bot.getApi().sendMessage(id, character_->get_context(), false, 0, keyboard);
 }
