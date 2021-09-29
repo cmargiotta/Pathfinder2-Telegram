@@ -58,7 +58,7 @@ void pathfinder2::add_item_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite
             std::string target = character_->get_data();
             character_->set_data("");
 
-            if (master::get_instance().is_master(character_->get_id()))
+            if (!master::get_instance().is_master(character_->get_id()))
             {
                 //Not the master, the item must be removed from inventory
                 character_->get_inventory().remove_item(text);

@@ -7,7 +7,6 @@
 
 void pathfinder2::remove_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
-	
     auto& text = message->text;
 	auto id = message->chat->id;
 	auto character_ = pathfinder2::character_cache[id];
