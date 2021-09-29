@@ -17,13 +17,14 @@ void pathfinder2::list_detail_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQL
 	auto item = character_->get_inventory().get_item(text);
 
 	common::trim(text);
+	text = common::escape(text, common::to_escape, '\\');
 
 	std::stringstream message_;
 	message_ << "[" << text << "](" << item->get_url() << ")\n";
-    message_ << "Bulk: " + item->get_bulk_string() + "\n\n";
-    message_ << item->get_description(); 
+    message_ << "Bulk: " + common::escape(item->get_bulk_string(), common::to_escape, '\\') + "\n\n";
+    message_ << common::escape(item->get_description(), common::to_escape, '\\'); 
 
-	text = common::escape(message_.str(), common::to_escape, '\\');
+	text = message_.str();
 
 	character_->set_context("");
 
