@@ -50,13 +50,45 @@ namespace common
 		std::string token;
 		std::vector<std::string> res;
 
-		while ((pos_end = s.find (delimiter, pos_start)) != std::string::npos) {
-			token = s.substr (pos_start, pos_end - pos_start);
-			pos_start = pos_end + delim_len;
-			res.push_back (token);
-		}
+		bool description_found = false; 
 
-		res.push_back (s.substr (pos_start));
+		while (pos_end != std::string::npos) 
+		{
+			pos_end = s.find (delimiter, pos_start);
+			
+			if (description_found && pos_start == pos_end)
+			{
+				pos_start--; 
+			}
+			
+			token = s.substr (pos_start, pos_end - pos_start);
+			
+			pos_start = pos_end + delim_len;
+
+			if (token[0] == '"')
+			{
+				description_found = true; 
+				res.push_back("");
+			}
+			
+			if (description_found)
+			{
+				if (token.back() == '"')
+				{
+					res.back() += token;
+					description_found = false;
+				}
+				else
+				{
+					res.back() += token; 
+				}
+			}
+			else
+			{
+				res.push_back(token);
+			}
+		}
+		
 		return res;
 	}
 }

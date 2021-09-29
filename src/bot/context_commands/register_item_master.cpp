@@ -29,7 +29,8 @@ void pathfinder2::register_item_master_(TgBot::Bot& bot, TgBot::Message::Ptr mes
 		{
 			url = field;
 		}
-		else if ((field[0] == 'L' || field[0] == 'l' || (field[0] >= '0' && field[0] <= '9')) && bulk.size() == 0)
+		else if ((((field[0] == 'L' || field[0] == 'l') && field.size() == 1) || 
+					(field[0] >= '0' && field[0] <= '9')) && bulk.size() == 0)
 		{
 			bulk = field;
 		}
