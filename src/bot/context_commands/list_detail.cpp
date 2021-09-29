@@ -16,6 +16,7 @@ void pathfinder2::list_detail_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQL
 	auto item = character_->get_inventory().get_item(text);
 
 	common::trim(text);
+	common::escape(text, common::to_escape, '\\');
 
 	std::stringstream message_;
 	message_ << "[" << text << "](" << item->get_url() << ")\n";
