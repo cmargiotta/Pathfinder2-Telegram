@@ -88,7 +88,7 @@ void item_database::register_new_item(const string& name, const string& url, con
 	query.bind(1, name);
 	query.bind(2, url);
 	query.bind(3, category);
-	query.bind(4, common::escape(description, common::to_escape, '\\'));
+	query.bind(4, description);
 	query.bind(5, bulk);
 	query.exec();
 
