@@ -7,6 +7,7 @@
 #include "../master.hpp"
 #include "../keyboards.hpp"
 #include "../local_data.hpp"
+#include "common/string_utils.hpp"
 #include "character/character_cache.hpp"
 
 using std::vector;
