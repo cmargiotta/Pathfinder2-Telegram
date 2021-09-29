@@ -70,11 +70,9 @@ void pathfinder2::add_item_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite
             character_->get_inventory().add_item(text);
             auto item = character_->get_inventory().get_item(text);
 
-            text = common::escape(text, common::to_escape, '\\');
-
             std::stringstream message_;
             message_ << get_message("new_item_notification", message->from->languageCode) << "\n\n";
-            message_ << "[" << text << "](" << item->get_url() << ")\n";
+            message_ << "[" << common::escape(text, common::to_escape, '\\') << "](" << item->get_url() << ")\n";
             message_ << "Bulk: " + item->get_bulk_string() + "\n\n";
             message_ << common::escape(item->get_description(), common::to_escape, '\\'); 
 
