@@ -29,6 +29,11 @@ Database& pathfinder2::init_database(const string& path)
 			FOREIGN KEY('name') REFERENCES 'items'('name') \
 		);");
 		db.exec("CREATE VIRTUAL TABLE IF NOT EXISTS items USING FTS5(url, name, bulk, description, category);");
+		db.exec("CREATE TABLE IF NOT EXISTS 'item_data' ( \
+			'name'		TEXT NOT NULL, \
+			'image'		BLOB, \
+			PRIMARY KEY('name') \
+		);");
 		db.exec("CREATE TABLE IF NOT EXISTS 'character' ( \
 			'id'		INT NOT NULL, \
 			'capacity'	INT NOT NULL, \
@@ -67,6 +72,7 @@ Database& pathfinder2::init_database(const string& path)
 		{
 			;
 		}
+
 		transaction.commit();
 
 		initialised = true;

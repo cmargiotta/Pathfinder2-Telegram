@@ -99,7 +99,7 @@ const std::string& pathfinder2::get_command_id(const std::string& key, const std
 	}
 	catch(...)
 	{
-		throw std::runtime_error("command_error");
+		return key;
 	}
 }
 

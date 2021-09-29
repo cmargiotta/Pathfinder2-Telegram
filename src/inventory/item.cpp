@@ -142,7 +142,18 @@ void item::set_description(const std::string& description)
 	item_db.update_description(name, common::escape(description, common::to_escape, '\\'));
 }
 
+void item::set_image(const std::string& image)
+{
+	auto& item_db = item_database::get_instance();
+	item_db.update_image(name, image);
+}
+
 bool item::is_valid()
 {
 	return !data->deleted;
+}
+
+const std::string& item::get_image() const
+{
+	return data->image;
 }

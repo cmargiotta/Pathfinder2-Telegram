@@ -33,6 +33,12 @@ void pathfinder2::edit_value_request_(TgBot::Bot& bot, TgBot::Message::Ptr messa
 	{
 		item_db.update_url(name, text);
 	}
+	else if (field == get_command("edit_field_image", message->from->languageCode))
+	{
+		auto image_file = bot.getApi().getFile(message->photo.back()->fileId);
+		auto image = bot.getApi().downloadFile(image_file->filePath);
+		item_db.update_image(name, image);
+	}
 	else
 	{
 		throw std::runtime_error("generic_error");

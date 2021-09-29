@@ -88,6 +88,9 @@ void inventory_entry::set_description(const string& description)
 void inventory_entry::set_url(const string& url) 
 {}
 
+void inventory_entry::set_image(const string& image)
+{}
+
 bool inventory_entry::is_valid()
 {
 	return true;
@@ -96,4 +99,10 @@ bool inventory_entry::is_valid()
 const std::string& inventory_entry::get_bulk_string() const
 {
 	return bulk_string;
+}
+
+const std::string& inventory_entry::get_image() const 
+{
+	static std::string stub;
+	return stub;
 }

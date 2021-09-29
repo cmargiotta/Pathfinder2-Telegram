@@ -28,6 +28,7 @@ namespace pathfinder2
 			virtual const std::string& get_url() const; 
 			virtual const std::string& get_description() const; 
 			virtual const std::string& get_bulk_string() const;
+			virtual const std::string& get_image() const; 
 
 			virtual void update_quantity(int delta);
 			virtual void remove() = 0;
@@ -35,6 +36,7 @@ namespace pathfinder2
 			virtual void set_bulk(const std::string& bulk);
 			virtual void set_description(const std::string& description);
 			virtual void set_url(const std::string& url);
+			virtual void set_image(const std::string& image);
 
 			virtual bool is_valid();
 	};

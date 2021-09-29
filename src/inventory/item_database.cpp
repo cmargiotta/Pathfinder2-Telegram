@@ -33,8 +33,15 @@ std::shared_ptr<item_database_entry> item_database::build_entry(const std::strin
 			item->url = string(query.getColumn(0));
 			item->description = string(query.getColumn(3));
 			item->category = string(query.getColumn(4));
-
 			item->bulk = query.getColumn(2);
+
+			Statement data_query(database, "SELECT image FROM item_data WHERE name = ?");
+			data_query.bind(1, name);
+
+			while (data_query.executeStep())
+			{
+				item->image = data_query.getColumn(0).getString();
+			}
 
 			return item;
 		}
@@ -201,4 +208,37 @@ void item_database::update_bulk(const std::string& name, const std::string& _bul
 {
 	double bulk = _bulk[0] == 'L' ? 0.1f : atoi(_bulk.c_str());
 	update_bulk(name, bulk);
+}
+
+void item_database::update_image(const std::string& name, const std::string& data)
+{
+	get_nonconst_item(name)->image = data;
+
+	Statement _query(database, "SELECT name FROM item_data WHERE name = ?");
+	_query.bind(1, name);
+	bool found = false;
+
+	while (_query.executeStep())
+	{
+		found = true;
+	}
+
+	Transaction transaction(database);
+
+	if (!found)
+	{
+		Statement query (database, "INSERT INTO item_data (name, image) VALUES (?, ?)");
+		query.bind(1, name);
+		query.bindNoCopy(2, data);
+		query.exec();
+	}
+	else  
+	{
+		Statement query(database, "UPDATE item_data SET image = ? WHERE name = ?");
+		query.bindNoCopy(1, data);
+		query.bind(2, name);
+		query.exec(); 
+	}
+
+	transaction.commit();
 }

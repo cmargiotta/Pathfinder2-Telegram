@@ -22,6 +22,7 @@ namespace pathfinder2
 			const std::string& get_url() const override; 
 			const std::string& get_description() const override; 
 			const std::string& get_category() const override;
+			const std::string& get_image() const override; 
 			const std::string& get_bulk_string() const override;
 			double get_bulk() const override;
 
@@ -30,6 +31,7 @@ namespace pathfinder2
 			void set_bulk(const std::string& bulk) override;
 			void set_category(const std::string& category) override;
 			void set_description(const std::string& description) override;
+			void set_image(const std::string& image) override; 
 			void remove() override;
 
 			bool is_valid() override;

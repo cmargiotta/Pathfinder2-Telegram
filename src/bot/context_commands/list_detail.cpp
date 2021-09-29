@@ -1,5 +1,6 @@
 #include "context_commands.hpp"
 
+#include <memory>
 #include <string>
 
 #include "../master.hpp"
@@ -24,6 +25,18 @@ void pathfinder2::list_detail_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQL
     message_ << item->get_description(); 
 
 	character_->set_context("");
-	bot.getApi().sendMessage(id, message_.str(), false, 0, pathfinder2::remove_keyboard, "MarkdownV2");
+
+	if (item->get_image().size() != 0)
+	{
+		auto image = std::make_shared<TgBot::InputFile>();
+		image->data = item->get_image();
+		image->fileName = item->get_name() + ".jpg";
+		bot.getApi().sendPhoto(id, image, message_.str(), 0, remove_keyboard, "MarkdownV2");
+	}
+	else 
+	{
+		bot.getApi().sendMessage(id, message_.str(), false, 0, pathfinder2::remove_keyboard, "MarkdownV2");
+	}
+	
 	bot.getApi().sendMessage(id, get_message("default_message", message->from->languageCode), false, 0, pathfinder2::get_default_keyboard(message->from->languageCode, master::get_instance().is_master(id)));
 }

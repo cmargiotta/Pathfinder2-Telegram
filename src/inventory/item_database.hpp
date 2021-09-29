@@ -13,13 +13,14 @@ namespace pathfinder2
 {
 	struct item_database_entry
 	{
-		std::string url; 
-		std::string name; 
-		std::string description;
-		std::string category;
-		double		bulk; 
+		std::string 	url; 
+		std::string 	name; 
+		std::string 	description;
+		std::string 	category;
+		double			bulk; 
+		std::string		image;
 
-		bool 		deleted = false;
+		bool 			deleted = false;
 	};
 
 	class item_database
@@ -47,6 +48,7 @@ namespace pathfinder2
 			void update_description(const std::string& name, const std::string& description);
 			void update_bulk(const std::string& name, const std::string& bulk);
 			void update_bulk(const std::string& name, double bulk);
+			void update_image(const std::string& name, const std::string& data);
 
 			const std::vector<std::shared_ptr<const item_database_entry>> search_items(const std::string& name);
 			std::shared_ptr<const item_database_entry> get_item(const std::string& name);

@@ -10,7 +10,9 @@ void pathfinder2::edit_item_master_(TgBot::Bot& bot, TgBot::Message::Ptr message
 		{std::string(get_command("edit_field_category", message->from->languageCode))},
 		{std::string(get_command("edit_field_bulk", message->from->languageCode))},
 		{std::string(get_command("edit_field_description", message->from->languageCode))},
-		{std::string(get_command("edit_field_url", message->from->languageCode))}
+		{std::string(get_command("edit_field_url", message->from->languageCode))},
+		{std::string(get_command("edit_field_image", message->from->languageCode))},
+		{std::string(get_command("cancel", message->from->languageCode))}
 	});
 
     auto& text = message->text;
