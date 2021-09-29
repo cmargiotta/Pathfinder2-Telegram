@@ -49,6 +49,7 @@ const std::string& pathfinder2::get_command(const std::string& key, const std::s
 
 	if (!init)
 	{
+		init = true;
 		for (auto& l: parse_installed_languages())
 		{
 			nlohmann::json commands_json;
@@ -99,7 +100,14 @@ const std::string& pathfinder2::get_command_id(const std::string& key, const std
 	}
 	catch(...)
 	{
-		return key;
+		for (auto& entry: commands)
+		{
+			if (entry.second.count(key) != 0)
+			{
+				return entry.second.at(key);
+			}
+		}
+		throw std::runtime_error("command_error");
 	}
 }
 

@@ -12,7 +12,7 @@ void pathfinder2::_list(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Da
 
     auto keyboard = pathfinder2::create_keyboard({
 		{
-			get_command("list_brief")
+			get_command("list_brief", message->from->languageCode)
 		}, 
 		{
 			get_command("list_detail", message->from->languageCode)
