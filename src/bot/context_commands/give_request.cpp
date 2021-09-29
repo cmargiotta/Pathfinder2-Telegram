@@ -20,5 +20,5 @@ void pathfinder2::give_request_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQ
     pathfinder2::add_button_row(keyboard, get_command("cancel", message->from->languageCode));
 
     character_->set_context(get_message("add_response", message->from->languageCode));
-	bot.getApi().sendMessage(character_->get_id(), character_->get_context());
+	bot.getApi().sendMessage(character_->get_id(), character_->get_context(), false, 0, keyboard);
 }
