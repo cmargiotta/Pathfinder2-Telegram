@@ -55,13 +55,16 @@ void pathfinder2::add_item_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite
 
         if (character_->get_data() != "")
         {
+            std::string target = character_->get_data();
+            character_->set_data("");
+
             if (master::get_instance().is_master(character_->get_id()))
             {
                 //Not the master, the item must be removed from inventory
                 character_->get_inventory().remove_item(text);
             }
             
-            character_ = character_cache[character::get_id(database, character_->get_data())];
+            character_ = character_cache[character::get_id(database, target)];
 
             character_->get_inventory().add_item(text);
             auto item = character_->get_inventory().get_item(text);
