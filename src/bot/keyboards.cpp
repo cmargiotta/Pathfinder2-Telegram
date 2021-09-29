@@ -1,6 +1,7 @@
 #include "keyboards.hpp"
 
 #include <fstream>
+#include <unordered_map>
 
 #include "local_data.hpp"
 
@@ -44,32 +45,48 @@ void pathfinder2::add_button_row(ReplyKeyboardMarkup::Ptr keyboard, const string
 
 ReplyKeyboardMarkup::Ptr pathfinder2::get_default_keyboard(const std::string& locale, bool master)
 {
-	static auto keyboard = pathfinder2::create_keyboard({
-		{get_command("add", locale), get_command("remove", locale)},
-		{get_command("list", locale)},
-		{get_command("set_capacity", locale)},
-		{get_command("get_money", locale), get_command("money_transaction", locale)},
-		{get_command("give", locale)}
-	});
-	
-	static auto master_keyboard = pathfinder2::create_keyboard({
-		{get_command("add", locale), get_command("remove", locale)},
-		{get_command("list", locale)},
-		{get_command("set_capacity", locale)},
-		{get_command("get_money", locale), get_command("money_transaction", locale)},
-		{get_command("give", locale)},
-		{get_command("register_item_master", locale)},
-		{get_command("delete_item_master", locale)},
-		{get_command("edit_item_master", locale)},
-		{get_command("send_broadcast", locale)}
-	});
+	static std::unordered_map<std::string, ReplyKeyboardMarkup::Ptr> keyboards, keyboards_master;
 
-	if (!master)
+	if (master)
 	{
-		return keyboard;
+		try
+		{
+			return keyboards_master.at(locale);
+		}
+		catch(const std::exception& e)
+		{
+			keyboards_master[locale] = pathfinder2::create_keyboard({
+				{get_command("add", locale), get_command("remove", locale)},
+				{get_command("list", locale)},
+				{get_command("set_capacity", locale)},
+				{get_command("get_money", locale), get_command("money_transaction", locale)},
+				{get_command("give", locale)},
+				{get_command("register_item_master", locale)},
+				{get_command("delete_item_master", locale)},
+				{get_command("edit_item_master", locale)},
+				{get_command("send_broadcast", locale)}
+			});
+
+			return keyboards_master[locale];
+		}
 	}
 	else
 	{
-		return master_keyboard;
+		try
+		{
+			return keyboards.at(locale);
+		}
+		catch(const std::exception& e)
+		{
+			keyboards[locale] = pathfinder2::create_keyboard({
+				{get_command("add", locale), get_command("remove", locale)},
+				{get_command("list", locale)},
+				{get_command("set_capacity", locale)},
+				{get_command("get_money", locale), get_command("money_transaction", locale)},
+				{get_command("give", locale)}
+			});
+
+			return keyboards[locale];
+		}
 	}
 }
