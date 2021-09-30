@@ -6,14 +6,7 @@
 #include "character/character_cache.hpp"
 
 void pathfinder2::edit_item_master_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
-{	static auto keyboard = create_keyboard({
-		{std::string(get_command("edit_field_category", message->from->languageCode))},
-		{std::string(get_command("edit_field_bulk", message->from->languageCode))},
-		{std::string(get_command("edit_field_description", message->from->languageCode))},
-		{std::string(get_command("edit_field_url", message->from->languageCode))},
-		{std::string(get_command("edit_field_image", message->from->languageCode))},
-		{std::string(get_command("cancel", message->from->languageCode))}
-	});
+{	static auto keyboard = get_edit_keyboard(message->from->languageCode);
 
     auto& text = message->text;
 	auto id = message->chat->id;

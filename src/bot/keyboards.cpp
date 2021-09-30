@@ -90,3 +90,26 @@ ReplyKeyboardMarkup::Ptr pathfinder2::get_default_keyboard(const std::string& lo
 		}
 	}
 }
+
+ReplyKeyboardMarkup::Ptr pathfinder2::get_edit_keyboard(const std::string& locale)
+{
+	static std::unordered_map<std::string, ReplyKeyboardMarkup::Ptr> keyboards;
+
+	try
+	{
+		return keyboards.at(locale);
+	}
+	catch(const std::exception& e)
+	{
+		keyboards[locale] = create_keyboard({
+			{std::string(get_command("edit_field_category", locale))},
+			{std::string(get_command("edit_field_bulk", locale))},
+			{std::string(get_command("edit_field_description", locale))},
+			{std::string(get_command("edit_field_url", locale))},
+			{std::string(get_command("edit_field_image", locale))},
+			{std::string(get_command("cancel", locale))}
+		});
+
+		return keyboards[locale];
+	}
+}
