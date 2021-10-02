@@ -8,6 +8,11 @@
 
 void pathfinder2::add_custom_item_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
+	if (message->text.size() > 255)
+	{
+		throw std::runtime_error("length_error");
+	}
+
     auto& text = message->text;
 	auto id = message->chat->id;
 	auto character_ = pathfinder2::character_cache[id];

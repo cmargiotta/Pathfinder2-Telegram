@@ -36,5 +36,6 @@
 	"default_category"				: "Altro",
 	"command_error"					: "Comando non valido",
 	"broadcast_message_content_req"	: "Cosa vuoi scrivere?",
-	"new_item_notification"			: "NUOVO OGGETTO PER TE DA"
+	"new_item_notification"			: "NUOVO OGGETTO PER TE DA",
+	"length_error"					: "Quella è la descrizione non il nome, che cazzo."
 }

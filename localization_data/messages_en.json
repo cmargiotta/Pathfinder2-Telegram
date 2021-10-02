@@ -36,5 +36,6 @@
 	"default_category"				: "Miscellaneous",
 	"command_error"					: "Invalid command",
 	"broadcast_message_content_req"	: "What do you want to send?",
-	"new_item_notification"			: "NEW ITEM FOR YOU FROM"
+	"new_item_notification"			: "NEW ITEM FOR YOU FROM",
+	"length_error"					: "Given name is too long."
 }
