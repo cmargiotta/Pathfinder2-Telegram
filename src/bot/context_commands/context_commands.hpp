@@ -15,6 +15,7 @@ namespace pathfinder2
     void list_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
     void remove_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
     void add_item_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
+	void give_item_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
 	void list_detail_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
 	void set_capacity_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
 	void edit_selection_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);

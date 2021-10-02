@@ -12,7 +12,7 @@ namespace pathfinder2
 			std::string 			name; 
 			std::string				category;
 			mutable std::string		bulk_string;
-			double	   				bulk; 
+			mutable double	   		bulk; 
 			int						quantity; 
 
 		public: 
@@ -34,6 +34,7 @@ namespace pathfinder2
 			virtual void remove() = 0;
 			virtual void set_category(const std::string& category);
 			virtual void set_bulk(const std::string& bulk);
+			virtual void set_bulk(double bulk) const;
 			virtual void set_description(const std::string& description);
 			virtual void set_url(const std::string& url);
 			virtual void set_image(const std::string& image);

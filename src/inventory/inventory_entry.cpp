@@ -71,15 +71,73 @@ void inventory_entry::set_category(const string& category)
 
 void inventory_entry::set_bulk(const string& bulk) 
 {
-	if (bulk.empty() || 
-		!(common::is_number(bulk) || (bulk.size() == 1 && bulk[0] == 'L')))
+	bulk_string = bulk;
+	if (bulk_string.back() == 'l')
+	{
+		bulk_string.back() = 'L';
+	}
+
+	if (bulk_string.empty() || 
+		bulk_string[0] == '-' ||
+		!(common::is_number(bulk_string) || (bulk_string.back() == 'L' && (
+											common::is_number(bulk_string.substr(0, bulk_string.size() - 1)) ||
+											bulk_string.size() == 1))))
 	{
 		throw std::runtime_error("bulk_error");
 	}
 
-	bulk_string = bulk;
+	if (bulk_string == "1L")
+	{
+		bulk_string = "L";
+	}
 
-	this->bulk = bulk_string[0] == 'L' ? 0.1f : atoi(bulk_string.c_str());
+	if (bulk_string.back() == 'L')
+	{
+		if (bulk_string.size() == 1)
+		{
+			this->bulk = 0.1;
+		}
+		else 
+		{
+			bulk_string.back() = '\0';
+
+			this->bulk = 0.1 * atoi(bulk_string.c_str());
+			bulk_string.back() = 'L';
+		}
+	}
+	else 
+	{
+		this->bulk = static_cast<double>(atoi(bulk_string.c_str()));
+	}
+}
+
+void inventory_entry::set_bulk(double _bulk) const
+{
+	if (_bulk < 0)
+	{
+		throw std::runtime_error("bulk_error");
+	}
+
+	bulk = _bulk;
+
+	if (bulk - static_cast<long>(bulk) >= 0.1)
+	{
+		bulk_string = std::to_string(static_cast<int>(bulk*10));
+		bulk_string += "L";
+
+		if (bulk_string == "1L")
+		{
+			bulk_string = "L";
+		}
+		else if (bulk_string == "0L")
+		{
+			bulk_string = "0";
+		}
+	}
+	else 
+	{
+		bulk_string = std::to_string(static_cast<int>(bulk));
+	}
 }
 
 void inventory_entry::set_description(const string& description) 

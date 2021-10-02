@@ -14,6 +14,11 @@ void pathfinder2::add_custom_item_(TgBot::Bot& bot, TgBot::Message::Ptr message,
 
 	auto data = common::split(text, ",");
 
+	if (data.size() > 2)
+	{
+		throw std::runtime_error("generic_error");
+	}
+
 	std::string bulk, category;
 
 	bulk = data[0];

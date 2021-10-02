@@ -5,6 +5,7 @@
 	
 	"give_request"					: "Who do you want to give the item to?",
 	"edit_value_request"			: "Value?.",
+	"give_response"					: "Provide the name of the item you want to give or select it from the given list.",
 	"add_response"					: "Provide the name of the item you want to add or select it from the given list.",
 	"item_remove_select"			: "Please select the item you want to remove. If the selected item's quantity is more than one, it will be decreased by one.",
 	"item_delete_request"			: "Please provide the name of the item you want to remove from the database. Only exact matches are accepted.",
@@ -35,5 +36,5 @@
 	"default_category"				: "Miscellaneous",
 	"command_error"					: "Invalid command",
 	"broadcast_message_content_req"	: "What do you want to send?",
-	"new_item_notification"			: "NEW ITEM FOR YOU\\!"
+	"new_item_notification"			: "NEW ITEM FOR YOU FROM"
 }

@@ -15,5 +15,6 @@ const std::unordered_map<std::string, std::function<void(TgBot::Bot&, TgBot::Mes
 	{"edit_selection", edit_selection_},
 	{"edit_value_request", edit_value_request_},
 	{"give_request", give_request_},
+	{"give_response", give_item_},
 	{"broadcast_message_content_req", broadcast_message_content_req_master_}
 };

@@ -23,6 +23,15 @@ void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, 
 		character_->set_username(message->from->username);
 	}
 
+	if (message->text == get_command("cancel", message->from->languageCode))
+	{
+		character_->set_data("");
+		character_->set_context("");
+		bot.getApi().sendMessage(character_->get_id(), get_message("cancel_done", message->from->languageCode));
+		bot.getApi().sendMessage(id, get_message("default_message", message->from->languageCode), false, 0, pathfinder2::get_default_keyboard(message->from->languageCode, master::get_instance().is_master(id)));
+		return;
+	}
+
 	try
 	{
 		if (context.empty())
@@ -33,14 +42,6 @@ void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, 
 		}
 		else
 		{
-			if (message->text == get_command("cancel", message->from->languageCode))
-			{
-				character_->set_context("");
-				bot.getApi().sendMessage(character_->get_id(), get_message("cancel_done", message->from->languageCode));
-				bot.getApi().sendMessage(id, get_message("default_message", message->from->languageCode), false, 0, pathfinder2::get_default_keyboard(message->from->languageCode, master::get_instance().is_master(id)));
-				return;
-			}
-
 			std::string last_request = get_message_id(context, message->from->languageCode);
 
 			pathfinder2::context_commands.at(last_request)(bot, message, database);	

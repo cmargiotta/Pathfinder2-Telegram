@@ -32,6 +32,7 @@ item::item(int _owner, const string& _name, SQLite::Database& _database):
 	}
 
 	data = item_db.get_item(_name);
+
 	name = _name;
 	owner = _owner;
 
@@ -53,7 +54,8 @@ item::~item()
 
 double item::get_bulk() const 
 {
-	return data->bulk;
+	inventory_entry::set_bulk(data->bulk);
+	return bulk;
 }
 
 const std::string& item::get_category() const
@@ -73,15 +75,7 @@ const std::string& item::get_description() const
 
 const std::string& item::get_bulk_string() const
 {
-	if (data->bulk > 0 && data->bulk < 1)
-	{
-		bulk_string = "L";
-	}
-	else 
-	{
-		bulk_string = std::to_string(static_cast<int>(data->bulk));
-	}
-
+	inventory_entry::set_bulk(data->bulk);
 	return bulk_string;
 }
 

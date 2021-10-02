@@ -95,6 +95,11 @@ void inventory::erase_item(const string& name)
 	item_names.erase(_item->get_name());
 	category_list.remove(_item);
 
+	if (category_list.empty())
+	{
+		content_category.erase(_item->get_category());
+	}
+
 	_item->remove();
 }
 
@@ -110,6 +115,10 @@ void inventory::remove_item(const string& name)
 			//Quantity reached 0, remove this item from inventory
 			erase_item(name);
 		}
+	}
+	else 
+	{
+		throw std::runtime_error("item_not_found");
 	}
 }
 
@@ -147,12 +156,7 @@ void inventory::delete_invalid_items()
 	{
 		if (!entry.second->is_valid())
 		{
-			content_name.erase(entry.first);
-
-			auto& category_list = content_category[entry.second->get_category()];
-			item_names.erase(entry.second->get_name());
-
-			category_list.remove(entry.second);
+			erase_item(entry.first);
 			return delete_invalid_items();
 		}
 	}

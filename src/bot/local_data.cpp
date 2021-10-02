@@ -165,5 +165,12 @@ const std::string& pathfinder2::get_message_id(const std::string& key, const std
 		init = true;
 	}
 
-	return messages_ids[(locale == "") ? default_locale : locale].at(key);
+	try 
+	{
+		return messages_ids[(locale == "") ? default_locale : locale].at(key);
+	}
+	catch(...)
+	{
+		return key;
+	}
 }

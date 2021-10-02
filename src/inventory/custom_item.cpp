@@ -20,14 +20,7 @@ custom_item::custom_item(int _owner, const string& _name, Database& _database):
 		quantity = query.getColumn(0);
 		double bulk = query.getColumn(1);
 
-		if (bulk > 0 && bulk < 1)
-		{
-			set_bulk("L");
-		}
-		else 
-		{
-			set_bulk(std::to_string(static_cast<int>(bulk)));
-		}
+		inventory_entry::set_bulk(bulk);
 
 		category = string(query.getColumn(2));
 		
