@@ -43,7 +43,7 @@ void pathfinder2::add_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Dat
         pathfinder2::add_button_row(keyboard, item->name);
     }
 
-    if (character_->get_data() == "")
+    if (character_->get_data().empty())
     {
         pathfinder2::add_button_row(keyboard, get_command("create_custom_item", message->from->languageCode));
         pathfinder2::add_button_row(keyboard, get_command("ask_master", message->from->languageCode));
