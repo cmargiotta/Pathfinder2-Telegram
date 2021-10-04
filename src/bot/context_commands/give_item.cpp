@@ -13,6 +13,8 @@ void pathfinder2::give_item_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLit
 	auto id = message->chat->id;
 	auto character_ = pathfinder2::character_cache[id];
 
+    auto item = character_->get_inventory().get_item(text);
+
     if (!master::get_instance().is_master(character_->get_id()))
     {
         //Not the master, the item must be removed from inventory
@@ -29,11 +31,8 @@ void pathfinder2::give_item_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLit
     }
     catch(...)
     {
-        auto item = character_->get_inventory().get_item(text);
         dest_character->get_inventory().add_item(text, item->get_bulk_string(), item->get_category());
     }
-
-    auto item = dest_character->get_inventory().get_item(text);
     
     std::stringstream message_;
     message_ << get_message("new_item_notification", message->from->languageCode) + " @" + character_->get_username() << "\n\n";
