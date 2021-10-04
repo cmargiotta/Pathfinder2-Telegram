@@ -34,7 +34,8 @@ namespace pathfinder2
 			void set_image(const std::string& image) override; 
 			void remove() override;
 
-			bool is_valid() override;
+			bool is_valid() const override;
+			bool only_master() const override;
 	};
 }
 

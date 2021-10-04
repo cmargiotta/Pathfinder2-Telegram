@@ -149,7 +149,7 @@ void inventory_entry::set_url(const string& url)
 void inventory_entry::set_image(const string& image)
 {}
 
-bool inventory_entry::is_valid()
+bool inventory_entry::is_valid() const
 {
 	return true;
 }

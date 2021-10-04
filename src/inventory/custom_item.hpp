@@ -28,6 +28,8 @@ namespace pathfinder2
 			void set_category(const std::string& category) override;
 			void set_bulk(const std::string& bulk) override;
 			void remove() override;
+
+			bool only_master() const override;
 	};
 }
 

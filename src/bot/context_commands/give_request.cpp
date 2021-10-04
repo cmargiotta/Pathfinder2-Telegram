@@ -15,7 +15,7 @@ void pathfinder2::give_request_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQ
 
     character_->set_data(text);
 
-    auto& item_list = character_->get_inventory().get_item_list();
+    auto& item_list = character_->get_inventory().get_item_list(true);
     auto keyboard = create_keyboard(item_list.begin(), item_list.end());
     pathfinder2::add_button_row(keyboard, get_command("cancel", message->from->languageCode));
 

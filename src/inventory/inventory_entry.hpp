@@ -39,7 +39,8 @@ namespace pathfinder2
 			virtual void set_url(const std::string& url);
 			virtual void set_image(const std::string& image);
 
-			virtual bool is_valid();
+			virtual bool is_valid() const;
+			virtual bool only_master() const = 0;
 	};
 }
 

@@ -142,7 +142,7 @@ void item::set_image(const std::string& image)
 	item_db.update_image(name, image);
 }
 
-bool item::is_valid()
+bool item::is_valid() const
 {
 	return !data->deleted;
 }
@@ -150,4 +150,9 @@ bool item::is_valid()
 const std::string& item::get_image() const
 {
 	return data->image;
+}
+
+bool item::only_master() const
+{
+	return true;
 }

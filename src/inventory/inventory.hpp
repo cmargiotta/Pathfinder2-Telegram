@@ -19,7 +19,7 @@ namespace pathfinder2
 			SQLite::Database& 																database; 
 			std::unordered_map<std::string, std::list<std::shared_ptr<inventory_entry>>>	content_category;
 			std::unordered_map<std::string, std::shared_ptr<inventory_entry>> 				content_name;
-			std::set<std::string>															item_names;
+			std::set<std::string>															item_names_full, item_names_user;
 
 			void delete_invalid_items();
 			void erase_item(const std::string& name);
@@ -38,7 +38,7 @@ namespace pathfinder2
 			std::shared_ptr<const inventory_entry> get_item(const std::string& name) const;
 
 			double get_occupied_bulk();
-			const std::set<std::string>& get_item_list();
+			const std::set<std::string>& get_item_list(bool master = false);
 
 			const decltype(content_category)& get_categorised_items();
 

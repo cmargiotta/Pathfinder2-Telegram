@@ -10,7 +10,7 @@ void pathfinder2::_add(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Dat
 	auto id = message->chat->id;
 	auto character_ = pathfinder2::character_cache[id];
 
-    auto& item_list = character_->get_inventory().get_item_list();
+    auto& item_list = character_->get_inventory().get_item_list(master::get_instance().is_master(id));
     auto keyboard = pathfinder2::create_keyboard(item_list.begin(), item_list.end());
     pathfinder2::add_button_row(keyboard, get_command("cancel", message->from->languageCode));
 

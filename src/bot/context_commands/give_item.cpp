@@ -23,6 +23,7 @@ void pathfinder2::give_item_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLit
 
     std::string target = character_->get_data();
     character_->set_data("");
+    character_->set_context("");
     auto dest_character = character_cache[character::get_id(database, target)];
 
     try 
@@ -54,7 +55,6 @@ void pathfinder2::give_item_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLit
 		bot.getApi().sendMessage(dest_character->get_id(), message_.str(), false, 0, std::make_shared<TgBot::GenericReply>(), "MarkdownV2");
 	}
 
-    character_->set_context("");
     bot.getApi().sendMessage(id, get_message("default_message", message->from->languageCode), false, 0, pathfinder2::get_default_keyboard(message->from->languageCode, master::get_instance().is_master(id)));
     
 }

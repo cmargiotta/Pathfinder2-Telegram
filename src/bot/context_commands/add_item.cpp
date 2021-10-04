@@ -35,6 +35,13 @@ void pathfinder2::add_item_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite
     }
     else
     {
+        auto item = character_->get_inventory().get_item(text);
+
+        if (item->only_master() && !master::get_instance().is_master(id))
+        {
+            throw std::runtime_error("authorization_error");
+        }
+
         character_->get_inventory().add_item(text);
 
         auto keyboard = make_shared<TgBot::InlineKeyboardMarkup>();

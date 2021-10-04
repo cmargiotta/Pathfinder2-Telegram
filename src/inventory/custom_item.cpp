@@ -120,3 +120,8 @@ void custom_item::remove()
 
 	quantity = 0;
 }
+
+bool custom_item::only_master() const
+{
+	return false;
+}

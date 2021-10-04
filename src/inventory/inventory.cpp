@@ -27,7 +27,7 @@ inventory::inventory(int _owner, Database& _database):
 		
 		content_category[_item->get_category()].push_back(_item);
 		content_name[_item->get_name()] = _item;
-		item_names.insert(_item->get_name());
+		item_names_full.insert(_item->get_name());
 	}
 
 	Statement query1 (database, "SELECT name FROM custom_items WHERE owner = ?");
@@ -40,7 +40,8 @@ inventory::inventory(int _owner, Database& _database):
 
 		content_category[_item->get_category()].push_back(_item);
 		content_name[_item->get_name()] = _item;
-		item_names.insert(_item->get_name());
+		item_names_full.insert(_item->get_name());
+		item_names_user.insert(_item->get_name());
 	}
 }
 
@@ -59,7 +60,7 @@ void inventory::add_item(const string& name)
 			auto _item = make_shared<item>(owner, name, database);
 			content_category[_item->get_category()].push_back(_item);
 			content_name[_item->get_name()] = _item;
-			item_names.insert(_item->get_name());
+			item_names_full.insert(_item->get_name());
 		}
 		catch(...)
 		{
@@ -82,7 +83,8 @@ void inventory::add_item(const string& name, const string& bulk, const string& c
 		auto _item = make_shared<custom_item>(owner, name, category, bulk, database);
 		content_category[_item->get_category()].push_back(_item);
 		content_name[_item->get_name()] = _item;
-		item_names.insert(_item->get_name());
+		item_names_full.insert(_item->get_name());
+		item_names_user.insert(_item->get_name());
 	}
 }
 
@@ -92,7 +94,17 @@ void inventory::erase_item(const string& name)
 	content_name.erase(name);
 
 	auto& category_list = content_category[_item->get_category()];
-	item_names.erase(_item->get_name());
+	item_names_full.erase(_item->get_name());
+	
+	try 
+	{
+		item_names_user.erase(_item->get_name());
+	}
+	catch(...)
+	{
+		;
+	}
+
 	category_list.remove(_item);
 
 	if (category_list.empty())
@@ -147,7 +159,8 @@ void inventory::reset()
 
 	content_category.clear();
 	content_name.clear();
-	item_names.clear();
+	item_names_full.clear();
+	item_names_user.clear();
 }
 
 void inventory::delete_invalid_items()
@@ -162,11 +175,18 @@ void inventory::delete_invalid_items()
 	}
 }
 
-const set<string>& inventory::get_item_list()
+const set<string>& inventory::get_item_list(bool master)
 {
 	delete_invalid_items();
 
-	return item_names;
+	if (master)
+	{
+		return item_names_full;
+	}
+	else 
+	{
+		return item_names_user;
+	}
 }
 
 const decltype(inventory::content_category)& inventory::get_categorised_items()
