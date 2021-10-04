@@ -28,7 +28,7 @@ void pathfinder2::add_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Dat
 
     for (auto& item: matches)
     {
-        if (item->name == text)
+        if (item == text)
         {
 			//Perfect match on item database, no need to continue, add it directly
 			add_item_(bot, message, database);
@@ -40,7 +40,7 @@ void pathfinder2::add_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Dat
 
 	for (auto& item: matches)
     {
-        pathfinder2::add_button_row(keyboard, item->name);
+        pathfinder2::add_button_row(keyboard, item);
     }
 
     pathfinder2::add_button_row(keyboard, get_command("create_custom_item", message->from->languageCode));

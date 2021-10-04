@@ -114,27 +114,17 @@ void item_database::delete_item(const std::string& name)
 	item_cache.remove(name);
 }
 
-const std::vector<std::shared_ptr<const item_database_entry>> item_database::search_items(const std::string& name)
+const std::vector<std::string> item_database::search_items(const std::string& name)
 {
-	std::vector<std::shared_ptr<const item_database_entry>> result;
+	std::vector<std::string> result;
 
 	//Load item from database
-	Statement query(database, "SELECT url, name, bulk, description FROM items WHERE name MATCH ?");
+	Statement query(database, "SELECT name FROM items WHERE name MATCH ?");
 	query.bind(1, name);  
 
 	while (query.executeStep())
 	{
-		auto item = make_shared<item_database_entry>();
-		//Build the new item instance
-		item->url = string(query.getColumn(0));
-		item->name = string(query.getColumn(1));
-		item->description = string(query.getColumn(3));
-
-		auto bulk_str = query.getColumn(2);
-		item->bulk = bulk_str[0] == 'L' ? 0.1f : atoi(bulk_str);
-
-		//Insert it in the cache and in the result vector
-		result.emplace_back(item_cache.insert(item->name, item));
+		result.emplace_back(std::string(query.getColumn(0)));
 	}
 
 	return result; 
