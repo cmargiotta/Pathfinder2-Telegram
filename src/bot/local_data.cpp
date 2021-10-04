@@ -171,6 +171,14 @@ const std::string& pathfinder2::get_message_id(const std::string& key, const std
 	}
 	catch(...)
 	{
+		for (auto m: messages_ids)
+		{
+			if (m.second.count(key) != 0)
+			{
+				return m.second.at(key);
+			}
+		}
+		
 		return key;
 	}
 }
