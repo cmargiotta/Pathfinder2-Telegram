@@ -75,7 +75,7 @@ void pathfinder2::list_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Da
     {
         auto keyboard = pathfinder2::create_keyboard({});
 
-        for (auto& item: character_->get_inventory().get_item_list())
+        for (auto& item: character_->get_inventory().get_item_list(true))
         {
             pathfinder2::add_button_row(keyboard, item);
         }
