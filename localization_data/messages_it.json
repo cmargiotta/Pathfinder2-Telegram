@@ -14,7 +14,7 @@
 	"list_granularity_request"		: "Scegli.",
 	"edit_selection"				: "Quale campo vuoi modificare?",
 	"list_detail_selection"			: "Seleziona un oggetto dal tuo inventario.",
-	"money_transaction_request"		: "Quante monete di rame? Numero negativo per pagare.",
+	"money_transaction_request"		: "Con quante monete di rame vuoi pagare?",
 	"capacity_request"				: "Quanto puoi trasportare?",
 	"custom_item_info_request"		: "Indicare bulk (obbligatorio) e categoria (opzionale) separati da virgola.",
 
@@ -37,5 +37,7 @@
 	"command_error"					: "Comando non valido",
 	"broadcast_message_content_req"	: "Cosa vuoi scrivere?",
 	"new_item_notification"			: "NUOVO OGGETTO PER TE DA",
-	"length_error"					: "Quella è la descrizione non il nome, che cazzo."
+	"length_error"					: "Quella è la descrizione non il nome, che cazzo.",
+	"money_dest_request"			: "A chi vuoi dare i tuoi soldi?",
+	"money_notification"			: "Da "
 }

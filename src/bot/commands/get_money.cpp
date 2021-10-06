@@ -12,7 +12,6 @@ using std::stringstream;
 
 void pathfinder2::_get_money(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
-	
 	auto id = message->chat->id;
 	auto character_ = pathfinder2::character_cache[id];
 

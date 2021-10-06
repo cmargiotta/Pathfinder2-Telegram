@@ -7,10 +7,13 @@
 
 void pathfinder2::_money_transaction(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
-	
 	auto id = message->chat->id;
 	auto character_ = pathfinder2::character_cache[id];
 
-	character_->set_context(get_message("money_transaction_request", message->from->languageCode));
-	bot.getApi().sendMessage(id, character_->get_context(), false, 0, pathfinder2::remove_keyboard);
+	auto usernames = character::get_usernames(database);
+    auto keyboard = create_keyboard(usernames.begin(), usernames.end());
+    add_button_row(keyboard, get_command("cancel", message->from->languageCode));
+
+	character_->set_context(get_message("money_dest_request", message->from->languageCode));
+	bot.getApi().sendMessage(id, character_->get_context(), false, 0, keyboard);
 }

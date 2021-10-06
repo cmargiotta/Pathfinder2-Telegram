@@ -14,7 +14,7 @@
 	"list_granularity_request"		: "Choose.",
 	"edit_selection"				: "What do you want to edit?",
 	"list_detail_selection"			: "Select an item from your inventory.",
-	"money_transaction_request"		: "How many copper coins? Negative number for paying.",
+	"money_transaction_request"		: "With how many copper coins do you want to pay?",
 	"capacity_request"				: "What is your capacity?",
 	"custom_item_info_request"		: "Provide bulk (mandatory) and category (optional) separated by commas.",
 
@@ -37,5 +37,7 @@
 	"command_error"					: "Invalid command",
 	"broadcast_message_content_req"	: "What do you want to send?",
 	"new_item_notification"			: "NEW ITEM FOR YOU FROM",
-	"length_error"					: "Given name is too long."
+	"length_error"					: "Given name is too long.",
+	"money_dest_request"			: "Who do you want to give your money?",
+	"money_notification"			: "From "
 }
