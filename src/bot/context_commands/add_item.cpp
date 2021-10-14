@@ -7,6 +7,7 @@
 #include "../keyboards.hpp"
 #include "../local_data.hpp"
 #include "common/string_utils.hpp"
+#include "inventory/item_database.hpp"
 #include "character/character_cache.hpp"
 
 using std::vector;
@@ -35,14 +36,21 @@ void pathfinder2::add_item_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite
     }
     else
     {
-        auto item = character_->get_inventory().get_item(text);
-
-        if (item->only_master() && !master::get_instance().is_master(id))
+        if (master::get_instance().is_master(id))
         {
-            throw std::runtime_error("authorization_error");
+            character_->get_inventory().add_item(text);
         }
+        else 
+        {
+            auto item = character_->get_inventory().get_item(text);
 
-        character_->get_inventory().add_item(text);
+            if (item->only_master())
+            {
+                throw std::runtime_error("authorization_error");
+            }
+
+            character_->get_inventory().add_item(text);
+        }
 
         auto keyboard = make_shared<TgBot::InlineKeyboardMarkup>();
         vector<TgBot::InlineKeyboardButton::Ptr> row0;
