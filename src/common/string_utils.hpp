@@ -9,7 +9,7 @@
 
 namespace common
 {
-	static inline const std::set<char> to_escape ({'.', '-', '+', '(', ')', '=', '<', '>'});
+	static inline const std::set<char> to_escape ({'.', '-', '+', '(', ')', '=', '<', '>', '!'});
 
 	//Used for escaping description when loading from/in database
 	static inline std::string escape(const std::string& src, const std::set<char>& escapee, const char marker)

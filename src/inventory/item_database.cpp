@@ -70,16 +70,51 @@ item_database& item_database::get_instance(Database* database)
 	return instance;
 }
 
-void item_database::register_new_item(const string& name, const string& url, const string& category, const string& description, const string& bulk)
+void item_database::register_new_item(const string& name, const string& url, const string& category, const string& description, const string& _bulk)
 {
 	if (item_cache.contains(name))
 	{
 		throw std::runtime_error("no_duplicate_items");
 	}
 
-	if (bulk.empty() || (!std::all_of(bulk.begin(), bulk.end(), ::isdigit) && !(bulk.size() == 1 && bulk[0] == 'L')))
+	float bulk;
+	auto bulk_string = _bulk;
+	if (bulk_string.back() == 'l')
+	{
+		bulk_string.back() = 'L';
+	}
+
+	if (bulk_string.empty() || 
+		bulk_string[0] == '-' ||
+		!(common::is_number(bulk_string) || (bulk_string.back() == 'L' && (
+											common::is_number(bulk_string.substr(0, bulk_string.size() - 1)) ||
+											bulk_string.size() == 1))))
 	{
 		throw std::runtime_error("bulk_error");
+	}
+
+	if (bulk_string == "1L")
+	{
+		bulk_string = "L";
+	}
+
+	if (bulk_string.back() == 'L')
+	{
+		if (bulk_string.size() == 1)
+		{
+			bulk = 0.1;
+		}
+		else 
+		{
+			bulk_string.back() = '\0';
+
+			bulk = 0.1 * atoi(bulk_string.c_str());
+			bulk_string.back() = 'L';
+		}
+	}
+	else 
+	{
+		bulk = static_cast<double>(atoi(bulk_string.c_str()));
 	}
 
 	Transaction transaction (database);
