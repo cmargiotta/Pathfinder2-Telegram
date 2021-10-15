@@ -20,9 +20,12 @@ void pathfinder2::money_transaction_(TgBot::Bot& bot, TgBot::Message::Ptr messag
 	if (!common::is_number(text) || q < 0)
 	{
 		throw std::runtime_error("generic_error");
-	}	
+	}
 
-	dest->update_cp(q);
+	if (!master::get_instance().is_master(dest->get_id()))
+	{
+		dest->update_cp(q);
+	}
 
 	if (!master::get_instance().is_master(id))
 	{

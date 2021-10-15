@@ -15,11 +15,7 @@ void pathfinder2::give_item_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLit
 
     auto item = character_->get_inventory().get_item(text);
 
-    if (!master::get_instance().is_master(character_->get_id()))
-    {
-        //Not the master, the item must be removed from inventory
-        character_->get_inventory().remove_item(text);
-    }
+    character_->get_inventory().remove_item(text);
 
     std::string target = character_->get_data();
     
