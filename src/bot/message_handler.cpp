@@ -1,5 +1,6 @@
 #include "message_handler.hpp"
 
+#include <string>
 #include <memory>
 #include <iostream>
 
@@ -8,6 +9,7 @@
 #include "local_data.hpp"
 #include "commands/commands.hpp"
 #include "character/character_cache.hpp"
+#include "dice_expression_parser/node.hpp"
 #include "context_commands/context_commands.hpp"
 
 void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
@@ -27,7 +29,7 @@ void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, 
 	{
 		character_->set_data("");
 		character_->set_context("");
-		bot.getApi().sendMessage(character_->get_id(), get_message("cancel_done", message->from->languageCode));
+		bot.getApi().sendMessage(id, get_message("cancel_done", message->from->languageCode));
 		bot.getApi().sendMessage(id, get_message("default_message", message->from->languageCode), false, 0, pathfinder2::get_default_keyboard(message->from->languageCode, master::get_instance().is_master(id)));
 		return;
 	}
@@ -35,10 +37,23 @@ void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, 
 	try
 	{
 		if (context.empty())
-		{		
-			std::string cmd = get_command_id(message->text, message->from->languageCode);
+		{
+			try 
+			{
+				auto expression = dice::build_dice_tree(message->text); 
+				auto res = expression->compute(); 
+				auto response = expression->print() + "\n\n" + std::to_string(res); 
+				
+				bot.getApi().sendMessage(id, response);
+				bot.getApi().sendMessage(id, get_message("default_message", message->from->languageCode), false, 0, pathfinder2::get_default_keyboard(message->from->languageCode, master::get_instance().is_master(id)));
+				return; 
+			}
+			catch(...)
+			{
+				std::string cmd = get_command_id(message->text, message->from->languageCode);
 
-			pathfinder2::commands.at(cmd)(bot, message, database);	
+				pathfinder2::commands.at(cmd)(bot, message, database);
+			}	
 		}
 		else
 		{
@@ -51,15 +66,15 @@ void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, 
 	{
 		try
 		{
-			bot.getApi().sendMessage(character_->get_id(), get_message(e.what(), message->from->languageCode));
+			bot.getApi().sendMessage(id, get_message(e.what(), message->from->languageCode));
 		}
 		catch(...)
 		{
-			bot.getApi().sendMessage(character_->get_id(), e.what());
+			bot.getApi().sendMessage(id, e.what());
 		}
 	}
 	catch(...)
 	{
-		bot.getApi().sendMessage(character_->get_id(), get_message("generic_error", message->from->languageCode));
+		bot.getApi().sendMessage(id, get_message("generic_error", message->from->languageCode));
 	}
 }
