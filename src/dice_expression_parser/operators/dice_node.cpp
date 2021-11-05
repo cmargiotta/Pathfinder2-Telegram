@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <random>
+#include <stdexcept>
 
 using std::unique_ptr; 
 using pathfinder2::dice::inode;
@@ -63,6 +64,12 @@ int dice_node::compute()
 
 	int rolls = right->compute(); 
 	int dice_size = left->compute(); 
+
+	if (dice_size < 1)
+	{
+		throw std::runtime_error("dice_error");
+	}
+
 	last_result = 0; 
 
 	std::uniform_int_distribution<> distrib(1, dice_size);
