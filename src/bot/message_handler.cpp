@@ -38,6 +38,12 @@ void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, 
 	{
 		if (context.empty())
 		{
+			if (message->text.empty())
+			{
+				bot.getApi().sendMessage(id, get_message("generic_error", message->from->languageCode));
+				return;
+			}
+			
 			try 
 			{
 				auto expression = dice::build_dice_tree(message->text); 
