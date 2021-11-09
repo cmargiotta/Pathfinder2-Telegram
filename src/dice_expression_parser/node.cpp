@@ -67,7 +67,6 @@ std::string inode::get_ascii_stats_chart(int reference_roll)
 							return first.first < second.first; 
 						});
 
-	std::string chart = std::to_string(min_value) + "\n";
 	constexpr int bar_width = 25;
 	constexpr int max_bars = 20;
 
@@ -97,6 +96,7 @@ std::string inode::get_ascii_stats_chart(int reference_roll)
 		temp.clear();  
 	}
 
+	std::string chart = std::to_string(min_value) + "\n";
 	int last_roll = 0; 
 	for (auto& r: compressed_stats)
 	{

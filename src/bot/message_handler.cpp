@@ -8,6 +8,7 @@
 #include "keyboards.hpp"
 #include "local_data.hpp"
 #include "commands/commands.hpp"
+#include "common/string_utils.hpp"
 #include "character/character_cache.hpp"
 #include "dice_expression_parser/node.hpp"
 #include "context_commands/context_commands.hpp"
@@ -48,8 +49,9 @@ void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, 
 			{
 				auto expression = dice::build_dice_tree(message->text); 
 				auto res = expression->compute(); 
-				auto s = std::string("```") + expression->get_ascii_stats_chart(res) + "```";  
-				auto response = s + "\n" + expression->print() + "\n" + std::to_string(res); 
+				auto s = std::string("```\n") + expression->get_ascii_stats_chart(res) + "```";
+				auto expr_print = common::escape(expression->print(), common::to_escape, '\\');   
+				auto response = s + "\n" + expr_print + "\n" + std::to_string(res); 
 				
 				bot.getApi().sendMessage(id, response, false, 0, pathfinder2::remove_keyboard, "MarkdownV2");
 				bot.getApi().sendMessage(id, get_message("default_message", message->from->languageCode), false, 0, pathfinder2::get_default_keyboard(message->from->languageCode, master::get_instance().is_master(id)));
