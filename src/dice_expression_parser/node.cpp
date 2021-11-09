@@ -48,17 +48,12 @@ unique_ptr<inode> parse_token(stack<string>& tokens)
 unique_ptr<inode> parse_tokens(deque<string>& tokens, unique_ptr<inode> root = unique_ptr<inode>())
 {
 	stack<string> output; 
-	stack<pair<string, unsigned int>> operators; 
+	stack<pair<string, unsigned int>> operators_; 
 
 	while (!tokens.empty())
 	{
 		auto token = tokens.front(); 
-		tokens.pop_front(); 
-
-		if (token.empty())
-		{
-			continue;
-		}
+		tokens.pop_front();
 
 		if (common::is_number(token))
 		{
@@ -66,22 +61,26 @@ unique_ptr<inode> parse_tokens(deque<string>& tokens, unique_ptr<inode> root = u
 		}
 		else if (token[0] == '(')
 		{
-			operators.push(std::make_pair(token, 0)); 
+			operators_.push(std::make_pair(token, 0)); 
 		}
 		else if (token[0] == ')')
 		{
-			while (operators.top().first[0] != '(')
+			while (operators_.top().first[0] != '(')
 			{
-				if (operators.empty())
+				if (operators_.empty())
 				{
 					throw std::runtime_error("invalid_expression");
 				}
 
-				output.push(operators.top().first);
-				operators.pop(); 
+				output.push(operators_.top().first);
+				operators_.pop(); 
 			}
 			//Popping '('
-			operators.pop(); 
+			operators_.pop(); 
+		}
+		else if (functions.count(token))
+		{
+			operators_.emplace(make_pair(token, 0)); 
 		}
 		else 
 		{
@@ -96,14 +95,14 @@ unique_ptr<inode> parse_tokens(deque<string>& tokens, unique_ptr<inode> root = u
 				priority = sum_node::priority;
 			}
 
-			while (operators.top().first[0] != '(' &&
-					operators.top().second >= priority)
+			while (operators_.top().first[0] != '(' &&
+					operators_.top().second >= priority)
 			{
-				output.push(operators.top().first);
-				operators.pop(); 
+				output.push(operators_.top().first);
+				operators_.pop(); 
 			}
 
-			operators.push(std::make_pair(token, priority));
+			operators_.push(std::make_pair(token, priority));
 		}
 	}
 
@@ -149,15 +148,15 @@ unique_ptr<inode> pathfinder2::dice::build_dice_tree(const string& expression)
 			{
 				auto c_backup = c+1; 
 
-				while (c < expression.end() && !functions.contains(token))
+				while (c < expression.end() && !functions.count(token))
 				{
 					token += *c; 
 					++c;
 				}
 
-				if (!functions.contains(token))
+				if (!functions.count(token))
 				{
-					if (!operators.contains(token[0]))
+					if (!operators.count(token[0]))
 					{
 						throw std::runtime_error("invalid_expression");
 					}
