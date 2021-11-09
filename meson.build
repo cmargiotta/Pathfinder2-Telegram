@@ -1,4 +1,4 @@
-project('pathfinder2-telegram', 'cpp', default_options: ['cpp_std=c++17'])
+project('pathfinder2-telegram', 'cpp', default_options: ['cpp_std=c++20'])
 
 add_project_link_arguments(['-lstdc++fs'], language: 'cpp')
 

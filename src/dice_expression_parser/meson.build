@@ -1,6 +1,7 @@
 dice_parser_lib = static_library('dice_parser',
 						[
 							'node.cpp',
+							'node_factory.cpp',
 
 							'operators/sum_node.cpp',
 							'operators/dice_node.cpp',

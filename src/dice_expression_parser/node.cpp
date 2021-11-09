@@ -8,10 +8,8 @@
 #include <stdexcept>
 #include <exception>
 
-#include "operators/sum_node.hpp"
-#include "operators/leaf_node.hpp"
+#include "node_factory.hpp"
 #include "common/string_utils.hpp"
-#include "operators/dice_node.hpp"
 
 using std::pair; 
 using std::stack; 
@@ -26,19 +24,6 @@ inode::inode(unique_ptr<inode> _left, unique_ptr<inode> _right):
 	left{std::move(_left)},
 	right{std::move(_right)}
 {}
-
-unique_ptr<inode> node_factory(string& token)
-{
-	switch (token[0])
-	{
-		case (dice_node::identifier): 
-			return make_unique<dice_node>(); 
-		case (sum_node::identifier):
-			return make_unique<sum_node>(); 
-		default: 
-			return make_unique<leaf_node>(token); 
-	}
-}
 
 unique_ptr<inode> parse_token(stack<string>& tokens)
 {
@@ -60,7 +45,7 @@ unique_ptr<inode> parse_token(stack<string>& tokens)
 	return node; 
 }
 
-unique_ptr<inode> parse_tokens(deque<string>& tokens, unique_ptr<inode>& root)
+unique_ptr<inode> parse_tokens(deque<string>& tokens, unique_ptr<inode> root = unique_ptr<inode>())
 {
 	stack<string> output; 
 	stack<pair<string, unsigned int>> operators; 
@@ -134,38 +119,58 @@ unique_ptr<inode> pathfinder2::dice::build_dice_tree(const string& expression)
 {
 	deque<string> tokens; 
 	tokens.emplace_back("(");
-	tokens.emplace_back("");
 
-	for (char c: expression)
+	auto c = expression.begin();
+	while (c < expression.end())
 	{
-		switch (c)
+		while (*c == ' ')
 		{
-			case ' ': 
-				break; 
-			case dice_node::identifier: 
-				if (tokens.empty() || !common::is_number(tokens.back()))
+			++c; 
+		}
+
+		if (*c == '(' || *c == ')')
+		{
+			tokens.emplace_back(std::string() + *c); 
+			++c;
+		}
+		else 
+		{
+			std::string token; 
+
+			if (common::is_number(token + *c))
+			{
+				while (c < expression.end() && common::is_number(token + *c))
 				{
-					tokens.emplace_back("1");
+					token += *c;
+					++c;
 				}
-			case sum_node::identifier:
-				tokens.emplace_back(std::string() + c);
-				tokens.emplace_back("");
-				break;
-			case '(':
-				tokens.emplace_back("(");
-				tokens.emplace_back("");
-				break; 
-			case ')':
-				tokens.emplace_back(")");
-				tokens.emplace_back("");
-				break; 
-			default:
-				tokens.back() += c;
-				break; 
+			}
+			else
+			{
+				auto c_backup = c+1; 
+
+				while (c < expression.end() && !functions.contains(token))
+				{
+					token += *c; 
+					++c;
+				}
+
+				if (!functions.contains(token))
+				{
+					if (!operators.contains(token[0]))
+					{
+						throw std::runtime_error("invalid_expression");
+					}
+
+					c = c_backup; 
+					token = std::string() + token[0]; 
+				}
+			}
+
+			tokens.push_back(token);
 		}
 	}
 
 	tokens.emplace_back(")");
-	unique_ptr<inode> root; 
-	return parse_tokens(tokens, root);
+	return parse_tokens(tokens);
 }
