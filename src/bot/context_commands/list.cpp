@@ -24,7 +24,7 @@ std::string progress_bar(float progress)
         }
         else 
         {
-            bar += "▒";
+            bar += "░";
         }
     }
 
