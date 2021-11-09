@@ -1,11 +1,13 @@
 #include "node.hpp"
 
+#include <list>
 #include <stack>
 #include <deque>
 #include <random>
 #include <cstdlib>
 #include <utility>
 #include <stdexcept>
+#include <algorithm>
 #include <exception>
 
 #include "node_factory.hpp"
@@ -17,6 +19,7 @@ using std::deque;
 using std::string; 
 using std::unique_ptr; 
 using std::make_unique;
+using std::unordered_map;
 
 using namespace pathfinder2::dice; 
 
@@ -24,6 +27,108 @@ inode::inode(unique_ptr<inode> _left, unique_ptr<inode> _right):
 	left{std::move(_left)},
 	right{std::move(_right)}
 {}
+
+std::string inode::get_ascii_stats_chart(int reference_roll)
+{
+	auto stats = get_stats(); 
+	int min_value = std::min_element(stats.begin(), 
+							stats.end(), 
+							[](const decltype(stats)::value_type& o1, const decltype(stats)::value_type& o2)
+							{
+								return o1.first < o2.first; 
+							})->first;
+	int max_value = std::max_element(stats.begin(), 
+							stats.end(), 
+							[](const decltype(stats)::value_type& o1, const decltype(stats)::value_type& o2)
+							{
+								return o1.first < o2.first; 
+							})->first;
+	int max_rolls = std::max_element(stats.begin(), 
+							stats.end(), 
+							[](const decltype(stats)::value_type& o1, const decltype(stats)::value_type& o2)
+							{
+								return o1.second < o2.second; 
+							})->first;
+
+	double total_rolls = 0.0; 
+	for (auto& r: stats)
+	{
+		total_rolls += r.second; 
+	}
+
+	std::list<std::pair<int, double>> compressed_stats; 
+	for (auto& r: stats)
+	{
+		compressed_stats.emplace_back(std::make_pair(r.first, r.second));
+	}
+
+	compressed_stats.sort([](const std::pair<int, int>& first, const std::pair<int, int>& second)
+						{
+							return first.first < second.first; 
+						});
+
+	std::string chart = std::to_string(min_value) + "\n";
+	constexpr int bar_width = 25;
+	constexpr int max_bars = 20;
+
+	double scale_factor = (bar_width-2.0)/max_rolls;
+
+	while (compressed_stats.size() > max_bars)
+	{
+		std::list<std::pair<int, double>> temp; 
+
+		while (!compressed_stats.empty())
+		{
+			auto data1 = compressed_stats.front(); 
+			compressed_stats.pop_front(); 
+			if (compressed_stats.size() >= 2)
+			{
+				auto data2 = compressed_stats.front(); 
+				compressed_stats.pop_front(); 
+
+				data1.first = data2.first; 
+				data1.second = (data1.second + data2.second)/2.0; 
+			}
+			
+			temp.push_back(data1);
+		}
+
+		compressed_stats = std::move(temp);
+		temp.clear();  
+	}
+
+	int last_roll = 0; 
+	for (auto& r: compressed_stats)
+	{
+		int pos = r.second * scale_factor;
+
+		for (int i = 0; i < bar_width; ++i)
+		{
+			if (i <= pos) 
+			{
+				if (reference_roll <= r.first && reference_roll > last_roll)
+				{
+					chart += "═";
+				}
+				else 
+				{
+					chart += "█";
+				}
+			}
+			else 
+			{
+				chart += "░";
+			}
+		}
+
+		last_roll = r.first; 
+		chart += "\n";
+	}
+
+	chart += std::to_string(max_value) + "\n";
+
+    return chart;
+}
 
 unique_ptr<inode> parse_token(stack<string>& tokens)
 {
@@ -106,7 +211,7 @@ unique_ptr<inode> parse_tokens(deque<string>& tokens, unique_ptr<inode> root = u
 		}
 	}
 
-	if (!operators.empty())
+	if (!operators_.empty())
 	{
 		throw std::runtime_error("invalid_expression");
 	}

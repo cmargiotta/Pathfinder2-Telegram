@@ -85,3 +85,61 @@ int dice_node::compute()
 
 	return last_result; 
 }
+
+auto dice_results(int size)
+{
+	std::unordered_map<int, int> res;
+	res.reserve(size); 
+	
+	for (int i = 1; i <= size; ++i)
+	{
+		res[i] = 1;
+	}
+
+	return res; 
+}
+
+auto dice_sum(const std::unordered_map<int, int>& res1, const std::unordered_map<int, int>& res2)
+{
+	std::unordered_map<int, int> res;
+
+	for (auto r1: res1)
+	{
+		for (auto r2: res2)
+		{
+			res[r1.first + r2.first] += r1.second + r2.second; 
+		}
+	} 
+
+	return res; 
+}
+
+//TODO optimize
+std::unordered_map<int, int> dice_node::get_stats()
+{
+	auto dice_size_stats = left->get_stats(); 
+	auto rolls_stats = right->get_stats(); 
+
+	std::unordered_map<int, int> res;
+
+	for (auto rolls: rolls_stats)
+	{
+		for (auto dice_size: dice_size_stats)
+		{
+			auto dice_stats = dice_results(dice_size.first); 
+			auto current_stats = dice_stats;
+
+			for (int roll = 1; roll < rolls.first; ++roll)
+			{
+				current_stats = dice_sum(current_stats, dice_stats); 
+			}
+
+			for (auto s: current_stats)
+			{
+				res[s.first] += (s.second*rolls.second*dice_size.second); 
+			}
+		}
+	}
+
+	return res; 
+}

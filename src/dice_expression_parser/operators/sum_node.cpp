@@ -42,3 +42,23 @@ int sum_node::compute()
 	last_result = left->compute() + right->compute(); 
 	return last_result;
 }
+
+auto stats_sum(const std::unordered_map<int, int>& res1, const std::unordered_map<int, int>& res2)
+{
+	std::unordered_map<int, int> res;
+
+	for (auto r1: res1)
+	{
+		for (auto r2: res2)
+		{
+			res[r1.first + r2.first] = r1.second + r2.second; 
+		}
+	} 
+
+	return res; 
+}
+
+std::unordered_map<int, int> sum_node::get_stats()
+{
+	return stats_sum(left->get_stats(), right->get_stats());
+}

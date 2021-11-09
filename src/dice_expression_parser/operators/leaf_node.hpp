@@ -16,6 +16,7 @@ namespace pathfinder2::dice
 
 		int compute() override;
 		std::string print() override; 
+		std::unordered_map<int, int> get_stats() override;
 
 		static inline const unsigned int priority {0};
 	};

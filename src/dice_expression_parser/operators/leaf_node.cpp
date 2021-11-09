@@ -28,3 +28,8 @@ int leaf_node::compute()
 {
 	return value; 
 }
+
+std::unordered_map<int, int> leaf_node::get_stats()
+{
+	return {{value, 1}};
+}
