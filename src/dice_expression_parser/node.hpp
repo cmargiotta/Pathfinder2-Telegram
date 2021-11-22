@@ -8,26 +8,26 @@
 
 namespace pathfinder2::dice
 {
-	struct inode
+	class inode
 	{
-		std::unique_ptr<inode> left, right; 
-		std::string str; 
-		int last_result; 
-		bool leaf = false;
+		public:
+		 	std::unique_ptr<inode> left, right; 
+			std::string str; 
+			int last_result; 
+			bool leaf = false;
 
-		inode(std::unique_ptr<inode> left, std::unique_ptr<inode> right);
-		inode() = default;
+		protected:
+			std::string _print(char _operator);
 
-		virtual ~inode() = default; 
-		
-		virtual std::string print() = 0; 
-		virtual int compute() = 0;
-		virtual std::unordered_map<int, int> get_stats() = 0;
+		public: 
+			inode(std::unique_ptr<inode> left, std::unique_ptr<inode> right);
+			inode() = default;
 
-		std::string get_ascii_stats_chart(int reference_roll = -1); 
+			virtual ~inode() = default; 
+			
+			virtual std::string print() = 0; 
+			virtual int compute() = 0;
 	};
-
-	std::unique_ptr<inode> build_dice_tree(const std::string& expression);
 }
 
 #endif /* DICE_EXPRESSION_PARSER_NODE */

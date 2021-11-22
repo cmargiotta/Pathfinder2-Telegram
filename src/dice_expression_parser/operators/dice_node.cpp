@@ -14,28 +14,8 @@ dice_node::dice_node(unique_ptr<inode> _left, unique_ptr<inode> _right):
 
 std::string dice_node::print()
 {
-	std::string res;
-	
-	if (right->leaf)
-	{
-		res += right->print();
-	}
-	else
-	{
-		res += "(" + right->print() + ")";
-	}
+	auto res = inode::_print(identifier); 
 
-	res += "d";
-
-	if (left->leaf)
-	{
-		res += left->print();
-	}
-	else
-	{
-		res += "(" + left->print() + ")";
-	}
-	
 	res += "["; 
 
 	while (!results.empty())
@@ -62,8 +42,8 @@ int dice_node::compute()
 
 	results = std::queue<int>(); 
 
-	int rolls = right->compute(); 
-	int dice_size = left->compute(); 
+	int rolls = left->compute(); 
+	int dice_size = right->compute(); 
 
 	if (dice_size < 1)
 	{
@@ -110,36 +90,6 @@ auto dice_sum(const std::unordered_map<int, int>& res1, const std::unordered_map
 			res[r1.first + r2.first] += r1.second + r2.second; 
 		}
 	} 
-
-	return res; 
-}
-
-//TODO optimize
-std::unordered_map<int, int> dice_node::get_stats()
-{
-	auto dice_size_stats = left->get_stats(); 
-	auto rolls_stats = right->get_stats(); 
-
-	std::unordered_map<int, int> res;
-
-	for (auto rolls: rolls_stats)
-	{
-		for (auto dice_size: dice_size_stats)
-		{
-			auto dice_stats = dice_results(dice_size.first); 
-			auto current_stats = dice_stats;
-
-			for (int roll = 1; roll < rolls.first; ++roll)
-			{
-				current_stats = dice_sum(current_stats, dice_stats); 
-			}
-
-			for (auto s: current_stats)
-			{
-				res[s.first] += (s.second*rolls.second*dice_size.second); 
-			}
-		}
-	}
 
 	return res; 
 }

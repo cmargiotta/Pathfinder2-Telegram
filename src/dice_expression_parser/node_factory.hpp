@@ -7,9 +7,7 @@
 #include <functional>
 #include <unordered_map>
 
-#include "operators/sum_node.hpp"
-#include "operators/leaf_node.hpp"
-#include "operators/dice_node.hpp"
+#include "node.hpp"
 
 namespace pathfinder2::dice
 {
@@ -17,6 +15,8 @@ namespace pathfinder2::dice
 	extern const std::unordered_map<std::string, std::function<std::unique_ptr<inode>()>> functions; 
 
 	std::unique_ptr<inode> node_factory(const std::string& token);
+
+	std::unique_ptr<inode> build_dice_tree(const std::string& expression);
 }
 
 #endif /* DICE_EXPRESSION_PARSER_NODE_FACTORY */

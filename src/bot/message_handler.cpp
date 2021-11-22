@@ -10,8 +10,8 @@
 #include "commands/commands.hpp"
 #include "common/string_utils.hpp"
 #include "character/character_cache.hpp"
-#include "dice_expression_parser/node.hpp"
 #include "context_commands/context_commands.hpp"
+#include "dice_expression_parser/node_factory.hpp"
 
 void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
 {
@@ -49,10 +49,9 @@ void pathfinder2::message_handler(TgBot::Bot& bot, TgBot::Message::Ptr message, 
 			{
 				auto expression = dice::build_dice_tree(message->text); 
 				auto res = expression->compute(); 
-				auto expr_print = common::escape(expression->print(), common::to_escape, '\\');   
-				auto response = expr_print + "\n" + std::to_string(res); 
+				auto response = expression->print() + "\n" + std::to_string(res); 
 				
-				bot.getApi().sendMessage(id, response, false, 0, pathfinder2::remove_keyboard, "MarkdownV2");
+				bot.getApi().sendMessage(id, response);
 				bot.getApi().sendMessage(id, get_message("default_message", message->from->languageCode), false, 0, pathfinder2::get_default_keyboard(message->from->languageCode, master::get_instance().is_master(id)));
 				return; 
 			}
