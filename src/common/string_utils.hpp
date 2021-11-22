@@ -31,7 +31,7 @@ namespace common
 
 	static inline bool is_number(const std::string& s)
 	{
-		return (std::isdigit(s[0]) || s[0] == '-') && std::all_of(s.begin()+1, s.end(), ::isdigit);
+		return (std::isdigit(s[0])) && std::all_of(s.begin()+1, s.end(), ::isdigit);
 	}
 
 	static inline void trim(std::string& str, const std::string& whitespace = " \t\n")
