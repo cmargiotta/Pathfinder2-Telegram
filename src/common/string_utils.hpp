@@ -68,20 +68,20 @@ namespace common
 		
 		if (bulk >= 1.0)
 		{
+			//If bulk is only a number
 			text << std::fixed << std::setprecision(2) << bulk;
 		}
 		else
 		{
-			if (bulk * 10 < 2)
+			if (bulk == 0.1)
 			{
-				if (bulk - 0.1 < 0.01)
-				{
-					text << 'L';
-				}
-				else 
-				{
-					text << std::fixed << std::setprecision(2) << (bulk-0.1) * 10 << 'L';
-				}
+				//If it is only 'L'
+				text << 'L';
+			}
+			else
+			{
+				//If it contains a number + 'L'
+				text << std::fixed << std::setprecision(2) << bulk*10 << 'L';
 			}
 		}
 		

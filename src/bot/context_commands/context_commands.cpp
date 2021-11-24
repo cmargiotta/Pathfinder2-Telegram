@@ -18,5 +18,5 @@ const std::unordered_map<std::string, std::function<void(TgBot::Bot&, TgBot::Mes
 	{"give_response", give_item_},
 	{"broadcast_message_content_req", broadcast_message_content_req_master_},
 	{"money_dest_request", money_dest_request_},
-	{"set_coin_bulk", set_coin_bulk_master_}
+	{"money_bulk_request", set_coin_bulk_master_}
 };

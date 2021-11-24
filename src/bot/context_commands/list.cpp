@@ -57,8 +57,7 @@ void pathfinder2::list_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Da
             {
 				if (item)
 				{
-					message_text << "   " << common::escape(item->get_name(), common::to_escape, '\\') << ", bulk: " 
-								<< common::escape(item->get_bulk_string(), common::to_escape, '\\');
+					message_text << "   " << item->get_name() << ", bulk: " << item->get_bulk_string();
 
 					if (item->get_quantity() > 1)
 					{
@@ -80,10 +79,13 @@ void pathfinder2::list_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Da
 		auto sp = cp/10;
 		cp -= sp*10;
 
-		message_text << gp << "gp\n" << sp << "sp\n" << cp << "cp  bulk: " << settings.get_coin_bulk() << '\n';
+		message_text << gp << "gp\n" << sp << "sp\n" << cp << "cp  bulk: " << 
+						common::bulk_to_string(settings.get_coin_bulk()) << '\n';
+
+		auto message_text_str = common::escape(message_text.str(), common::to_escape, '\\');
 
         character_->set_context("");
-        bot.getApi().sendMessage(id, message_text.str(), false, 0, pathfinder2::remove_keyboard, "MarkdownV2");
+        bot.getApi().sendMessage(id, message_text_str, false, 0, pathfinder2::remove_keyboard, "MarkdownV2");
 	    bot.getApi().sendMessage(id, get_message("default_message", message->from->languageCode), false, 0, pathfinder2::get_default_keyboard(message->from->languageCode, master::get_instance().is_master(id)));
     }
     else if (text == get_command("list_detail", message->from->languageCode))

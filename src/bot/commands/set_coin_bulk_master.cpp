@@ -15,6 +15,6 @@ void pathfinder2::_set_coin_bulk_master(TgBot::Bot& bot, TgBot::Message::Ptr mes
 		throw std::runtime_error("authorization_error");
 	}
 
-	character_->set_context(get_message("new_coin_bulk", message->from->languageCode));
+	character_->set_context(get_message("money_bulk_request", message->from->languageCode));
 	bot.getApi().sendMessage(id, character_->get_context(), false, 0, pathfinder2::remove_keyboard);
 }

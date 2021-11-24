@@ -30,7 +30,7 @@ void pathfinder2::set_coin_bulk_master_(TgBot::Bot& bot, TgBot::Message::Ptr mes
 	{
 		try
 		{
-			bot.getApi().sendMessage(id_dest, text);
+			//bot.getApi().sendMessage(id_dest, text);
 		}
 		catch (...)
 		{
