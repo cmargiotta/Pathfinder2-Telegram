@@ -66,7 +66,12 @@ namespace common
 	{
 		std::stringstream text; 
 		
-		if (bulk >= 1.0)
+		if (bulk - int(bulk) < 0.0001)
+		{
+			//Bulk is only an int
+			text << std::fixed << std::setprecision(0) << bulk;
+		}
+		else if (bulk >= 1.0)
 		{
 			//If bulk is only a number
 			text << std::fixed << std::setprecision(2) << bulk;
@@ -96,6 +101,11 @@ namespace common
 		{
 			res = 0.1;
 			bulk = bulk.substr(0, bulk.size() - 1); 
+
+			if (bulk.empty())
+			{
+				return res; 
+			}
 		}
 
 		if (!common::is_float_number(bulk))

@@ -61,7 +61,7 @@ void pathfinder2::list_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Da
 
 					if (item->get_quantity() > 1)
 					{
-						message_text << " \\(" << item->get_quantity() << "\\)";
+						message_text << " (" << item->get_quantity() << ")";
 					}
 
 					message_text << '\n';
