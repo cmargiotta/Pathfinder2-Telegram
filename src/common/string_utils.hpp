@@ -78,7 +78,7 @@ namespace common
 		}
 		else
 		{
-			if (bulk == 0.1)
+			if (bulk - 0.1 < 0.0001)
 			{
 				//If it is only 'L'
 				text << 'L';
