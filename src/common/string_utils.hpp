@@ -2,9 +2,12 @@
 #define STRING_UTILS_HPP_
 
 #include <set>
+#include <cmath>
 #include <cctype>
 #include <string>
 #include <vector>
+#include <iomanip>
+#include <sstream>
 #include <algorithm>
 
 namespace common
@@ -31,7 +34,78 @@ namespace common
 
 	static inline bool is_number(const std::string& s)
 	{
-		return (std::isdigit(s[0])) && std::all_of(s.begin()+1, s.end(), ::isdigit);
+		return std::all_of(s.begin(), s.end(), ::isdigit);
+	}
+
+	static inline bool is_float_number(const std::string& s)
+	{
+		if (std::count(s.begin(), s.end(), '.') <= 1)
+		{
+			return std::all_of(s.begin(), s.end(), 
+				[](char c){
+					return std::isdigit(c) || c == '.';
+				}) &&
+				s.back() != '.' &&
+				s.front() != '.'; 
+		}
+
+		return false;
+	}
+
+	static inline bool is_bulk_string(std::string s)
+	{
+		if (s.back() == 'L' || s.back() == 'l')
+		{
+			s = s.substr(0, s.size() - 1); 
+		}
+
+		return is_float_number(s); 
+	}
+
+	static inline std::string bulk_to_string(double bulk)
+	{
+		std::stringstream text; 
+		
+		if (bulk >= 1.0)
+		{
+			text << std::fixed << std::setprecision(2) << bulk;
+		}
+		else
+		{
+			if (bulk * 10 < 2)
+			{
+				if (bulk - 0.1 < 0.01)
+				{
+					text << 'L';
+				}
+				else 
+				{
+					text << std::fixed << std::setprecision(2) << (bulk-0.1) * 10 << 'L';
+				}
+			}
+		}
+		
+		return text.str();  
+	}
+
+	static inline double parse_bulk(std::string bulk)
+	{
+		double res = 1; 
+
+		if (bulk.back() == 'L' || bulk.back() == 'l')
+		{
+			res = 0.1;
+			bulk = bulk.substr(0, bulk.size() - 1); 
+		}
+
+		if (!common::is_float_number(bulk))
+		{
+			throw std::runtime_error("generic_error");
+		}
+
+		res *= std::stod(bulk.c_str()); 
+
+		return res; 
 	}
 
 	static inline void trim(std::string& str, const std::string& whitespace = " \t\n")
@@ -52,7 +126,7 @@ namespace common
 
 		bool description_found = false; 
 
-		while (pos_end != std::string::npos) 
+		do
 		{
 			pos_end = s.find (delimiter, pos_start);
 			
@@ -87,7 +161,7 @@ namespace common
 			{
 				res.push_back(token);
 			}
-		}
+		} while (pos_end != std::string::npos); 
 		
 		return res;
 	}

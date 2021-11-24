@@ -5,6 +5,7 @@
 #include "../master.hpp"
 #include "../keyboards.hpp"
 #include "../local_data.hpp"
+#include "common/string_utils.hpp"
 #include "character/character_cache.hpp"
 
 void pathfinder2::set_capacity_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database)
@@ -12,6 +13,11 @@ void pathfinder2::set_capacity_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQ
     auto& text = message->text;
 	auto id = message->chat->id;
 	auto character_ = pathfinder2::character_cache[id];
+
+	if (!common::is_number(text))
+	{
+		throw std::runtime_error("generic_error¨");
+	}
 
 	character_->set_capacity(atoi(text.c_str()));
 

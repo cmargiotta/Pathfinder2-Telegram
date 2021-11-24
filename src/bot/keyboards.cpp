@@ -64,7 +64,8 @@ ReplyKeyboardMarkup::Ptr pathfinder2::get_default_keyboard(const std::string& lo
 				{get_command("register_item_master", locale)},
 				{get_command("delete_item_master", locale)},
 				{get_command("edit_item_master", locale)},
-				{get_command("send_broadcast", locale)}
+				{get_command("send_broadcast", locale)},
+				{get_command("set_coin_bulk", locale)}
 			});
 
 			return keyboards_master[locale];

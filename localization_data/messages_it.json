@@ -39,5 +39,6 @@
 	"new_item_notification"			: "NUOVO OGGETTO PER TE DA",
 	"length_error"					: "Quella è la descrizione non il nome, che cazzo.",
 	"money_dest_request"			: "A chi vuoi dare i tuoi soldi?",
-	"money_notification"			: "Da "
+	"money_notification"			: "Da ",
+	"new_coin_bulk"					: "Aggiornamento! 1cp ora pesa "
 }

@@ -29,7 +29,7 @@ void pathfinder2::register_item_master_(TgBot::Bot& bot, TgBot::Message::Ptr mes
 		{
 			url = field;
 		}
-		else if ((field == "L" || field == "l" || common::is_number(field)) && bulk.size() == 0)
+		else if (common::is_bulk_string(field) && bulk.size() == 0)
 		{
 			bulk = field;
 		}

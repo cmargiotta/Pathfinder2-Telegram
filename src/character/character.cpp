@@ -2,10 +2,13 @@
 
 #include <exception>
 
+#include "database/settings.hpp"
+
 using std::string;
 using SQLite::Database;
 using SQLite::Statement;
 using SQLite::Transaction;
+using pathfinder2::settings;
 using pathfinder2::character;
 using pathfinder2::inventory;
 
@@ -60,6 +63,22 @@ int character::get_id()
 int character::get_capacity()
 {
 	return capacity;
+}
+
+double character::get_occupied_bulk()
+{
+	static auto& settings = settings::get_instance(&database); 
+    
+	auto cp = this->cp; 
+
+    auto gp = cp/100;
+    cp -= gp*100;
+
+    auto sp = cp/10;
+    cp -= sp*10;
+	
+	return _inventory.get_occupied_bulk() + 
+			((cp + sp + gp) * settings.get_coin_bulk()); 
 }
 
 const string& character::get_context()

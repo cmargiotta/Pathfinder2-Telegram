@@ -1,6 +1,7 @@
 database_lib = static_library(	'database',
 								[
 									'database.cpp',
+									'settings.cpp'
 								],
 								dependencies: [sqlitecpp])
 

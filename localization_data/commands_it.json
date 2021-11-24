@@ -21,5 +21,6 @@
 	"edit_field_url"		: "URL",
 	"edit_field_image"		: "Immagine",
 	"send_broadcast"		: "Invia un messaggio a tutti",
-	"give"					: "Invia un oggetto a un giocatore"
+	"give"					: "Invia un oggetto a un giocatore",
+	"set_coin_bulk"			: "Imposta il peso di 1cp"
 }

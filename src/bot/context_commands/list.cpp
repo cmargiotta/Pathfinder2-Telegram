@@ -7,7 +7,10 @@
 #include "../keyboards.hpp"
 #include "../local_data.hpp"
 #include "common/string_utils.hpp"
+#include "database/settings.hpp"
 #include "character/character_cache.hpp"
+
+using pathfinder2::settings;
 
 std::string progress_bar(float progress)
 {
@@ -41,7 +44,7 @@ void pathfinder2::list_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Da
     {
         std::stringstream message_text; 
 
-        float occupied = character_->get_inventory().get_occupied_bulk();
+        float occupied = character_->get_occupied_bulk();
         auto capacity = character_->get_capacity();
         message_text << static_cast<int>(occupied) << '/' << capacity << '\n';
         message_text << "```" << progress_bar(occupied/capacity) << "```\n\n";
@@ -54,7 +57,8 @@ void pathfinder2::list_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Da
             {
 				if (item)
 				{
-					message_text << "   " << common::escape(item->get_name(), common::to_escape, '\\') << ", bulk: " << item->get_bulk_string();
+					message_text << "   " << common::escape(item->get_name(), common::to_escape, '\\') << ", bulk: " 
+								<< common::escape(item->get_bulk_string(), common::to_escape, '\\');
 
 					if (item->get_quantity() > 1)
 					{
@@ -64,8 +68,19 @@ void pathfinder2::list_(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Da
 					message_text << '\n';
 				}
             }
-            
         }
+
+		static auto& settings = settings::get_instance(&database); 
+
+		message_text << '\n';
+		auto cp = character_->get_cp();
+		auto gp = cp/100;
+		cp -= gp*100;
+
+		auto sp = cp/10;
+		cp -= sp*10;
+
+		message_text << gp << "gp\n" << sp << "sp\n" << cp << "cp  bulk: " << settings.get_coin_bulk() << '\n';
 
         character_->set_context("");
         bot.getApi().sendMessage(id, message_text.str(), false, 0, pathfinder2::remove_keyboard, "MarkdownV2");

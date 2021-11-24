@@ -39,5 +39,6 @@
 	"new_item_notification"			: "NEW ITEM FOR YOU FROM",
 	"length_error"					: "Given name is too long.",
 	"money_dest_request"			: "Who do you want to give your money?",
-	"money_notification"			: "From "
+	"money_notification"			: "From ",
+	"new_coin_bulk"					: "Update! 1cp bulk is now "
 }

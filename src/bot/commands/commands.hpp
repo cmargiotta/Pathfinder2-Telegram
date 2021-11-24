@@ -24,6 +24,7 @@ namespace pathfinder2
 	void _edit_item_master(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
 	void _delete_item_master(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
 	void _register_item_master(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
+	void _set_coin_bulk_master(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
 	void _send_broadcast_master(TgBot::Bot& bot, TgBot::Message::Ptr message, SQLite::Database& database);
 }
 #endif // COMMANDS_HPP_

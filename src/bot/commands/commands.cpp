@@ -13,5 +13,6 @@ const std::unordered_map<std::string, std::function<void(TgBot::Bot&, TgBot::Mes
 	{"delete_item_master", _delete_item_master},
 	{"edit_item_master", _edit_item_master},
 	{"send_broadcast", _send_broadcast_master},
-	{"give", _give}
+	{"give", _give},
+	{"set_coin_bulk", _set_coin_bulk_master}
 };

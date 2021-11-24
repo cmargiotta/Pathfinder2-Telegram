@@ -55,6 +55,9 @@ Database& pathfinder2::init_database(const string& path)
 			'id' INT NOT NULL, \
 			PRIMARY KEY('id') \
 		);");
+		db.exec("CREATE TABLE IF NOT EXISTS 'settings' (\
+			'coin_bulk' DOUBLE \
+		);");
 
 		db.exec("CREATE INDEX IF NOT EXISTS 'inventory_owner' ON 'inventory' ( \
 			'owner' \
@@ -62,6 +65,25 @@ Database& pathfinder2::init_database(const string& path)
 		db.exec("CREATE INDEX IF NOT EXISTS 'custom_items_owner' ON 'custom_items' ( \
 			'owner' \
 		);");
+
+		//Ensuring only one row in settings
+		db.exec("CREATE TRIGGER IF NOT EXISTS settings_only_one_row \
+				BEFORE INSERT ON settings \
+				WHEN (SELECT COUNT(*) FROM settings) >= 1 \
+				BEGIN \
+					SELECT RAISE(FAIL, 'only one row!'); \
+				END;"
+		);
+
+		//Init settings
+		try
+		{
+			db.exec("INSERT INTO settings VALUES (0);");
+		}
+		catch(...)
+		{
+			;
+		}
 
 		//ALTER TABLE for backward compatibility
 		try 

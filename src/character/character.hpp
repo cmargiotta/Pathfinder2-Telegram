@@ -33,6 +33,7 @@ namespace pathfinder2
 			int get_id();
 			int get_cp();
 			int get_capacity();
+			double get_occupied_bulk(); 
 
 			void update_cp(int delta);
 			void set_capacity(int capacity);

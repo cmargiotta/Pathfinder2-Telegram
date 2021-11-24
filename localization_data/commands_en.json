@@ -21,5 +21,6 @@
 	"edit_field_url"		: "URL",
 	"edit_field_image"		: "Image",
 	"send_broadcast"		: "Send a broadcast message",
-	"give"					: "Give an item to a player"
+	"give"					: "Give an item to a player",
+	"set_coin_bulk"			: "Set coin bulk"
 }
