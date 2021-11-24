@@ -40,5 +40,6 @@
 	"length_error"					: "Quella è la descrizione non il nome, che cazzo.",
 	"money_dest_request"			: "A chi vuoi dare i tuoi soldi?",
 	"money_notification"			: "Da ",
+	"money_bulk_request"			: "Bulk?",
 	"new_coin_bulk"					: "Aggiornamento! 1cp ora pesa "
 }
